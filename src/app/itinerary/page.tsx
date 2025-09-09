@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { itinerary } from '@/lib/itinerary';
+import { getShortDateForDay } from './dateUtils';
 
 export const metadata: Metadata = {
   title: 'Itinerary - Built to Create Project | 9-Day Christian Filmmaking Retreat',
@@ -29,47 +30,66 @@ export default function ItineraryPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
-            {itinerary.map((day) => (
-              <div 
-                key={day.id}
-                className="relative bg-cream rounded-2xl overflow-hidden shadow-sm"
-              >
-                <div className="p-6">
-                  <div className="flex items-start justify-end mb-4">
-                    <div className="text-right">
-                      <p className="text-sm font-semibold text-sage">{day.location}</p>
-                      <p className="text-xs text-charcoal/60">{day.theme}</p>
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-charcoal mb-3">
-                    {day.title}
-                  </h3>
-                  
-                  <div className="space-y-3 mb-4">
-                    <div>
-                      <p className="text-xs font-semibold text-forest mb-1">Spiritual Anchor</p>
-                      <p className="text-sm text-charcoal/70">{day.spiritualAnchor}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-forest mb-1">Creative Focus</p>
-                      <p className="text-sm text-charcoal/70">{day.creativeFocus}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-4 border-t border-stone/20 flex justify-between items-end">
-                    <span className="text-forest font-semibold text-sm">
-                      Day {day.id}
-                    </span>
-                    {day.isTransferDay && (
-                      <span className="bg-charcoal/10 text-charcoal px-2 py-1 rounded text-xs font-semibold">
-                        Transfer Day
+            {itinerary.map((day) => {
+              const computedDate = getShortDateForDay(day.id);
+              return (
+                <div 
+                  key={day.id}
+                  className="relative bg-cream rounded-2xl overflow-hidden shadow-sm"
+                >
+                  <div className="p-6">
+                    {/* Day label in top-left */}
+                    <div className="absolute top-6 left-6">
+                      <span 
+                        className="text-forest font-semibold text-sm"
+                        aria-label={`Day ${day.id}`}
+                      >
+                        Day {day.id}
                       </span>
+                    </div>
+                    
+                    {/* Location and Theme in top area */}
+                    <div className="flex items-start justify-end mb-4">
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-sage">{day.location}</p>
+                        <p className="text-xs text-charcoal/60">{day.theme}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Content sections */}
+                    <div className="space-y-3 mt-8 mb-12">
+                      <div>
+                        <p className="text-xs font-semibold text-forest mb-1">Spiritual Anchor</p>
+                        <p className="text-sm text-charcoal/70">{day.spiritualAnchor}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-forest mb-1">Creative Focus</p>
+                        <p className="text-sm text-charcoal/70">{day.creativeFocus}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Date in bottom-left */}
+                    <div className="absolute bottom-6 left-6">
+                      <span 
+                        className="text-charcoal/60 text-xs"
+                        aria-label={computedDate}
+                      >
+                        {computedDate}
+                      </span>
+                    </div>
+                    
+                    {/* Transfer day badge if applicable */}
+                    {day.isTransferDay && (
+                      <div className="absolute bottom-6 right-6">
+                        <span className="bg-charcoal/10 text-charcoal px-2 py-1 rounded text-xs font-semibold">
+                          Transfer Day
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -80,30 +100,30 @@ export default function ItineraryPage() {
           
           <div className="space-y-6">
             <div className="bg-cream rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-forest mb-2">Days 1-3: San José Foundation</h3>
+              <h3 className="text-lg font-semibold text-forest mb-2">Days 1-2: San José Foundation</h3>
               <p className="text-charcoal/70">
-                Begin in Costa Rica's vibrant capital. Master street cinematography, sound design, and storytelling fundamentals while exploring urban environments.
+                Begin in Costa Rica's vibrant capital. Establish presence-first filmmaking, story foundations through a Christian lens, and visual language as worship.
               </p>
             </div>
             
             <div className="bg-cream rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-forest mb-2">Days 4-6: Jacó Coastal Workshop</h3>
+              <h3 className="text-lg font-semibold text-forest mb-2">Days 3-5: Jacó Coastal Workshop</h3>
               <p className="text-charcoal/70">
-                Journey to the Pacific coast for golden hour mastery, waterfall cinematography, and full production days with mentor guidance.
+                Journey to the Pacific coast for documentary mindset development, directing with compassion, and mastering coverage for the edit.
               </p>
             </div>
             
             <div className="bg-cream rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-forest mb-2">Days 7-8: Puriscal Mountain Light</h3>
+              <h3 className="text-lg font-semibold text-forest mb-2">Days 6-8: Puriscal Mountain Reflection</h3>
               <p className="text-charcoal/70">
-                Ascend into the mountains to explore atmospheric conditions, lens selection for landscapes, and capture dramatic mountain light.
+                Ascend into the mountains for rest as worship, collaborative documentary work, and edit rhythm as atmosphere.
               </p>
             </div>
             
             <div className="bg-cream rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-forest mb-2">Day 9: Showcase & Celebration</h3>
+              <h3 className="text-lg font-semibold text-forest mb-2">Day 9: Commissioning & Sending</h3>
               <p className="text-charcoal/70">
-                Return to San José for final edits, private screening, and celebration of your creative journey before departures.
+                Return to San José for final delivery, presentation of work, and commissioning for the creative calling ahead.
               </p>
             </div>
           </div>

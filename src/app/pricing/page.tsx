@@ -211,27 +211,27 @@ function PricingTiersSection() {
         {tiers.map((tier) => {
           const isActive = tier.window === activeWindow;
           return (
-            <div key={tier.window} className={`relative bg-cream rounded-2xl p-6 shadow-lg ${isActive ? 'ring-2 ring-forest' : ''}`}>
+            <div key={tier.window} className={`relative rounded-2xl p-6 shadow-lg ${isActive ? 'bg-forest-700 text-cream-100 ring-2 ring-forest-700' : 'bg-cream'}`}>
               {isActive && (
                 <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-forest text-cream px-3 py-1 rounded-full text-xs font-semibold">
+                  <span className="bg-cream-100 text-forest-700 px-3 py-1 rounded-full text-xs font-semibold">
                     Currently Active
                   </span>
                 </div>
               )}
               
               <div className={`text-center mb-4 ${isActive ? 'mt-8' : ''}`}>
-                <h3 className="text-xl font-bold text-charcoal mb-1">{tier.label}</h3>
-                <p className="text-xs text-charcoal/60">
+                <h3 className={`text-xl font-bold mb-1 ${isActive ? 'text-cream-100' : 'text-charcoal'}`}>{tier.label}</h3>
+                <p className={`text-xs ${isActive ? 'text-cream-100/60' : 'text-charcoal/60'}`}>
                   {formatPaymentDate(tier.startDate)} - {formatPaymentDate(tier.endDate)}
                 </p>
               </div>
               
               <div className="text-center mb-4">
-                <div className="text-3xl font-bold text-forest">
+                <div className={`text-3xl font-bold ${isActive ? 'text-cream-100' : 'text-forest'}`}>
                   ${tier.total.toLocaleString()}
                 </div>
-                <p className="text-xs text-charcoal/70 mt-1">{tier.description}</p>
+                <p className={`text-xs mt-1 ${isActive ? 'text-cream-100/70' : 'text-charcoal/70'}`}>{tier.description}</p>
               </div>
             </div>
           );
