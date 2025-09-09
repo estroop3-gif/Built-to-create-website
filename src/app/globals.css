@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-heading: var(--font-heading), ui-sans-serif, system-ui, Arial, sans-serif;
+  --font-family-body: var(--font-body), ui-sans-serif, system-ui, Arial, sans-serif;
+  
+  --color-forest-50: #f0f4f1;
+  --color-forest-100: #dae5dc;
+  --color-forest-200: #b5cbb9;
+  --color-forest-300: #8fb196;
+  --color-forest-400: #6a9773;
+  --color-forest-500: #4a7c55;
+  --color-forest-600: #3d6546;
+  --color-forest-700: #304e37;
+  --color-forest-800: #233728;
+  --color-forest-900: #1a2a1e;
+  
+  --color-moss-50: #f2f5f0;
+  --color-moss-100: #e3ead0;
+  --color-moss-200: #c7d5a1;
+  --color-moss-300: #abc072;
+  --color-moss-400: #8fab43;
+  --color-moss-500: #6b7f5c;
+  --color-moss-600: #5a6b4d;
+  --color-moss-700: #49573e;
+  --color-moss-800: #38432f;
+  --color-moss-900: #2a3223;
+  
+  --color-sage-50: #f4f6f2;
+  --color-sage-100: #e8ece4;
+  --color-sage-200: #d1d9c9;
+  --color-sage-300: #bac6ae;
+  --color-sage-400: #a3b393;
+  --color-sage-500: #9ca891;
+  --color-sage-600: #849078;
+  --color-sage-700: #6c785f;
+  --color-sage-800: #546046;
+  --color-sage-900: #3f4835;
+  
+  --color-sand-50: #fdfcfa;
+  --color-sand-100: #faf8f4;
+  --color-sand-200: #f5f0e8;
+  --color-sand-300: #f0e8dc;
+  --color-sand-400: #ebe0d0;
+  --color-sand-500: #e6d8c4;
+  --color-sand-600: #d4c4a8;
+  --color-sand-700: #c2b08c;
+  --color-sand-800: #b09c70;
+  --color-sand-900: #9e8854;
+  
+  --color-cream-50: #fefefe;
+  --color-cream-100: #faf8f4;
+  --color-cream-200: #f7f4ee;
+  --color-cream-300: #f4f0e8;
+  --color-cream-400: #f1ece2;
+  --color-cream-500: #eee8dc;
+  --color-cream-600: #ddd5c5;
+  --color-cream-700: #ccc2ae;
+  --color-cream-800: #bbaf97;
+  --color-cream-900: #aa9c80;
+  
+  --color-ink-50: #f5f5f4;
+  --color-ink-100: #e8e7e4;
+  --color-ink-200: #d1cfc9;
+  --color-ink-300: #bab7ae;
+  --color-ink-400: #a39f93;
+  --color-ink-500: #8c8778;
+  --color-ink-600: #726f65;
+  --color-ink-700: #585752;
+  --color-ink-800: #3e3f3f;
+  --color-ink-900: #2c2925;
+  
+  --radius-DEFAULT: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  
+  --shadow-soft: 0 2px 12px -4px rgb(44 41 37 / 0.08), 0 1px 4px -2px rgb(44 41 37 / 0.04);
+  --shadow-card: 0 4px 24px -8px rgb(44 41 37 / 0.12), 0 2px 8px -4px rgb(44 41 37 / 0.06);
+  --shadow-card-hover: 0 8px 32px -12px rgb(44 41 37 / 0.16), 0 4px 12px -6px rgb(44 41 37 / 0.08);
+  --shadow-button: 0 1px 3px rgb(44 41 37 / 0.12), 0 1px 2px rgb(44 41 37 / 0.24);
+  --shadow-button-hover: 0 4px 12px rgb(44 41 37 / 0.15), 0 2px 4px rgb(44 41 37 / 0.12);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@utility font-heading {
+  font-family: var(--font-family-heading);
+}
+
+@utility font-body {
+  font-family: var(--font-family-body);
+}
+
+/* Nature texture utility */
+.nature-texture {
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(156, 168, 145, 0.03) 35px,
+      rgba(156, 168, 145, 0.03) 70px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 35px,
+      rgba(74, 95, 78, 0.02) 35px,
+      rgba(74, 95, 78, 0.02) 70px
+    );
+}
+
+/* Paper texture utility */
+.paper-texture {
+  background-image: 
+    radial-gradient(circle at 20% 80%, transparent 50%, rgba(156, 168, 145, 0.03) 50%),
+    radial-gradient(circle at 80% 20%, transparent 50%, rgba(107, 127, 92, 0.03) 50%),
+    radial-gradient(circle at 40% 40%, transparent 50%, rgba(74, 95, 78, 0.02) 50%);
+  background-size: 100px 100px, 150px 150px, 200px 200px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+.focus-visible\:ring-forest-600:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: rgb(61 101 70 / var(--tw-ring-opacity));
+  --tw-ring-opacity: 1;
+  box-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+}
+
+/* Additional utilities */
+/* Texture utilities can be used directly in HTML with class names */

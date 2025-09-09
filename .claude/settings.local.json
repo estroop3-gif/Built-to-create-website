@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(npm run build:*)",
+      "Bash(pkill:*)",
+      "Read(//mnt/c/Users/estro/Downloads/**)",
+      "Read(//mnt/c/Users/estro/OneDrive/Pictures/**)",
+      "Bash(gh:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
