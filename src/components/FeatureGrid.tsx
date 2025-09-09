@@ -28,7 +28,7 @@ const features: Feature[] = [
   {
     icon: "🛠️",
     title: "Complete Equipment Kit",
-    description: "Take home professional equipment worth over $3,000 including cameras, lenses, and accessories."
+    description: "Take home professional equipment worth over $2,800 including cameras, lenses, and accessories."
   },
   {
     icon: "✨",

@@ -7,43 +7,53 @@ export interface EquipmentItem {
 export const equipmentKit: EquipmentItem[] = [
   // Camera & Core
   {
-    name: "Sony NEX 6",
+    name: "Panasonic GH4",
     category: "camera",
-    description: "Professional mirrorless camera body"
+    description: "Professional 4K mirrorless camera body"
   },
   {
-    name: "NP-FW50 Battery and Three Slot Charger (3-Pack)", 
+    name: "Powerextra 2-Pack DMW-BLF19 batteries",
     category: "camera",
     description: "Extended battery system for all-day shooting"
+  },
+  {
+    name: "Transcend RDC8 USB 3.1 Gen 1 card reader",
+    category: "storage",
+    description: "Fast card reader for media transfer"
   },
   
   // Lenses
   {
-    name: "Sony 18–55mm OSS Lens",
+    name: "Panasonic Lumix G X Vario PZ 14–42mm f/3.5–5.6 ASPH Power O.I.S. lens",
     category: "lens",
     description: "Versatile zoom lens with optical stabilization"
   },
   {
-    name: "TTartisan APS-C 25mm F2 Lens",
+    name: "TTArtisan 25mm f/2 lens for Micro Four Thirds",
     category: "lens", 
     description: "Fast prime lens for low light and portraits"
+  },
+  {
+    name: "K&F Concept 37mm ND2–ND400 filter",
+    category: "lens",
+    description: "Variable neutral density filter for exposure control"
+  },
+  {
+    name: "K&F Concept 43mm ND2–ND400 filter",
+    category: "lens",
+    description: "Variable neutral density filter for exposure control"
   },
   
   // Audio
   {
-    name: "Godox Movlink Wireless Lav System",
+    name: "Godox Movlink wireless system",
     category: "audio",
     description: "Professional wireless microphone system"
-  },
-  {
-    name: "Sony Wired Headphones",
-    category: "audio",
-    description: "Monitor audio during recording"
   },
   
   // Lighting
   {
-    name: "Amaran 100d Light",
+    name: "Amaran 100d light",
     category: "lighting", 
     description: "Powerful daylight-balanced LED"
   },
@@ -53,39 +63,34 @@ export const equipmentKit: EquipmentItem[] = [
     description: "Soft, even light modifier"
   },
   {
-    name: "Neewer LED Light Panels Kit (2 Pack)",
+    name: "2x Neewer LED light panel kit",
     category: "lighting",
     description: "Portable LED panels for fill and accent lighting"
   },
   {
-    name: "Flashpoint Nano Light Stand (8.5 feet)",
+    name: "Flashpoint Nano 8.5' light stand",
     category: "lighting",
     description: "Lightweight support for lighting gear"
-  },
-  {
-    name: "LumoPro Universal Hot Shoe Adapter II", 
-    category: "accessories",
-    description: "Mount lights and accessories to camera"
   },
   
   // Support & Storage
   {
-    name: "KF09.136A Tripod",
+    name: "KF09.136A tripod",
     category: "accessories",
     description: "Sturdy tripod for stable shots"
   },
   {
-    name: "Lexar 128GB SD Cards (2 Pack)",
+    name: "Lexar 128GB SD cards (2-pack)",
     category: "storage",
     description: "High-speed memory cards for 4K recording"
   },
   {
-    name: "One Terabyte External Hard Drive", 
+    name: "1TB external hard drive", 
     category: "storage",
     description: "Backup and archive your footage"
   },
   {
-    name: "Pelican Vault V525 Rolling Case with Padded Dividers",
+    name: "Pelican Vault V525 rolling case with padded dividers",
     category: "accessories",
     description: "Professional hard case for safe transport"
   }
@@ -102,5 +107,5 @@ export const equipmentByCategory = {
 
 export const getTotalEquipmentValue = () => {
   // Approximate retail value for marketing purposes
-  return 3200; // Over $3,000 worth of equipment
+  return 2800; // Over $2,800 worth of equipment
 };

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface FAQItemProps {
   question: string;
-  answer: string;
+  answer: string | JSX.Element;
 }
 
 export default function FAQItem({ question, answer }: FAQItemProps) {
@@ -29,11 +29,15 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
       
       {isOpen && (
         <div className="pb-6 text-charcoal/70 animate-fade-in">
-          {answer.split('\n').map((paragraph, idx) => (
-            <p key={idx} className="mb-3 last:mb-0">
-              {paragraph}
-            </p>
-          ))}
+          {typeof answer === 'string' ? (
+            String(answer).split('\n').map((paragraph, idx) => (
+              <p key={idx} className="mb-3 last:mb-0">
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            answer
+          )}
         </div>
       )}
     </div>

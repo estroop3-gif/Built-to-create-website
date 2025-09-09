@@ -1,11 +1,18 @@
-import { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
+import { Metadata } from 'next';
+import { useState } from 'react';
+import { TRAVEL_DATE_START, TRAVEL_DATE_END, FULL_PAYMENT_DEADLINE, formatPaymentDate } from '@/lib/pricing';
+import { RefundPolicyContent } from '@/shared/refundPolicyContent';
+
+const metadata: Metadata = {
   title: 'Travel Logistics - Built to Create | Getting There',
   description: 'Complete travel information for your Costa Rica filmmaking retreat. Flight details, airport transfers, and ground transportation.',
 };
 
 export default function TravelPage() {
+  const [showRefundModal, setShowRefundModal] = useState(false);
+
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
@@ -47,7 +54,7 @@ export default function TravelPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-forest mb-3">Recommended Arrival</h3>
                   <div className="space-y-2 text-sm text-charcoal/70">
-                    <p><strong>Day 1 (March 15, 2024):</strong> Arrive by 2:00 PM</p>
+                    <p><strong>Day 1 ({formatPaymentDate(TRAVEL_DATE_START)}):</strong> Arrive by 2:00 PM</p>
                     <p>This allows time for customs, baggage claim, and airport transfer to Hotel Cultura Plaza before our welcome dinner at 6:30 PM.</p>
                   </div>
                 </div>
@@ -55,7 +62,7 @@ export default function TravelPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-forest mb-3">Departure Planning</h3>
                   <div className="space-y-2 text-sm text-charcoal/70">
-                    <p><strong>Day 9 (March 23, 2024):</strong> Departures after 3:00 PM</p>
+                    <p><strong>Day 9 ({formatPaymentDate(TRAVEL_DATE_END)}):</strong> Departures after 3:00 PM</p>
                     <p>Final screening and celebration lunch wraps by 2:00 PM. We recommend booking flights departing 5:00 PM or later to account for transfer time to SJO.</p>
                   </div>
                 </div>
@@ -200,10 +207,6 @@ export default function TravelPage() {
                   <span className="text-sage mr-2">•</span>
                   Travel insurance recommended
                 </li>
-                <li className="flex items-start">
-                  <span className="text-sage mr-2">•</span>
-                  COVID-19 requirements (check current status)
-                </li>
               </ul>
             </div>
 
@@ -245,8 +248,42 @@ export default function TravelPage() {
           <a href="mailto:hello@builttocreate.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
             Contact Our Team
           </a>
+          <div className="mt-6">
+            <button
+              onClick={() => setShowRefundModal(true)}
+              className="text-cream underline text-xs hover:text-cream/80 transition-colors"
+            >
+              Refund policy
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* Refund Policy Modal */}
+      {showRefundModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-charcoal">Refund Policy</h3>
+              <button
+                onClick={() => setShowRefundModal(false)}
+                className="text-charcoal/60 hover:text-charcoal transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <RefundPolicyContent />
+            <button
+              onClick={() => setShowRefundModal(false)}
+              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

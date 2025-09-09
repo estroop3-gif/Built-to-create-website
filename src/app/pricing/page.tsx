@@ -97,15 +97,15 @@ export default function PricingPage() {
                   <ul className="space-y-2 text-charcoal/70">
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
+                      All meals included - 3 meals daily (breakfast, lunch, dinner)
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-sage mr-2">•</span>
                       Welcome dinner on arrival
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
                       Farewell celebration dinner
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Daily breakfast at all hotels
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
@@ -117,11 +117,6 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-forest text-cream rounded-2xl p-8 shadow-lg">
-              <h2 className="text-2xl font-bold mb-6">Complete Equipment Kit</h2>
-              <p className="text-cream/90 mb-6">
-                Take home over $3,000 worth of professional equipment, including:
-              </p>
-              
               <div className="space-y-4">
                 <EquipmentList showByCategory={true} compact={true} />
               </div>
@@ -161,12 +156,8 @@ export default function PricingPage() {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-forest mb-3">Meals & Extras</h3>
+                <h3 className="text-lg font-semibold text-forest mb-3">Extras & Upgrades</h3>
                 <ul className="space-y-2 text-charcoal/70">
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Most lunches and dinners (7 meals total)
-                  </li>
                   <li className="flex items-start">
                     <span className="text-earth mr-2">•</span>
                     Alcoholic beverages
@@ -322,7 +313,7 @@ function DueTodayPanel() {
       
       <div className="mt-6 text-center">
         <p className="text-sm text-charcoal/70 mb-4">
-          Sales tax (7%) is applied only to today's charge
+          Sales tax (7%) is applied to every charge
         </p>
         {afterDeadline && (
           <p className="text-sm text-forest font-semibold">

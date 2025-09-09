@@ -34,7 +34,7 @@ export default function Home() {
           </h2>
           <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
             Choose the pricing tier that works for you. All tiers include the complete 
-            professional equipment kit worth over $3,000.
+            professional equipment kit worth over $2,800.
           </p>
         </div>
         <PricingCards />

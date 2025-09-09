@@ -272,39 +272,71 @@ export default function PackingPage() {
                 </div>
                 <h3 className="text-lg font-bold text-charcoal">Complete Equipment Kit Provided</h3>
               </div>
-              <p className="text-sm text-charcoal/60 mb-3">Over $3,000 worth of professional gear you take home</p>
+              <p className="text-sm text-charcoal/60 mb-3">Over $2,800 worth of professional gear you take home</p>
               <ul className="space-y-2 text-sm text-charcoal/70">
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Sony NEX 6 camera body
+                  Panasonic GH4
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Prime & telephoto lenses
+                  Powerextra 2-Pack DMW-BLF19 batteries
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Godox Movlink wireless audio
+                  Panasonic Lumix G X Vario PZ 14–42mm f/3.5–5.6 ASPH Power O.I.S. lens
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Amaran 100d LED light
+                  TTArtisan 25mm f/2 lens for Micro Four Thirds
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Professional tripod & stabilizer
+                  Transcend RDC8 USB 3.1 Gen 1 card reader
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  128GB SD cards & storage
+                  KF09.136A tripod
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Complete accessory package
+                  Godox Movlink wireless system
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Professional carrying case
+                  Amaran 100d light
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  SmallRig RA-D55 Parabolic Softbox (21.6" x 14.6")
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  2x Neewer LED light panel kit
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  Flashpoint Nano 8.5' light stand
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  Lexar 128GB SD cards (2-pack)
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  1TB external hard drive
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  Pelican Vault V525 rolling case with padded dividers
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  K&F Concept 37mm ND2–ND400 filter
+                </li>
+                <li className="flex items-start">
+                  <span className="text-sage mr-2">•</span>
+                  K&F Concept 43mm ND2–ND400 filter
                 </li>
               </ul>
             </div>
