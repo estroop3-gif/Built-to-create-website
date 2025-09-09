@@ -6,7 +6,7 @@ import { TIMEZONE, DEPOSIT, TAX_RATE, EARLY_BIRD_START, EARLY_BIRD_END, FULL_PAY
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Packing List - Built to Create | What to Bring',
+  title: 'Packing List - Built to Create Project | What to Bring',
   description: 'Essential packing list for your Costa Rica filmmaking retreat. Camera gear, clothing, and personal items for 9 days of creative exploration.',
 };
 

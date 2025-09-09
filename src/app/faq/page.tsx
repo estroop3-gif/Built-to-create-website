@@ -3,7 +3,7 @@ import FAQItem from '@/components/FAQItem';
 import { faqData } from '@/lib/faq';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Costa Rica Filmmaking Retreat | Built to Create',
+  title: 'FAQ - Costa Rica Filmmaking Retreat | Built to Create Project',
   description: 'Frequently asked questions about the Costa Rica filmmaking retreat. Equipment, travel, pricing, and logistics information.',
 };
 

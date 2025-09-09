@@ -6,7 +6,7 @@ import { TRAVEL_DATE_START, TRAVEL_DATE_END, FULL_PAYMENT_DEADLINE, formatPaymen
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Travel Logistics - Built to Create | Getting There',
+  title: 'Travel Logistics - Built to Create Project | Getting There',
   description: 'Complete travel information for your Costa Rica filmmaking retreat. Flight details, airport transfers, and ground transportation.',
 };
 
@@ -94,7 +94,7 @@ export default function TravelPage() {
                   <div className="space-y-2 text-sm text-charcoal/70">
                     <p>• Professional, air-conditioned vehicles</p>
                     <p>• English-speaking drivers</p>
-                    <p>• Meet at SJO arrivals with Built to Create sign</p>
+                    <p>• Meet at SJO arrivals with Built to Create Project sign</p>
                     <p>• 45-minute drive to central San José</p>
                   </div>
                 </div>

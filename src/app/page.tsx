@@ -16,7 +16,7 @@ export default function Home() {
       <Section spacing="xl" background="white">
         <div className="text-center mb-16">
           <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-            Why Choose Built to Create?
+            Why Choose Built to Create Project?
           </h2>
           <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
             More than just a filmmaking workshop—this is a transformative journey 

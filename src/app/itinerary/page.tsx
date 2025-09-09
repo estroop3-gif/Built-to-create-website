@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { itinerary } from '@/lib/itinerary';
 
 export const metadata: Metadata = {
-  title: 'Itinerary - Built to Create | 9-Day Christian Filmmaking Retreat',
+  title: 'Itinerary - Built to Create Project | 9-Day Christian Filmmaking Retreat',
   description: 'Faith-centered documentary filmmaking retreat through Costa Rica. Nine days of spiritual growth and creative development.',
 };
 

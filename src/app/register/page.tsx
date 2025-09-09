@@ -6,7 +6,7 @@ import { pricing, paymentOptions, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBir
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Register - Costa Rica Filmmaking Retreat | Built to Create',
+  title: 'Register - Costa Rica Filmmaking Retreat | Built to Create Project',
   description: 'Register for the Costa Rica 9-day filmmaking retreat. Complete equipment kit included or save $300 by bringing your own camera.',
 };
 

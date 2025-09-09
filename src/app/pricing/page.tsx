@@ -8,7 +8,7 @@ import { paymentOptions, getPricingTiers, getActiveWindow, getCurrentTotal, calc
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Pricing - Costa Rica Filmmaking Retreat | Built to Create',
+  title: 'Pricing - Costa Rica Filmmaking Retreat | Built to Create Project',
   description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
 };
 
@@ -166,10 +166,6 @@ export default function PricingPage() {
                     <span className="text-earth mr-2">•</span>
                     Optional activities and excursions
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Single room upgrades (+$600)
-                  </li>
                 </ul>
               </div>
             </div>
@@ -181,7 +177,7 @@ export default function PricingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Filmmaking?</h2>
           <p className="text-xl mb-8 text-cream/90">
-            Limited to 12 participants for personalized attention and meaningful connections.
+            Limited to 20 participants for personalized attention and meaningful connections.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

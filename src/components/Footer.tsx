@@ -42,8 +42,9 @@ export default function Footer() {
               href="/" 
               className="font-heading text-3xl font-bold text-forest-800 hover:text-forest-900 transition-colors"
             >
-              Built to Create
+              Built to Create Project
             </Link>
+            <p className="font-body text-sm text-ink-500 mt-2">A project by Built to Create</p>
             <p className="font-body text-lg text-ink-600 mt-4 max-w-2xl mx-auto leading-relaxed">
               Where creativity meets calling. Join us for a transformative filmmaking 
               and storytelling retreat in the heart of Costa Rica.
@@ -134,7 +135,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="font-body text-sm text-ink-500">
-            <p>© 2024 Built to Create. All rights reserved.</p>
+            <p>© 2024 Built to Create Project. All rights reserved.</p>
           </div>
         </div>
       </Container>

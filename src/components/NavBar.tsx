@@ -27,7 +27,7 @@ export default function NavBar() {
             href="/" 
             className="font-heading text-2xl font-bold text-forest-800 hover:text-forest-900 transition-colors duration-200"
           >
-            Built to Create
+            Built to Create Project
           </Link>
 
           {/* Desktop Navigation - Centered */}
