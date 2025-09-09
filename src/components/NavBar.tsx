@@ -7,6 +7,7 @@ import Button from './Button';
 
 const navItems = [
   { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
   { href: '/itinerary', label: 'Itinerary' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/packing', label: 'Packing' },

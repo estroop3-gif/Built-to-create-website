@@ -30,10 +30,14 @@ export const TAX_RATE = 0.07;
 export const TIMEZONE = 'America/New_York';
 export const EARLY_BIRD_START = '2025-01-01T00:00:00';
 export const EARLY_BIRD_END = '2025-10-31T23:59:59';
+export const STANDARD_START = '2025-11-01T00:00:00';
+export const STANDARD_END = '2025-12-31T23:59:59';
+export const LATE_START = '2026-01-01T00:00:00';
 export const FULL_PAYMENT_DEADLINE = '2025-12-31T23:59:59';
+export const TRAVEL_DATE = '2026-02-20T00:00:00';
 export const EARLY_BIRD_TOTAL = 4790;
 export const STANDARD_TOTAL = 5490;
-export const TRAVEL_DATE = '2026-03-15T00:00:00';
+export const LATE_TOTAL = 5950;
 
 export const getCurrentPricingTier = () => {
   const today = new Date();
@@ -42,16 +46,39 @@ export const getCurrentPricingTier = () => {
   ) || pricingTiers[pricingTiers.length - 1];
 };
 
-export const getCurrentTotal = () => {
+export const getActiveWindow = () => {
   const now = new Date().toLocaleString('en-US', { timeZone: TIMEZONE });
   const currentTime = new Date(now);
   const earlyBirdStart = new Date(EARLY_BIRD_START);
   const earlyBirdEnd = new Date(EARLY_BIRD_END);
-  
+  const standardStart = new Date(STANDARD_START);
+  const standardEnd = new Date(STANDARD_END);
+  const lateStart = new Date(LATE_START);
+
   if (currentTime >= earlyBirdStart && currentTime <= earlyBirdEnd) {
-    return EARLY_BIRD_TOTAL;
+    return 'EARLY_BIRD';
   }
-  return STANDARD_TOTAL;
+  if (currentTime >= standardStart && currentTime <= standardEnd) {
+    return 'STANDARD';
+  }
+  if (currentTime >= lateStart) {
+    return 'LATE';
+  }
+  return 'STANDARD';
+};
+
+export const getCurrentTotal = () => {
+  const activeWindow = getActiveWindow();
+  switch (activeWindow) {
+    case 'EARLY_BIRD':
+      return EARLY_BIRD_TOTAL;
+    case 'STANDARD':
+      return STANDARD_TOTAL;
+    case 'LATE':
+      return LATE_TOTAL;
+    default:
+      return STANDARD_TOTAL;
+  }
 };
 
 export const isEarlyBirdPeriod = () => {
@@ -73,6 +100,42 @@ export const isAfterFullPaymentDeadline = () => {
 
 export const calculateRemainingBalance = (grandTotal: number) => {
   return grandTotal - DEPOSIT;
+};
+
+export const calculateDueToday = (paymentOption: 'deposit' | 'full', grandTotal: number) => {
+  const afterDeadline = isAfterFullPaymentDeadline();
+  const baseDueToday = (paymentOption === 'deposit' && !afterDeadline) ? DEPOSIT : grandTotal;
+  const salesTaxToday = Math.round(baseDueToday * TAX_RATE);
+  return baseDueToday + salesTaxToday;
+};
+
+export const getPricingTiers = () => {
+  return [
+    {
+      window: 'EARLY_BIRD',
+      label: 'Early Bird',
+      total: EARLY_BIRD_TOTAL,
+      startDate: EARLY_BIRD_START,
+      endDate: EARLY_BIRD_END,
+      description: 'Best value - save $1,160'
+    },
+    {
+      window: 'STANDARD',
+      label: 'Standard',
+      total: STANDARD_TOTAL,
+      startDate: STANDARD_START,
+      endDate: STANDARD_END,
+      description: 'Regular pricing'
+    },
+    {
+      window: 'LATE',
+      label: 'Late Registration',
+      total: LATE_TOTAL,
+      startDate: LATE_START,
+      endDate: TRAVEL_DATE,
+      description: 'Last minute registration'
+    }
+  ];
 };
 
 export const formatPaymentDate = (dateString: string) => {

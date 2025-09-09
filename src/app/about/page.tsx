@@ -1,131 +1,148 @@
 export default function About() {
   return (
     <>
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-sand to-cream"></div>
-        <div className="absolute inset-0 nature-texture opacity-30"></div>
-        
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Our Story</h1>
-          <p className="text-xl text-charcoal/70 mb-8">
-            Born from a passion for authentic storytelling and creative expression
-          </p>
-          
-          <div className="max-w-3xl mx-auto text-left">
-            <p className="text-charcoal/80 mb-6">
-              Built to Create is a Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling—narratives that reflect God's heart and reveal His character through the fundamentals of documentary filmmaking. Here, excellence becomes worship as we steward our creative gifts with intentionality and skill.
+      <section className="pt-20 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-16">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-charcoal mb-4">About Me</h2>
+                <p className="text-charcoal/70 mb-4">
+                  I'm Edward Parker Stroop (Parker), filmmaker and retreat leader, with nearly a decade of experience across television, commercials, feature films, motorsports, and documentary follow projects. My approach to filmmaking is rooted in faith—creating what I call "R-rated Christian films" that don't shy away from the raw realities of life while maintaining a redemptive perspective.
+                </p>
+                <p className="text-charcoal/70">
+                  I have a passion for merging creativity with calling, creating spaces where filmmakers can encounter God in their craft and develop work that carries both artistic excellence and eternal significance.
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <div className="w-64 h-64 rounded-full overflow-hidden shadow-lg">
+                  <img 
+                    src="/parker-profile.jpg" 
+                    alt="Edward Parker Stroop" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">Credits</h2>
+            <p className="text-charcoal/70 mb-4">
+              My work has been featured across major networks including National Geographic, History Channel, ABC, HGTV, Lifetime, and Fox.
             </p>
-            <p className="text-charcoal/80">
+            <p className="text-charcoal/70">
+              I've developed expertise across diverse genres—from high-octane motorsports cinematography to intimate narrative work and reality/documentary follow projects. This breadth of experience allows me to guide filmmakers through multiple storytelling approaches while maintaining technical excellence.
+            </p>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">Our Story</h2>
+            <p className="text-charcoal/70 mb-4">
+              Born from a passion for authentic storytelling and creative expression, Built to Create is a Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling—narratives that reflect God's heart and reveal His character through the fundamentals of documentary filmmaking. Here, excellence becomes worship as we steward our creative gifts with intentionality and skill.
+            </p>
+            <p className="text-charcoal/70">
               All are welcome to join this community where faith and filmmaking intersect. Our rhythm includes morning devotion and prayer, optional quiet hours for Scripture and reflection, testimony circles for sharing God's work in our lives, and worship and ministry nights that celebrate His faithfulness in our creative journey.
             </p>
           </div>
-        </div>
-      </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-charcoal mb-4">Our Mission</h2>
-              <p className="text-charcoal/70 mb-4">
-                To empower creatives to discover and share their unique voice through the art of filmmaking and storytelling. We believe that everyone has a story worth telling, and our retreat provides the tools, guidance, and community to bring those stories to life.
-              </p>
-              <p className="text-charcoal/70">
-                We create a sacred space where creativity meets purpose, where technical skills merge with personal growth, and where individual expression contributes to collective inspiration.
-              </p>
-            </div>
-            <div className="h-96 bg-sage/20 rounded-2xl flex items-center justify-center">
-              <span className="text-sage text-sm">Full-bleed photography placeholder</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-sand/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1 h-96 bg-forest/20 rounded-2xl flex items-center justify-center">
-              <span className="text-forest text-sm">Full-bleed photography placeholder</span>
-            </div>
-            <div className="order-1 md:order-2">
-              <h2 className="text-3xl font-bold text-charcoal mb-4">Our Vision</h2>
-              <p className="text-charcoal/70 mb-4">
-                We envision a world where creative expression is accessible to all, where stories bridge divides, and where filmmaking becomes a tool for personal transformation and social change.
-              </p>
-              <p className="text-charcoal/70">
-                Through our retreats, we're building a global community of conscious creators who use their skills not just to entertain, but to inspire, educate, and elevate the human experience.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-charcoal mb-12 text-center">Our Values</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-charcoal mb-2">Creativity</h3>
-              <p className="text-charcoal/70 text-sm">
-                Fostering innovative thinking and artistic expression in everything we do
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-charcoal mb-2">Authenticity</h3>
-              <p className="text-charcoal/70 text-sm">
-                Encouraging genuine self-expression and honest storytelling
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-charcoal mb-2">Community</h3>
-              <p className="text-charcoal/70 text-sm">
-                Building supportive networks that nurture growth and collaboration
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-charcoal mb-2">Purpose</h3>
-              <p className="text-charcoal/70 text-sm">
-                Connecting creativity with meaningful impact and personal calling
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-forest text-cream">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-center">The Experience</h2>
-          <div className="prose prose-lg mx-auto text-cream/90 text-center">
-            <p className="mb-6">
-              Nestled in nature, away from the distractions of daily life, our retreat offers a unique opportunity to reconnect with your creative spirit. Over five transformative days, you'll learn from industry professionals, collaborate with fellow creatives, and produce work that reflects your authentic voice.
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">Our Mission</h2>
+            <p className="text-charcoal/70 mb-4">
+              To empower creatives to discover and share their unique voice through the art of filmmaking and storytelling. We believe that everyone has a story worth telling, and our retreat provides the tools, guidance, and community to bring those stories to life.
             </p>
-            <p>
-              From sunrise meditation sessions to late-night editing workshops, every moment is designed to deepen your craft and expand your creative horizons. You'll leave not just with new skills, but with a renewed sense of purpose and a community that will support your journey long after the retreat ends.
+            <p className="text-charcoal/70">
+              We create a sacred space where creativity meets purpose, where technical skills merge with personal growth, and where individual expression contributes to collective inspiration.
             </p>
           </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">Our Vision</h2>
+            <p className="text-charcoal/70 mb-4">
+              We envision a world where creative expression is accessible to all, where stories bridge divides, and where filmmaking becomes a tool for personal transformation and social change.
+            </p>
+            <p className="text-charcoal/70">
+              Through our retreats, we're building a global community of conscious creators who use their skills not just to entertain, but to inspire, educate, and elevate the human experience.
+            </p>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">Core Values</h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Presence Over Performance</h3>
+                <p className="text-charcoal/70 text-sm">
+                  Intimacy with God comes before perfection in art. Everything we create flows from who we are in Him.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Eternal Impact</h3>
+                <p className="text-charcoal/70 text-sm">
+                  We create with heaven in mind. Our work is meant to outlast trends and applause.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Spirit-Led Creativity</h3>
+                <p className="text-charcoal/70 text-sm">
+                  We welcome the Holy Spirit's guidance, inspiration, and redirection at every step.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Excellence as Worship</h3>
+                <p className="text-charcoal/70 text-sm">
+                  We pursue mastery of our craft as an act of devotion, not self-glory.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Truth in Storytelling</h3>
+                <p className="text-charcoal/70 text-sm">
+                  We tell stories that reflect God's heart, even when raw or uncomfortable, because truth heals.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Called, Not Competing</h3>
+                <p className="text-charcoal/70 text-sm">
+                  Every creator has a unique assignment. We celebrate others' gifts.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Community Over Clout</h3>
+                <p className="text-charcoal/70 text-sm">
+                  This is a family, not a platform. Everyone has a seat at the table.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-forest mb-2">Purity in Message</h3>
+                <p className="text-charcoal/70 text-sm">
+                  We do not glorify sin. We do not attach sin to anyone's identity. We love people while rejecting the sin, speaking truth with grace.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-charcoal mb-4">The Experience</h2>
+            <p className="text-charcoal/70 mb-4">
+              Nestled in the beauty of Costa Rica—moving from San José to Jacó to Santiago de Puriscal—our retreat offers a unique opportunity to reconnect with your creative spirit while immersed in vibrant culture and nature.
+            </p>
+            <p className="text-charcoal/70 mb-4">
+              Over nine transformative days, you'll learn fundamentals of documentary filmmaking from industry professionals, collaborate with fellow creatives, and produce work that reflects your authentic voice and faith.
+            </p>
+            <p className="text-charcoal/70 mb-4">
+              Mornings begin with devotion and prayer; evenings may include testimony circles, worship nights, or reflection. Field work spans travel sequences, portraits, interviews, and vérité practice across multiple locations.
+            </p>
+            <p className="text-charcoal/70">
+              You'll leave not just with sharpened skills, but with a renewed sense of calling and a community that will support your creative and spiritual journey long after the retreat ends.
+            </p>
+          </div>
+
         </div>
       </section>
     </>

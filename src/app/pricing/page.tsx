@@ -1,12 +1,15 @@
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { StandardPricingCard, DiscountPricingCard } from '@/components/PricingCard';
+import { useState } from 'react';
 import EquipmentList from '@/components/EquipmentList';
-import { pricing, paymentOptions } from '@/lib/pricing';
+import { paymentOptions, getPricingTiers, getActiveWindow, getCurrentTotal, calculateDueToday, isAfterFullPaymentDeadline, formatPaymentDate } from '@/lib/pricing';
+import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: 'Pricing - Costa Rica Filmmaking Retreat | Built to Create',
-  description: `All-inclusive 9-day filmmaking retreat for $${pricing.standardTuition.toLocaleString()}. Complete equipment kit included. Save $${pricing.cameraDiscount} by bringing your own camera.`,
+  description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
 };
 
 export default function PricingPage() {
@@ -25,32 +28,16 @@ export default function PricingPage() {
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            <StandardPricingCard />
-            <DiscountPricingCard />
+          {/* Christian retreat intro */}
+          <div className="text-center mb-12">
+            <p className="text-lg text-charcoal/80 max-w-3xl mx-auto">
+              Join our Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling and excellence as worship through the fundamentals of documentary filmmaking.
+            </p>
           </div>
 
-          <div className="bg-sand/30 rounded-2xl p-8 mb-16">
-            <h2 className="text-3xl font-bold text-charcoal mb-8 text-center">Payment Plan Options</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {paymentOptions.map((option, idx) => {
-                const amount = Math.round(pricing.standardTuition * option.multiplier);
-                return (
-                  <div key={idx} className="bg-cream rounded-xl p-6 text-center">
-                    <h3 className="text-lg font-semibold text-forest mb-2">{option.name}</h3>
-                    <p className="text-sm text-charcoal/70 mb-4">{option.description}</p>
-                    <div className="text-2xl font-bold text-charcoal mb-2">
-                      ${amount.toLocaleString()}
-                      {option.name !== "Full Payment" && <span className="text-sm text-charcoal/60 font-normal">/month</span>}
-                    </div>
-                    {option.note && (
-                      <p className="text-xs text-charcoal/60">{option.note}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <PricingTiersSection />
+
+          <DueTodayPanel />
 
           <div className="grid lg:grid-cols-2 gap-12 mb-16">
             <div className="bg-cream rounded-2xl p-8 shadow-lg">
@@ -222,5 +209,127 @@ export default function PricingPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function PricingTiersSection() {
+  const activeWindow = getActiveWindow();
+  const tiers = getPricingTiers();
+  const [showRefundModal, setShowRefundModal] = useState(false);
+
+  return (
+    <div className="mb-16">
+      <h2 className="text-3xl font-bold text-charcoal mb-8 text-center">Retreat Pricing Tiers</h2>
+      <div className="grid md:grid-cols-3 gap-6 mb-6">
+        {tiers.map((tier) => {
+          const isActive = tier.window === activeWindow;
+          return (
+            <div key={tier.window} className={`relative bg-cream rounded-2xl p-6 shadow-lg ${isActive ? 'ring-2 ring-forest' : ''}`}>
+              {isActive && (
+                <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-forest text-cream px-3 py-1 rounded-full text-xs font-semibold">
+                    Currently Active
+                  </span>
+                </div>
+              )}
+              
+              <div className="text-center mb-4">
+                <h3 className="text-xl font-bold text-charcoal mb-1">{tier.label}</h3>
+                <p className="text-xs text-charcoal/60">
+                  {formatPaymentDate(tier.startDate)} - {formatPaymentDate(tier.endDate)}
+                </p>
+              </div>
+              
+              <div className="text-center mb-4">
+                <div className="text-3xl font-bold text-forest">
+                  ${tier.total.toLocaleString()}
+                </div>
+                <p className="text-xs text-charcoal/70 mt-1">{tier.description}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="text-center text-sm text-charcoal/60 mb-4">
+        Selected automatically based on today's date
+      </p>
+      <div className="text-center">
+        <button
+          onClick={() => setShowRefundModal(true)}
+          className="text-forest underline text-xs hover:text-forest-600 transition-colors"
+        >
+          Refund policy
+        </button>
+      </div>
+
+      {/* Refund Policy Modal */}
+      {showRefundModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-charcoal">Refund Policy</h3>
+              <button
+                onClick={() => setShowRefundModal(false)}
+                className="text-charcoal/60 hover:text-charcoal transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <RefundPolicyContent />
+            <button
+              onClick={() => setShowRefundModal(false)}
+              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DueTodayPanel() {
+  const grandTotal = getCurrentTotal();
+  const afterDeadline = isAfterFullPaymentDeadline();
+  const depositDue = calculateDueToday('deposit', grandTotal);
+  const fullDue = calculateDueToday('full', grandTotal);
+
+  return (
+    <div className="bg-sand/30 rounded-2xl p-8 mb-16">
+      <h2 className="text-3xl font-bold text-charcoal mb-8 text-center">Payment Options</h2>
+      <div className="grid md:grid-cols-2 gap-8">
+        {!afterDeadline && (
+          <div className="bg-cream rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-forest mb-2">Deposit Only</h3>
+            <div className="text-2xl font-bold text-charcoal mb-2">
+              ${depositDue.toLocaleString()}
+            </div>
+            <p className="text-xs text-charcoal/70">Due today (includes sales tax)</p>
+          </div>
+        )}
+        
+        <div className="bg-cream rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-forest mb-2">Full Payment</h3>
+          <div className="text-2xl font-bold text-charcoal mb-2">
+            ${fullDue.toLocaleString()}
+          </div>
+          <p className="text-xs text-charcoal/70">Due today (includes sales tax)</p>
+        </div>
+      </div>
+      
+      <div className="mt-6 text-center">
+        <p className="text-sm text-charcoal/70 mb-4">
+          Sales tax (7%) is applied only to today's charge
+        </p>
+        {afterDeadline && (
+          <p className="text-sm text-forest font-semibold">
+            Full payment is required after the deadline
+          </p>
+        )}
+      </div>
+    </div>
   );
 }

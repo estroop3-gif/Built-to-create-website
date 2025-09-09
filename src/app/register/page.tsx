@@ -3,6 +3,7 @@
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
 import { pricing, paymentOptions, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE } from '@/lib/pricing';
+import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
   title: 'Register - Costa Rica Filmmaking Retreat | Built to Create',
@@ -465,15 +466,7 @@ export default function RegisterPage() {
                 </svg>
               </button>
             </div>
-            <div className="text-sm text-charcoal/80 space-y-3">
-              <p>• The ${DEPOSIT.toLocaleString()} deposit is non-refundable</p>
-              <p>• Refunds apply to the remaining balance only</p>
-              <p>• 120 or more days before travel: 75% refundable</p>
-              <p>• 90 to 119 days before travel: 50% refundable</p>
-              <p>• 60 to 89 days before travel: 25% refundable</p>
-              <p>• Fewer than 60 days before travel: non-refundable</p>
-              <p>• Taxes already paid are not refunded</p>
-            </div>
+            <RefundPolicyContent />
             <button
               onClick={() => setShowRefundModal(false)}
               className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
