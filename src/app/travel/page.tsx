@@ -240,7 +240,7 @@ export default function TravelPage() {
           <p className="text-xl mb-8 text-cream/90">
             We're happy to help coordinate your travel plans and answer any logistics questions.
           </p>
-          <a href="mailto:hello@builttocreate.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+          <a href="mailto:parker@builttocreateproject.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
             Contact Our Team
           </a>
           <div className="mt-6 flex flex-col items-center space-y-2">

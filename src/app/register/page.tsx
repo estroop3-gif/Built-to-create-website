@@ -138,7 +138,7 @@ export default function RegisterPage() {
             </div>
             
             <p className="text-sm text-charcoal/60">
-              Questions? Contact us at hello@builttocreate.com
+              Questions? Contact us at parker@builttocreateproject.com
             </p>
           </div>
         </div>

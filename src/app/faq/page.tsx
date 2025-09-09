@@ -36,7 +36,7 @@ export default function FAQPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
-                href="mailto:hello@builttocreate.com" 
+                href="mailto:parker@builttocreateproject.com" 
                 className="bg-forest text-cream px-6 py-3 rounded-full hover:bg-moss transition-colors font-semibold"
               >
                 Email Us

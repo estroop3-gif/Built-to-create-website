@@ -44,7 +44,7 @@ export default function Footer() {
             >
               Built to Create Project
             </Link>
-            <p className="font-body text-sm text-ink-500 mt-2">A project by Built to Create</p>
+            <p className="font-body text-sm text-ink-500 mt-2">A project by Second Watch Network</p>
             <p className="font-body text-lg text-ink-600 mt-4 max-w-2xl mx-auto leading-relaxed">
               Where creativity meets calling. Join us for a transformative filmmaking 
               and storytelling retreat in the heart of Costa Rica.
@@ -100,10 +100,10 @@ export default function Footer() {
             <div className="space-y-4">
               <p className="font-body text-ink-600">
                 <a
-                  href="mailto:hello@builttocreate.com"
+                  href="mailto:parker@builttocreateproject.com"
                   className="hover:text-forest-700 transition-colors duration-200 text-lg"
                 >
-                  hello@builttocreate.com
+                  parker@builttocreateproject.com
                 </a>
               </p>
               

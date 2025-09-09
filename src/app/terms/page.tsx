@@ -44,23 +44,30 @@ export default function TermsPage() {
                 <li>Spiritual and creative development activities</li>
               </ul>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">3. Payment Terms</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">3. Registration & Payment Terms</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
-                Registration requires a $500 non-refundable deposit. Full payment of $4,500 is due by November 1, 2025. Payment plans are available upon request.
+                Registration requires a non-refundable $1,800 deposit to secure a spot. The remaining balance must be paid in full no later than December 31, 2025. After December 31, 2025, deposits will no longer be accepted; the full amount will be due at the time of purchase.
+              </p>
+              <p className="text-ink-700 mb-6 leading-relaxed">
+                Flexible payment plans are available upon request. Please contact us directly to arrange.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">4. Cancellation and Refund Policy</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">4. Pricing Tiers</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
-                The $500 deposit is non-refundable under all circumstances. Additional payments may be refundable according to the following schedule:
+                The following pricing tiers are currently active:
               </p>
               <ul className="list-disc list-inside text-ink-700 mb-6 ml-4 space-y-2">
-                <li><strong>90+ days before retreat:</strong> 75% refund of payments beyond deposit</li>
-                <li><strong>60-89 days before retreat:</strong> 50% refund of payments beyond deposit</li>
-                <li><strong>30-59 days before retreat:</strong> 25% refund of payments beyond deposit</li>
-                <li><strong>Less than 30 days before retreat:</strong> No refund available</li>
+                <li><strong>Early Bird:</strong> January 1, 2025 – October 31, 2025 → $4,790 (save $1,160)</li>
+                <li><strong>Standard:</strong> November 1, 2025 – December 31, 2025 → $5,490 (regular pricing)</li>
+                <li><strong>Late Registration:</strong> January 1, 2026 – February 20, 2026 → $5,950 (last-minute registration)</li>
               </ul>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">5. Travel and Health Requirements</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">5. Refund & Cancellation Policy</h2>
+              <p className="text-ink-700 mb-4 leading-relaxed">
+                All deposits are non-refundable. Cancellations after full payment has been made are non-refundable unless otherwise stated in writing.
+              </p>
+
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">6. Travel and Health Requirements</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
                 Participants are responsible for:
               </p>
@@ -72,7 +79,7 @@ export default function TermsPage() {
                 <li>Disclosure of any medical conditions that may affect participation</li>
               </ul>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">6. Code of Conduct</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">7. Code of Conduct</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
                 The Built to Create Project maintains Christian values. Participants agree to:
               </p>
@@ -84,44 +91,44 @@ export default function TermsPage() {
                 <li>Participate fully in scheduled activities unless excused for health reasons</li>
               </ul>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">7. Equipment and Materials</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">8. Equipment and Materials</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 Each participant receives a professional equipment kit valued at $2,800+ to keep. This equipment becomes the participant's property upon completion of the retreat. Participants who leave early forfeit their right to the equipment.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">8. Photography and Video Release</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">9. Photography and Video Release</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 By participating, you grant Built to Create Project permission to photograph and video record your participation for promotional purposes. You waive any rights to compensation for such use and agree that all materials created become property of Built to Create Project.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">9. Limitation of Liability</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">10. Limitation of Liability</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 Built to Create Project, its organizers, and partners are not liable for injuries, illness, loss of property, or other damages that may occur during the retreat. Participants assume all risks associated with international travel and retreat activities. Travel insurance is strongly recommended.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">10. Force Majeure</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">11. Force Majeure</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 If the retreat must be cancelled or significantly modified due to circumstances beyond our control (including but not limited to natural disasters, political instability, pandemic restrictions, or acts of God), Built to Create Project will work to reschedule or provide alternative arrangements but cannot guarantee full refunds.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">11. Intellectual Property</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">12. Intellectual Property</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 Participants retain rights to their own creative works produced during the retreat. However, Built to Create Project retains rights to use participant works for promotional and educational purposes. All curriculum, teaching materials, and proprietary methods remain property of Built to Create Project.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">12. Dispute Resolution</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">13. Dispute Resolution</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 Any disputes arising from these terms or retreat participation shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in [Your State/City].
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">13. Changes to Terms</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">14. Changes to Terms</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 Built to Create Project reserves the right to modify these terms with 30 days written notice to registered participants. Continued participation after notice constitutes acceptance of modified terms.
               </p>
 
-              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">14. Contact Information</h2>
+              <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">15. Contact Information</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Questions regarding these terms should be directed to: <a href="mailto:hello@builttocreate.com" className="text-forest-700 hover:text-forest-800 underline">hello@builttocreate.com</a>
+                Questions regarding these terms should be directed to: <a href="mailto:parker@builttocreateproject.com" className="text-forest-700 hover:text-forest-800 underline">parker@builttocreateproject.com</a>
               </p>
 
               <hr className="my-8 border-sand-300" />

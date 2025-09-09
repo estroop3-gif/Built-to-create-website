@@ -213,14 +213,14 @@ function PricingTiersSection() {
           return (
             <div key={tier.window} className={`relative bg-cream rounded-2xl p-6 shadow-lg ${isActive ? 'ring-2 ring-forest' : ''}`}>
               {isActive && (
-                <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
+                <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-forest text-cream px-3 py-1 rounded-full text-xs font-semibold">
                     Currently Active
                   </span>
                 </div>
               )}
               
-              <div className="text-center mb-4">
+              <div className={`text-center mb-4 ${isActive ? 'mt-8' : ''}`}>
                 <h3 className="text-xl font-bold text-charcoal mb-1">{tier.label}</h3>
                 <p className="text-xs text-charcoal/60">
                   {formatPaymentDate(tier.startDate)} - {formatPaymentDate(tier.endDate)}

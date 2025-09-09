@@ -132,10 +132,10 @@ export default function FAQ() {
             We're here to help! Reach out with any specific questions about the retreat.
           </p>
           <a
-            href="mailto:hello@builttocreate.com"
+            href="mailto:parker@builttocreateproject.com"
             className="inline-flex items-center font-body font-bold text-forest-700 hover:text-forest-800 transition-colors text-lg group"
           >
-            hello@builttocreate.com
+            parker@builttocreateproject.com
             <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>

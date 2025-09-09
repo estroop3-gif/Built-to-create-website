@@ -21,7 +21,7 @@ export default function PricingCards() {
           >
             {/* Current Tier Badge */}
             {isCurrentTier && (
-              <div className="absolute -top-0 -right-0 bg-forest-500 text-cream-100 px-4 py-1 text-sm font-heading font-bold transform rotate-12 translate-x-4 -translate-y-2 rounded-full">
+              <div className="absolute top-3 right-3 bg-forest-500 text-cream-100 px-4 py-1 text-sm font-heading font-bold transform rotate-12 rounded-full">
                 Current Rate
               </div>
             )}
