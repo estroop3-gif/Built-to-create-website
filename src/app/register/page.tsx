@@ -1,6 +1,7 @@
 'use client';
 
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { pricing, paymentOptions, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
@@ -363,13 +364,21 @@ export default function RegisterPage() {
                           <div className="space-y-1 text-sm text-charcoal/70">
                             <p>Deposit due today: ${DEPOSIT.toLocaleString()} plus applicable sales tax</p>
                             <p>Remaining balance due by: {formatPaymentDate(FULL_PAYMENT_DEADLINE)}</p>
-                            <button
-                              type="button"
-                              onClick={() => setShowRefundModal(true)}
-                              className="text-forest underline text-xs hover:text-forest-600 transition-colors"
-                            >
-                              Refund policy
-                            </button>
+                            <div className="flex flex-col space-y-1">
+                              <button
+                                type="button"
+                                onClick={() => setShowRefundModal(true)}
+                                className="text-forest underline text-xs hover:text-forest-600 transition-colors"
+                              >
+                                Refund policy
+                              </button>
+                              <Link
+                                href="/terms"
+                                className="text-forest underline text-xs hover:text-forest-600 transition-colors"
+                              >
+                                Terms & Agreement
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       )}

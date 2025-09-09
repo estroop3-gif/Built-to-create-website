@@ -133,6 +133,18 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Legal Links */}
+          <div className="mb-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6">
+              <Link 
+                href="/terms" 
+                className="font-body text-sm text-ink-600 hover:text-forest-700 underline transition-colors duration-200"
+              >
+                Terms & Agreement
+              </Link>
+            </div>
+          </div>
+
           {/* Copyright */}
           <div className="font-body text-sm text-ink-500">
             <p>© 2024 Built to Create Project. All rights reserved.</p>

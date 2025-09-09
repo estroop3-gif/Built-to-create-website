@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { itinerary } from '@/lib/itinerary';
 
 export const metadata: Metadata = {
@@ -31,23 +30,19 @@ export default function ItineraryPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {itinerary.map((day) => (
-              <Link 
+              <div 
                 key={day.id}
-                href={`/itinerary/${day.slug}`}
-                className="group relative bg-cream rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover-lift"
+                className="relative bg-cream rounded-2xl overflow-hidden shadow-sm"
               >
                 <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="bg-forest text-cream rounded-full w-12 h-12 flex items-center justify-center font-bold">
-                      {day.id}
-                    </div>
+                  <div className="flex items-start justify-end mb-4">
                     <div className="text-right">
                       <p className="text-sm font-semibold text-sage">{day.location}</p>
                       <p className="text-xs text-charcoal/60">{day.theme}</p>
                     </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-charcoal mb-3 group-hover:text-forest transition-colors">
+                  <h3 className="text-xl font-bold text-charcoal mb-3">
                     {day.title}
                   </h3>
                   
@@ -63,8 +58,8 @@ export default function ItineraryPage() {
                   </div>
                   
                   <div className="pt-4 border-t border-stone/20 flex justify-between items-end">
-                    <span className="text-forest font-semibold text-sm group-hover:underline">
-                      View Day {day.id} →
+                    <span className="text-forest font-semibold text-sm">
+                      Day {day.id}
                     </span>
                     {day.isTransferDay && (
                       <span className="bg-charcoal/10 text-charcoal px-2 py-1 rounded text-xs font-semibold">
@@ -73,7 +68,7 @@ export default function ItineraryPage() {
                     )}
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

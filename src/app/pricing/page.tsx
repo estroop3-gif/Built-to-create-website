@@ -240,13 +240,19 @@ function PricingTiersSection() {
       <p className="text-center text-sm text-charcoal/60 mb-4">
         Selected automatically based on today's date
       </p>
-      <div className="text-center">
+      <div className="text-center flex flex-col items-center space-y-1">
         <button
           onClick={() => setShowRefundModal(true)}
           className="text-forest underline text-xs hover:text-forest-600 transition-colors"
         >
           Refund policy
         </button>
+        <Link
+          href="/terms"
+          className="text-forest underline text-xs hover:text-forest-600 transition-colors"
+        >
+          Terms & Agreement
+        </Link>
       </div>
 
       {/* Refund Policy Modal */}

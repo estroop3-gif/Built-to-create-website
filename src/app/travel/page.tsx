@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { TRAVEL_DATE_START, TRAVEL_DATE_END, FULL_PAYMENT_DEADLINE, formatPaymentDate } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
@@ -242,13 +243,19 @@ export default function TravelPage() {
           <a href="mailto:hello@builttocreate.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
             Contact Our Team
           </a>
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col items-center space-y-2">
             <button
               onClick={() => setShowRefundModal(true)}
               className="text-cream underline text-xs hover:text-cream/80 transition-colors"
             >
               Refund policy
             </button>
+            <Link
+              href="/terms"
+              className="text-cream underline text-xs hover:text-cream/80 transition-colors"
+            >
+              Terms & Agreement
+            </Link>
           </div>
         </div>
       </section>
