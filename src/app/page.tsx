@@ -4,7 +4,6 @@ import FeatureGrid from '@/components/FeatureGrid';
 import PricingCards from '@/components/PricingCards';
 import EquipmentList from '@/components/EquipmentList';
 import GalleryGrid from '@/components/GalleryGrid';
-import FAQ from '@/components/FAQ';
 
 export default function Home() {
   return (
@@ -48,11 +47,6 @@ export default function Home() {
       {/* Gallery Section */}
       <Section spacing="xl" background="white">
         <GalleryGrid />
-      </Section>
-
-      {/* FAQ Section */}
-      <Section spacing="xl" background="sand">
-        <FAQ />
       </Section>
     </main>
   );

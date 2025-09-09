@@ -1,3 +1,13 @@
+export interface ScheduleItem {
+  time: string;
+  title: string;
+  description?: string;
+  skillsFocus?: string[];
+  gearNotes?: string;
+  locationNotes?: string;
+  terrainNotes?: string;
+}
+
 export interface Day {
   id: number;
   slug: string;

@@ -1,8 +1,9 @@
+import { ReactElement } from 'react';
 import { TRAVEL_DATE_START, TRAVEL_DATE_END, FULL_PAYMENT_DEADLINE, formatPaymentDate } from '@/lib/pricing';
 
 export interface FAQItem {
   question: string;
-  answer: string | JSX.Element;
+  answer: string | ReactElement;
   category: 'general' | 'travel' | 'equipment' | 'pricing' | 'logistics' | 'spiritual';
 }
 

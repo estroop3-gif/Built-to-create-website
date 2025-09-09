@@ -118,7 +118,7 @@ export default function PricingPage() {
 
             <div className="bg-forest text-cream rounded-2xl p-8 shadow-lg">
               <div className="space-y-4">
-                <EquipmentList showByCategory={true} compact={true} />
+                <EquipmentList />
               </div>
               
               <div className="mt-8 p-4 bg-cream/10 rounded-xl">

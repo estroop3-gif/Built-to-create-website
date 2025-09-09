@@ -121,15 +121,6 @@ export default function GalleryGrid({
         ))}
       </div>
 
-      {/* Note about placeholder images */}
-      <div className="mt-12 text-center">
-        <div className="inline-flex items-center px-6 py-3 bg-sand-50 border border-sand-200 rounded-full">
-          <div className="w-2 h-2 bg-sand-400 rounded-full mr-3"></div>
-          <p className="font-body text-sm text-ink-600 italic">
-            Gallery images coming soon. These represent the beautiful locations where you'll be filming.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

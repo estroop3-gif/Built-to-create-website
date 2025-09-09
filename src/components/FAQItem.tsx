@@ -1,19 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactElement } from 'react';
 
 interface FAQItemProps {
   question: string;
-  answer: string | JSX.Element;
+  answer: string | ReactElement;
+  isOpen?: boolean;
+  onToggle?: () => void;
 }
 
-export default function FAQItem({ question, answer }: FAQItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function FAQItem({ question, answer, isOpen: propIsOpen, onToggle }: FAQItemProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = propIsOpen !== undefined ? propIsOpen : internalIsOpen;
+  
+  const handleToggle = () => {
+    if (onToggle) {
+      onToggle();
+    } else {
+      setInternalIsOpen(!internalIsOpen);
+    }
+  };
 
   return (
     <div className="border-b border-stone/20 last:border-0">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className="w-full py-6 text-left flex justify-between items-center hover:text-forest transition-colors"
       >
         <h3 className="text-lg font-semibold text-charcoal pr-4">{question}</h3>
