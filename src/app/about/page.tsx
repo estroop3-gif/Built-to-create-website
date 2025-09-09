@@ -7,9 +7,18 @@ export default function About() {
         
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Our Story</h1>
-          <p className="text-xl text-charcoal/70">
+          <p className="text-xl text-charcoal/70 mb-8">
             Born from a passion for authentic storytelling and creative expression
           </p>
+          
+          <div className="max-w-3xl mx-auto text-left">
+            <p className="text-charcoal/80 mb-6">
+              Built to Create is a Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling—narratives that reflect God's heart and reveal His character through the fundamentals of documentary filmmaking. Here, excellence becomes worship as we steward our creative gifts with intentionality and skill.
+            </p>
+            <p className="text-charcoal/80">
+              All are welcome to join this community where faith and filmmaking intersect. Our rhythm includes morning devotion and prayer, optional quiet hours for Scripture and reflection, testimony circles for sharing God's work in our lives, and worship and ministry nights that celebrate His faithfulness in our creative journey.
+            </p>
+          </div>
         </div>
       </section>
 

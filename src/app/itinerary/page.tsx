@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { itinerary } from '@/lib/itinerary';
 
 export const metadata: Metadata = {
-  title: 'Itinerary - Built to Create | 9-Day Filmmaking Retreat',
-  description: 'Complete 9-day filmmaking journey through Costa Rica. From San José streets to Jacó beaches to Puriscal mountains.',
+  title: 'Itinerary - Built to Create | 9-Day Christian Filmmaking Retreat',
+  description: 'Faith-centered documentary filmmaking retreat through Costa Rica. Nine days of spiritual growth and creative development.',
 };
 
 export default function ItineraryPage() {
@@ -12,11 +12,17 @@ export default function ItineraryPage() {
     <>
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/30 to-sand nature-texture opacity-20"></div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{
+            backgroundImage: "url('/itinerary-header.jpg')"
+          }}
+        ></div>
         
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">9-Day Journey</h1>
           <p className="text-xl text-charcoal/70">
-            From urban streets to coastal shores to mountain peaks - master filmmaking across Costa Rica's diverse landscapes
+            A Christian documentary filmmaking retreat through Costa Rica's diverse landscapes and faithful community
           </p>
         </div>
       </section>
@@ -26,24 +32,18 @@ export default function ItineraryPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {itinerary.map((day) => (
               <Link 
-                key={day.day}
-                href={`/itinerary/day-${day.day}`}
+                key={day.id}
+                href={`/itinerary/${day.slug}`}
                 className="group relative bg-cream rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover-lift"
               >
-                {day.transferFlag && (
-                  <div className="absolute top-4 right-4 z-10 bg-forest/90 text-cream px-3 py-1 rounded-full text-xs font-semibold">
-                    Transfer Day
-                  </div>
-                )}
-                
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="bg-forest text-cream rounded-full w-12 h-12 flex items-center justify-center font-bold">
-                      {day.day}
+                      {day.id}
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-sage">{day.city}</p>
-                      <p className="text-xs text-charcoal/60">{day.hotel}</p>
+                      <p className="text-sm font-semibold text-sage">{day.location}</p>
+                      <p className="text-xs text-charcoal/60">{day.theme}</p>
                     </div>
                   </div>
                   
@@ -51,19 +51,26 @@ export default function ItineraryPage() {
                     {day.title}
                   </h3>
                   
-                  <div className="space-y-2 mb-4">
-                    {day.highlights.slice(0, 3).map((highlight, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-charcoal/70">
-                        <span className="text-sage mr-2">•</span>
-                        {highlight}
-                      </div>
-                    ))}
+                  <div className="space-y-3 mb-4">
+                    <div>
+                      <p className="text-xs font-semibold text-forest mb-1">Spiritual Anchor</p>
+                      <p className="text-sm text-charcoal/70">{day.spiritualAnchor}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-forest mb-1">Creative Focus</p>
+                      <p className="text-sm text-charcoal/70">{day.creativeFocus}</p>
+                    </div>
                   </div>
                   
-                  <div className="pt-4 border-t border-stone/20">
+                  <div className="pt-4 border-t border-stone/20 flex justify-between items-end">
                     <span className="text-forest font-semibold text-sm group-hover:underline">
-                      View Day {day.day} →
+                      View Day {day.id} →
                     </span>
+                    {day.isTransferDay && (
+                      <span className="bg-charcoal/10 text-charcoal px-2 py-1 rounded text-xs font-semibold">
+                        Transfer Day
+                      </span>
+                    )}
                   </div>
                 </div>
               </Link>
