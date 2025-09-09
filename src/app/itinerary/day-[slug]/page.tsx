@@ -11,8 +11,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const day = getDayBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const day = getDayBySlug(slug);
   
   if (!day) {
     return {
@@ -26,8 +27,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function DayDetailPage({ params }: { params: { slug: string } }) {
-  const day = getDayBySlug(params.slug);
+export default async function DayDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const day = getDayBySlug(slug);
   
   if (!day) {
     notFound();

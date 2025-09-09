@@ -1,14 +1,8 @@
 'use client';
 
-import { Metadata } from 'next';
 import { useState } from 'react';
 import { TRAVEL_DATE_START, TRAVEL_DATE_END, FULL_PAYMENT_DEADLINE, formatPaymentDate } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
-
-const metadata: Metadata = {
-  title: 'Travel Logistics - Built to Create Project | Getting There',
-  description: 'Complete travel information for your Costa Rica filmmaking retreat. Flight details, airport transfers, and ground transportation.',
-};
 
 export default function TravelPage() {
   const [showRefundModal, setShowRefundModal] = useState(false);

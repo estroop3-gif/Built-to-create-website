@@ -4,11 +4,12 @@ import { notFound } from 'next/navigation';
 import { getDayBySlug } from '@/lib/itinerary';
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const day = getDayBySlug(params.slug);
+  const { slug } = await params;
+  const day = getDayBySlug(slug);
   
   if (!day) {
     return {
@@ -22,8 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function DayPage({ params }: Props) {
-  const day = getDayBySlug(params.slug);
+export default async function DayPage({ params }: Props) {
+  const { slug } = await params;
+  const day = getDayBySlug(slug);
 
   if (!day) {
     notFound();
