@@ -19,14 +19,17 @@ import { Resend } from 'resend';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' });
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
-const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
-const SITE_URL = (process.env.SITE_URL || 'https://www.thebtcp.com').replace(/\/+$/, ''); // no trailing slash
+// Move initialization inside the handler to avoid build-time environment variable issues
 
 export async function POST(req: Request) {
   try {
+    // Initialize Stripe and Resend inside the handler to avoid build-time environment variable issues
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' });
+    const resend = new Resend(process.env.RESEND_API_KEY!);
+    
+    const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
+    const SITE_URL = (process.env.SITE_URL || 'https://www.thebtcp.com').replace(/\/+$/, ''); // no trailing slash
+
     // --- Verify signature with RAW body ---
     const sig = req.headers.get('stripe-signature') as string;
     const raw = Buffer.from(await req.arrayBuffer());

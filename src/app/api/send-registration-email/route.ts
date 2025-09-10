@@ -12,11 +12,11 @@ import { Registration } from '@/lib/types/database';
 
 export const runtime = 'nodejs';
 
-const resend = new Resend(process.env.RESEND_API_KEY || '');
-const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'; // safe fallback
-
 export async function POST(request: NextRequest) {
   try {
+    // Initialize Resend inside the handler to avoid build-time environment variable issues
+    const resend = new Resend(process.env.RESEND_API_KEY || '');
+    const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'; // safe fallback
     // Ensure RESEND_API_KEY is present
     if (!process.env.RESEND_API_KEY) {
       console.error('Missing RESEND_API_KEY');
