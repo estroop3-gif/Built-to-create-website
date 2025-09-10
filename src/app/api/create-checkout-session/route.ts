@@ -5,6 +5,7 @@ export async function POST(request: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: '2025-08-27.basil',
   });
+  
   try {
     const body = await request.json();
     const { email, retreat_option = 'with_equipment' } = body;
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     const pricing = {
       with_equipment: {
-        name: 'Costa Rica Retreat - With Equipment',
+        name: 'Costa Rica Retreat - With Equipment Included',
         unit_amount: 399700, // $3,997
       },
       without_equipment: {
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest) {
     };
 
     const selectedPricing = pricing[retreat_option as keyof typeof pricing];
+    const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -45,12 +47,14 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${request.headers.get('origin') || 'http://localhost:3000'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.get('origin') || 'http://localhost:3000'}/register`,
+      success_url: `${siteUrl}/register/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/register/cancel`,
       customer_email: email,
       metadata: {
         retreat_option,
-        retreat: 'costa_rica_2026',
+        retreat: 'Born to Create Project Retreat',
+        retreat_start: 'February 14-22, 2026',
+        retreat_location: 'Costa Rica',
       },
     });
 

@@ -1,25 +1,9 @@
-// src/app/api/stripe-webhook/route.ts
-// Webhook that sends:
-// 1) Customer confirmation email (to the registrant)
-// 2) Internal notification (to parker@thebtcp.com)
-//
-// Requirements:
-// - Next.js App Router
-// - npm i stripe resend
-// - Env: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY, EMAIL_FROM, SITE_URL
-//
-// Notes:
-// - Ensure your Stripe Dashboard webhook points to https://www.thebtcp.com/api/stripe-webhook
-// - If your “retreat” metadata or other fields differ, adjust the mapping below.
-
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-// Move initialization inside the handler to avoid build-time environment variable issues
 
 export async function POST(req: Request) {
   try {
@@ -28,7 +12,7 @@ export async function POST(req: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY!);
     
     const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
-    const SITE_URL = (process.env.SITE_URL || 'https://www.thebtcp.com').replace(/\/+$/, ''); // no trailing slash
+    const SITE_URL = (process.env.SITE_URL || 'http://localhost:3000').replace(/\/+$/, ''); // no trailing slash
 
     // --- Verify signature with RAW body ---
     const sig = req.headers.get('stripe-signature') as string;
@@ -39,7 +23,7 @@ export async function POST(req: Request) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // Extract useful info (customize if you pass more via metadata)
+      // Extract useful info
       const email = session.customer_details?.email || '';
       const name = session.customer_details?.name || '';
       const [firstName, ...lastNameArr] = name.trim().split(' ');
@@ -47,27 +31,25 @@ export async function POST(req: Request) {
       const amountPaid = (session.amount_total ?? 0) / 100; // USD
       const currency = (session.currency || 'usd').toUpperCase();
 
-      // Optional metadata you may set when creating the Checkout Session
-      const retreatName =
-        session.metadata?.retreat ||
-        'Born to Create Project Retreat';
-      const retreatStart = session.metadata?.retreat_start || ''; // e.g. "Sept 14, 2025"
-      const retreatLocation = session.metadata?.retreat_location || ''; // e.g. "Costa Rica"
+      // Extract metadata
+      const retreatName = session.metadata?.retreat || 'Born to Create Project Retreat';
+      const retreatStart = session.metadata?.retreat_start || 'February 14-22, 2026';
+      const retreatLocation = session.metadata?.retreat_location || 'Costa Rica';
 
-      // Build URLs we’ll link in emails (edit if your site uses different slugs)
+      // Build URLs
       const urls = {
         homepage: `${SITE_URL}/`,
         itinerary: `${SITE_URL}/itinerary`,
         faq: `${SITE_URL}/faq`,
-        packingList: `${SITE_URL}/packing-list`,
+        packingList: `${SITE_URL}/packing`,
         terms: `${SITE_URL}/terms`,
         contact: `${SITE_URL}/contact`,
-        successPortal: `${SITE_URL}/register/success`,
+        successPortal: `${SITE_URL}/register/success?session_id=${session.id}`,
       };
 
-      // Send customer confirmation (only if we have their email)
+      // Send customer confirmation email
       if (email) {
-        const subjectCustomer = `You’re in! ${retreatName} — Registration Confirmed`;
+        const subjectCustomer = `You're in! ${retreatName} — Registration Confirmed`;
         const htmlCustomer = generateCustomerEmailHtml({
           firstName: firstName || 'Friend',
           lastName,
@@ -99,7 +81,7 @@ export async function POST(req: Request) {
           subject: subjectCustomer,
           html: htmlCustomer,
           text: textCustomer,
-          replyTo: 'parker@thebtcp.com', // reply goes to you
+          replyTo: 'parker@thebtcp.com',
         });
 
         if (error) {
@@ -166,8 +148,8 @@ type SharedEmailData = {
   amountPaid: number;
   currency: string;
   retreatName: string;
-  retreatStart?: string;
-  retreatLocation?: string;
+  retreatStart: string;
+  retreatLocation: string;
   urls: {
     homepage: string;
     itinerary: string;
@@ -202,47 +184,62 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
       p { line-height: 1.55; }
       .content { padding: 24px; }
       .card { background: #f4fbf4; border-left: 4px solid #2d5016; padding: 16px; margin: 16px 0; }
-      .btn { display: inline-block; padding: 10px 16px; background: #2d5016; color: #fff !important; text-decoration: none; border-radius: 6px; }
+      .btn { display: inline-block; padding: 10px 16px; background: #2d5016; color: #fff !important; text-decoration: none; border-radius: 6px; margin: 4px; }
       .muted { color: #666; font-size: 12px; }
       .list a { color: #2d5016; }
       .row { margin: 8px 0; }
       .label { color: #2d5016; font-weight: bold; }
       a { color: #2d5016; }
+      .checklist { background: #f9fcf9; padding: 16px; border-radius: 6px; margin: 16px 0; }
+      .checklist li { margin: 8px 0; }
+      .button-group { text-align: center; margin: 20px 0; }
     </style>
   </head>
   <body>
     <div class="wrap">
       <div class="hero">
-        <h1>You're in, ${escapeHtml(d.firstName)}!</h1>
-        <p>${escapeHtml(d.retreatName)}${d.retreatLocation ? ` — ${escapeHtml(d.retreatLocation)}` : ''}${d.retreatStart ? ` • ${escapeHtml(d.retreatStart)}` : ''}</p>
+        <h1>🎉 You're in, ${escapeHtml(d.firstName)}!</h1>
+        <p>${escapeHtml(d.retreatName)}</p>
+        <p>${escapeHtml(d.retreatLocation)} • ${escapeHtml(d.retreatStart)}</p>
       </div>
 
       <div class="content">
-        <p>Thank you for registering. We’ve received your payment of <strong>${amountFmt}</strong>.</p>
+        <p>Congratulations! Your registration is confirmed and we've received your payment of <strong>${amountFmt}</strong>.</p>
 
         <div class="card">
           <div class="row"><span class="label">Name:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</div>
           <div class="row"><span class="label">Email:</span> ${escapeHtml(d.email)}</div>
           <div class="row"><span class="label">Amount Paid:</span> ${amountFmt} ${escapeHtml(d.currency)}</div>
-          <div class="row"><span class="label">Stripe Session ID:</span> ${escapeHtml(d.sessionId)}</div>
+          <div class="row"><span class="label">Confirmation:</span> ${escapeHtml(d.sessionId)}</div>
         </div>
 
-        <p>Next steps & helpful links:</p>
-        <ul class="list">
-          <li><a href="${d.urls.itinerary}">Retreat Itinerary</a></li>
-          <li><a href="${d.urls.packingList}">Packing List & Gear Guide</a></li>
-          <li><a href="${d.urls.faq}">Frequently Asked Questions</a></li>
-          <li><a href="${d.urls.terms}">Terms & Policies</a></li>
-          <li><a href="${d.urls.contact}">Contact our team</a></li>
-        </ul>
+        <div class="checklist">
+          <h3 style="color: #2d5016; margin-top: 0;">🚀 What happens next:</h3>
+          <ul>
+            <li>📋 Review your detailed itinerary and daily schedule</li>
+            <li>🎒 Check out the packing list for Costa Rica</li>
+            <li>✈️ Plan your travel (we'll send airport/timing details soon)</li>
+            <li>❓ Browse our FAQ for common questions</li>
+            <li>📱 Connect with us if you need anything</li>
+          </ul>
+        </div>
 
-        <p style="margin: 20px 0;">
-          <a class="btn" href="${d.urls.successPortal}">View Your Registration Details</a>
-        </p>
+        <div class="button-group">
+          <a class="btn" href="${d.urls.itinerary}">📋 View Itinerary</a>
+          <a class="btn" href="${d.urls.packingList}">🎒 Packing List</a>
+          <a class="btn" href="${d.urls.faq}">❓ FAQ</a>
+          <a class="btn" href="${d.urls.contact}">📱 Contact Us</a>
+        </div>
 
-        <p>If any of your details are incorrect, just reply to this email and we’ll fix it.</p>
+        <p>Your retreat portal: <a href="${d.urls.successPortal}">View Registration Details</a></p>
 
-        <p class="muted">If you didn’t initiate this registration, please <a href="${d.urls.contact}">contact us</a>.</p>
+        <p><strong>Need to make changes?</strong> Just reply to this email and we'll take care of it.</p>
+
+        <div class="card">
+          <p style="margin: 0;"><strong>Important:</strong> We'll send travel details, packing reminders, and final prep info closer to the retreat date. Keep an eye on your inbox!</p>
+        </div>
+
+        <p class="muted">If you didn't make this registration, please <a href="${d.urls.contact}">contact us immediately</a>.</p>
       </div>
     </div>
   </body>
@@ -254,26 +251,29 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
 function generateCustomerEmailText(d: SharedEmailData): string {
   const amountFmt = `${d.currency} ${d.amountPaid.toFixed(2)}`;
   return [
-    `You're in, ${d.firstName}!`,
-    `${d.retreatName}${d.retreatLocation ? ` — ${d.retreatLocation}` : ''}${d.retreatStart ? ` • ${d.retreatStart}` : ''}`,
+    `🎉 You're in, ${d.firstName}!`,
+    `${d.retreatName}`,
+    `${d.retreatLocation} • ${d.retreatStart}`,
     ``,
-    `We received your payment of ${amountFmt}.`,
+    `Congratulations! Your registration is confirmed and we received your payment of ${amountFmt}.`,
     ``,
+    `Registration Details:`,
     `Name: ${d.firstName} ${d.lastName}`,
     `Email: ${d.email}`,
     `Amount Paid: ${amountFmt}`,
-    `Stripe Session ID: ${d.sessionId}`,
+    `Confirmation: ${d.sessionId}`,
     ``,
-    `Helpful links:`,
-    `- Itinerary: ${d.urls.itinerary}`,
-    `- Packing List: ${d.urls.packingList}`,
-    `- FAQ: ${d.urls.faq}`,
-    `- Terms & Policies: ${d.urls.terms}`,
-    `- Contact: ${d.urls.contact}`,
+    `🚀 What happens next:`,
+    `- Review your itinerary: ${d.urls.itinerary}`,
+    `- Check the packing list: ${d.urls.packingList}`,
+    `- Browse our FAQ: ${d.urls.faq}`,
+    `- Contact us anytime: ${d.urls.contact}`,
     ``,
-    `View your registration details: ${d.urls.successPortal}`,
+    `Your retreat portal: ${d.urls.successPortal}`,
     ``,
-    `If anything looks wrong, reply to this email and we’ll help.`,
+    `Need to make changes? Just reply to this email and we'll take care of it.`,
+    ``,
+    `We'll send travel details and final prep info closer to the retreat date!`,
   ].join('\n');
 }
 
@@ -299,23 +299,29 @@ function generateAdminEmailHtml(d: SharedEmailData): string {
       .label { font-weight: bold; color: #2d5016; }
       a { color: #2d5016; }
       .box { background: #f7faf7; border-left: 4px solid #2d5016; padding: 12px; margin: 12px 0; }
+      .payment { background: #e8f5e8; padding: 12px; border-radius: 6px; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h2 class="h">New Registration</h2>
-      <div class="row"><span class="label">Name:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</div>
-      <div class="row"><span class="label">Email:</span> ${escapeHtml(d.email)}</div>
-      <div class="row"><span class="label">Amount Paid:</span> ${amountFmt} (${escapeHtml(d.currency)})</div>
-      <div class="row"><span class="label">Session ID:</span> ${escapeHtml(d.sessionId)}</div>
-      <div class="row"><span class="label">Retreat:</span> ${escapeHtml(d.retreatName)}</div>
-      ${d.retreatLocation ? `<div class="row"><span class="label">Location:</span> ${escapeHtml(d.retreatLocation)}</div>` : ''}
-      ${d.retreatStart ? `<div class="row"><span class="label">Start:</span> ${escapeHtml(d.retreatStart)}</div>` : ''}
+      <h2 class="h">🎉 New Registration Confirmed</h2>
+      
+      <div class="payment">
+        <div class="row"><span class="label">💰 Amount Received:</span> ${amountFmt} (${escapeHtml(d.currency)})</div>
+        <div class="row"><span class="label">📧 Customer:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)} (${escapeHtml(d.email)})</div>
+      </div>
+
+      <div class="row"><span class="label">🎯 Retreat:</span> ${escapeHtml(d.retreatName)}</div>
+      <div class="row"><span class="label">📅 Dates:</span> ${escapeHtml(d.retreatStart)}</div>
+      <div class="row"><span class="label">📍 Location:</span> ${escapeHtml(d.retreatLocation)}</div>
+      <div class="row"><span class="label">🔗 Session ID:</span> ${escapeHtml(d.sessionId)}</div>
 
       <div class="box">
-        <div><a href="${d.urls.successPortal}">Registration Portal</a></div>
-        <div><a href="${d.urls.faq}">FAQ</a> • <a href="${d.urls.itinerary}">Itinerary</a> • <a href="${d.urls.packingList}">Packing</a> • <a href="${d.urls.terms}">Terms</a> • <a href="${d.urls.contact}">Contact</a></div>
+        <div><strong>Quick Links:</strong></div>
+        <div><a href="${d.urls.successPortal}">Registration Portal</a> • <a href="${d.urls.itinerary}">Itinerary</a> • <a href="${d.urls.packingList}">Packing</a> • <a href="${d.urls.faq}">FAQ</a> • <a href="${d.urls.terms}">Terms</a></div>
       </div>
+      
+      <p><em>Customer confirmation email has been sent automatically.</em></p>
     </div>
   </body>
   </html>
@@ -326,23 +332,24 @@ function generateAdminEmailHtml(d: SharedEmailData): string {
 function generateAdminEmailText(d: SharedEmailData): string {
   const amountFmt = `${d.currency} ${d.amountPaid.toFixed(2)}`;
   return [
-    `New Registration`,
-    `Name: ${d.firstName} ${d.lastName}`,
-    `Email: ${d.email}`,
-    `Amount Paid: ${amountFmt}`,
-    `Session ID: ${d.sessionId}`,
-    `Retreat: ${d.retreatName}`,
-    d.retreatLocation ? `Location: ${d.retreatLocation}` : '',
-    d.retreatStart ? `Start: ${d.retreatStart}` : '',
+    `🎉 New Registration Confirmed`,
     ``,
-    `Links:`,
-    `- Portal: ${d.urls.successPortal}`,
-    `- FAQ: ${d.urls.faq}`,
+    `💰 Amount Received: ${amountFmt}`,
+    `📧 Customer: ${d.firstName} ${d.lastName} (${d.email})`,
+    `🎯 Retreat: ${d.retreatName}`,
+    `📅 Dates: ${d.retreatStart}`,
+    `📍 Location: ${d.retreatLocation}`,
+    `🔗 Session ID: ${d.sessionId}`,
+    ``,
+    `Quick Links:`,
+    `- Registration Portal: ${d.urls.successPortal}`,
     `- Itinerary: ${d.urls.itinerary}`,
-    `- Packing: ${d.urls.packingList}`,
+    `- Packing List: ${d.urls.packingList}`,
+    `- FAQ: ${d.urls.faq}`,
     `- Terms: ${d.urls.terms}`,
-    `- Contact: ${d.urls.contact}`,
-  ].filter(Boolean).join('\n');
+    ``,
+    `Customer confirmation email sent automatically.`,
+  ].join('\n');
 }
 
 /* ========== util ========== */
