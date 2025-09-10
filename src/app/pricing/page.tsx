@@ -1,16 +1,16 @@
 'use client';
 
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
 import EquipmentList from '@/components/EquipmentList';
-import { paymentOptions, getPricingTiers, getActiveWindow, getCurrentTotal, calculateDueToday, isAfterFullPaymentDeadline, formatPaymentDate } from '@/lib/pricing';
+import { getPricingTiers, getActiveWindow, getCurrentTotal, calculateDueToday, isAfterFullPaymentDeadline, formatPaymentDate } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-const metadata: Metadata = {
-  title: 'Pricing - Costa Rica Filmmaking Retreat | The Born to Create Project',
-  description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
-};
+// const metadata: Metadata = {
+//   title: 'Pricing - Costa Rica Filmmaking Retreat | The Born to Create Project',
+//   description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
+// };
 
 export default function PricingPage() {
   return (

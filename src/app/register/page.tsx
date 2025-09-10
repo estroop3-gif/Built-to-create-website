@@ -1,15 +1,15 @@
 'use client';
 
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { pricing, paymentOptions, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE } from '@/lib/pricing';
+import { pricing, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-const metadata: Metadata = {
-  title: 'Register - Costa Rica Filmmaking Retreat | The Born to Create Project',
-  description: 'Register for the Costa Rica 9-day filmmaking retreat. Complete equipment kit included or save $300 by bringing your own camera.',
-};
+// const metadata: Metadata = {
+//   title: 'Register - Costa Rica Filmmaking Retreat | The Born to Create Project',
+//   description: 'Register for the Costa Rica 9-day filmmaking retreat. Complete equipment kit included or save $300 by bringing your own camera.',
+// };
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -61,9 +61,9 @@ export default function RegisterPage() {
     return DEPOSIT;
   };
 
-  const calculateFirstPayment = () => {
-    return 0;
-  };
+  // const calculateFirstPayment = () => {
+  //   return 0;
+  // };
 
   const calculateSalesTaxToday = () => {
     if (formData.paymentOption === 'full' || isAfterFullPaymentDeadline()) {
@@ -88,17 +88,17 @@ export default function RegisterPage() {
     return calculateRemainingBalance(calculateTotal());
   };
 
-  const getSelectedPaymentOption = () => {
-    return paymentOptions[0];
-  };
+  // const getSelectedPaymentOption = () => {
+  //   return paymentOptions[0];
+  // };
 
-  const calculateMonthlyPayment = () => {
-    return 0;
-  };
+  // const calculateMonthlyPayment = () => {
+  //   return 0;
+  // };
 
-  const getRemainingPaymentCount = () => {
-    return 0;
-  };
+  // const getRemainingPaymentCount = () => {
+  //   return 0;
+  // };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

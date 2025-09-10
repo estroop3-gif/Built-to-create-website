@@ -135,7 +135,7 @@ export class RegistrationService {
     paymentStatus: Registration['payment_status'], 
     stripePaymentIntentId?: string
   ): Promise<boolean> {
-    const updateData: any = { payment_status: paymentStatus };
+    const updateData: { payment_status: Registration['payment_status']; stripe_payment_intent_id?: string } = { payment_status: paymentStatus };
     if (stripePaymentIntentId) {
       updateData.stripe_payment_intent_id = stripePaymentIntentId;
     }

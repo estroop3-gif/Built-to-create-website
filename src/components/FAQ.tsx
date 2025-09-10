@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { faqData, faqByCategory } from '@/lib/faq';
+import { faqByCategory } from '@/lib/faq';
 
 const categoryLabels = {
   general: 'General',

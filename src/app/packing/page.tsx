@@ -1,14 +1,14 @@
 'use client';
 
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
 import { useState } from 'react';
-import { TIMEZONE, DEPOSIT, TAX_RATE, EARLY_BIRD_START, EARLY_BIRD_END, FULL_PAYMENT_DEADLINE, TRAVEL_DATE_START, TRAVEL_DATE_END, formatPaymentDate, isAfterFullPaymentDeadline, getActiveWindow } from '@/lib/pricing';
+import { TRAVEL_DATE_START, formatPaymentDate } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-const metadata: Metadata = {
-  title: 'Packing List - The Born to Create Project | What to Bring',
-  description: 'Essential packing list for your Costa Rica filmmaking retreat. Camera gear, clothing, and personal items for 9 days of creative exploration.',
-};
+// const metadata: Metadata = {
+//   title: 'Packing List - The Born to Create Project | What to Bring',
+//   description: 'Essential packing list for your Costa Rica filmmaking retreat. Camera gear, clothing, and personal items for 9 days of creative exploration.',
+// };
 
 export default function PackingPage() {
   const [showRefundModal, setShowRefundModal] = useState(false);

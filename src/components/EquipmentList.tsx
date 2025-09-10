@@ -1,4 +1,4 @@
-import { equipmentKit, equipmentByCategory, getTotalEquipmentValue } from '@/lib/equipment';
+import { equipmentByCategory, getTotalEquipmentValue } from '@/lib/equipment';
 
 const categoryLabels = {
   camera: 'Camera & Power',

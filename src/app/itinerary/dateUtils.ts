@@ -8,7 +8,7 @@ import { START_DATE } from './itinerary.config';
 export function getDateForDay(dayIndex: number): string {
   // Parse the date string and create date in UTC to avoid timezone issues
   const [year, month, day] = START_DATE.split('-').map(Number);
-  const startDate = new Date(year, month - 1, day); // month is 0-indexed
+  // const startDate = new Date(year, month - 1, day); // month is 0-indexed
   const targetDate = new Date(year, month - 1, day + (dayIndex - 1));
   
   // Format as "February 20, 2026"
