@@ -1,51 +1,71 @@
+// app/api/registration-email/route.ts
+// Complete route to send a registration email via Resend to parker@thebtcp.com
+
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import { Registration } from '@/lib/types/database';
+
+// Required env:
+// RESEND_API_KEY=your_resend_key
+// EMAIL_FROM="Born to Create Project <no-reply@thebtcp.com>"
+// Note: verify the sender/domain in Resend. If not verified yet, set EMAIL_FROM=onboarding@resend.dev
+
+export const runtime = 'nodejs';
+
+const resend = new Resend(process.env.RESEND_API_KEY || '');
+const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'; // safe fallback
 
 export async function POST(request: NextRequest) {
   try {
+    // Ensure RESEND_API_KEY is present
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Missing RESEND_API_KEY');
+      return NextResponse.json(
+        { success: false, error: 'Server misconfigured: RESEND_API_KEY is missing' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { registration, paymentAmount } = body as {
       registration: Registration;
       paymentAmount: number;
     };
 
-    // Create email content
+    // Basic validation
+    if (!registration || typeof paymentAmount !== 'number') {
+      return NextResponse.json(
+        { success: false, error: 'Invalid payload: registration and paymentAmount are required' },
+        { status: 400 }
+      );
+    }
+
     const emailSubject = `New Retreat Registration: ${registration.first_name} ${registration.last_name}`;
-    
     const emailHtml = generateRegistrationEmailHtml(registration, paymentAmount);
     const emailText = generateRegistrationEmailText(registration, paymentAmount);
 
-    // For now, we'll use a simple email service
-    // You can integrate with SendGrid, Resend, or another email service
-    const emailData = {
+    // Send to Parker
+    const { data, error } = await resend.emails.send({
+      from: EMAIL_FROM, // must be a verified sender/domain in Resend
       to: 'parker@thebtcp.com',
       subject: emailSubject,
       html: emailHtml,
       text: emailText,
-    };
-
-    // TODO: Integrate with your preferred email service
-    console.log('Email would be sent:', emailData);
-    
-    // Example with fetch to an email service (uncomment and configure)
-    /*
-    const emailResponse = await fetch('YOUR_EMAIL_SERVICE_ENDPOINT', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.EMAIL_SERVICE_API_KEY}`,
-      },
-      body: JSON.stringify(emailData),
+      // helpful to be able to reply to the registrant
+      replyTo: registration.email || undefined,
     });
 
-    if (!emailResponse.ok) {
-      throw new Error('Failed to send email');
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        { success: false, error: 'Failed to send email through Resend' },
+        { status: 502 }
+      );
     }
-    */
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Email sending error:', error);
+    return NextResponse.json({ success: true, messageId: data?.id || null });
+  } catch (err) {
+    console.error('Email sending error:', err);
     return NextResponse.json(
       { success: false, error: 'Failed to send email' },
       { status: 500 }
@@ -53,6 +73,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * HTML email body
+ */
 function generateRegistrationEmailHtml(registration: Registration, paymentAmount: number): string {
   return `
     <!DOCTYPE html>
@@ -124,15 +147,13 @@ function generateRegistrationEmailHtml(registration: Registration, paymentAmount
           <div class="section">
             <h2>How They Heard About Us</h2>
             <div class="value">${registration.how_did_you_hear}</div>
-          </div>
-          ` : ''}
+          </div>` : ''}
 
           ${registration.special_requests ? `
           <div class="section">
             <h2>Special Requests</h2>
             <div class="value">${registration.special_requests}</div>
-          </div>
-          ` : ''}
+          </div>` : ''}
 
           <div class="section">
             <h2>Consent</h2>
@@ -151,6 +172,9 @@ function generateRegistrationEmailHtml(registration: Registration, paymentAmount
   `;
 }
 
+/**
+ * Plain text email body
+ */
 function generateRegistrationEmailText(registration: Registration, paymentAmount: number): string {
   return `
 New Retreat Registration - The Born to Create Project
