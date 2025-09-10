@@ -6,6 +6,11 @@ import fs from 'fs';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const isLiveKey = (k?: string) => !!k && k.startsWith('sk_live');
+if (process.env.NODE_ENV !== 'production' && isLiveKey(process.env.STRIPE_SECRET_KEY)) {
+  throw new Error('Refusing to start: LIVE Stripe key detected in non-production environment.');
+}
+
 export async function POST(req: Request) {
   try {
     // Initialize Stripe and Resend inside the handler to avoid build-time environment variable issues
@@ -29,6 +34,7 @@ export async function POST(req: Request) {
       const name = session.customer_details?.name || '';
       const [firstName, ...lastNameArr] = name.trim().split(' ');
       const lastName = lastNameArr.join(' ');
+      const phone = session.customer_details?.phone || session.metadata?.phone || '';
       const amountPaid = (session.amount_total ?? 0) / 100; // USD
       const currency = (session.currency || 'usd').toUpperCase();
 
@@ -56,6 +62,7 @@ export async function POST(req: Request) {
           firstName: firstName || 'Friend',
           lastName,
           email: clientEmail,
+          phone,
           amountPaid,
           currency,
           planLabel,
@@ -69,6 +76,7 @@ export async function POST(req: Request) {
           firstName: firstName || 'Friend',
           lastName,
           email: clientEmail,
+          phone,
           amountPaid,
           currency,
           planLabel,
@@ -105,6 +113,7 @@ export async function POST(req: Request) {
           firstName,
           lastName,
           email: clientEmail,
+          phone,
           amountPaid,
           currency,
           planLabel,
@@ -118,6 +127,7 @@ export async function POST(req: Request) {
           firstName,
           lastName,
           email: clientEmail,
+          phone,
           amountPaid,
           currency,
           planLabel,
@@ -161,6 +171,7 @@ type SharedEmailData = {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   amountPaid: number;
   currency: string;
   planLabel: string;
@@ -328,6 +339,7 @@ function generateAdminEmailHtml(d: SharedEmailData): string {
       <div class="payment">
         <div class="row"><span class="label">💰 Amount Received:</span> ${amountFmt} (${escapeHtml(d.currency)})</div>
         <div class="row"><span class="label">📧 Customer:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)} (${escapeHtml(d.email)})</div>
+        ${d.phone ? `<div class="row"><span class="label">📞 Phone:</span> ${escapeHtml(d.phone)}</div>` : ''}
         <div class="row"><span class="label">📋 Plan:</span> ${escapeHtml(d.planLabel)}</div>
       </div>
 
@@ -356,6 +368,7 @@ function generateAdminEmailText(d: SharedEmailData): string {
     ``,
     `💰 Amount Received: ${amountFmt}`,
     `📧 Customer: ${d.firstName} ${d.lastName} (${d.email})`,
+    ...(d.phone ? [`📞 Phone: ${d.phone}`] : []),
     `📋 Plan: ${d.planLabel}`,
     `🎯 Retreat: ${d.retreatName}`,
     `📅 Dates: ${d.retreatStart}`,

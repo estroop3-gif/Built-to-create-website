@@ -3,7 +3,7 @@
 // import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { pricing, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE } from '@/lib/pricing';
+import { pricing, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, getActiveWindow } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 // const metadata: Metadata = {
@@ -118,6 +118,28 @@ export default function RegisterPage() {
     setIsLoading(true);
     
     try {
+      // Determine the correct plan label based on current pricing tier and payment option
+      const activeWindow = getActiveWindow();
+      let planLabel = '';
+      
+      if (formData.paymentOption === 'deposit') {
+        planLabel = 'Deposit';
+      } else {
+        switch (activeWindow) {
+          case 'EARLY_BIRD':
+            planLabel = 'Full - Early Bird';
+            break;
+          case 'STANDARD':
+            planLabel = 'Full - Standard';
+            break;
+          case 'LATE':
+            planLabel = 'Full - Late';
+            break;
+          default:
+            planLabel = 'Full - Standard';
+        }
+      }
+
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
@@ -125,7 +147,7 @@ export default function RegisterPage() {
         },
         body: JSON.stringify({
           email: formData.email,
-          retreat_option: formData.bringOwnCamera ? 'without_equipment' : 'with_equipment',
+          planLabel: planLabel,
           customer_data: formData // Include form data for future use
         }),
       });

@@ -4,6 +4,11 @@ import Stripe from 'stripe';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const isLiveKey = (k?: string) => !!k && k.startsWith('sk_live');
+if (process.env.NODE_ENV !== 'production' && isLiveKey(process.env.STRIPE_SECRET_KEY)) {
+  throw new Error('Refusing to start: LIVE Stripe key detected in non-production environment.');
+}
+
 export async function POST(request: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: '2025-08-27.basil',
@@ -11,7 +16,7 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const { email, planLabel, retreat, retreat_start, retreat_location } = body;
+    const { email, planLabel, retreat, retreat_start, retreat_location, first_name, last_name, phone } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -27,22 +32,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const isTestMode = process.env.NODE_ENV !== 'production';
+    const testAmount = 100; // $1.00 for testing
+
     const pricing = {
       'Full - Early Bird': {
         name: 'Full - Early Bird',
-        unit_amount: 479000, // $4,790
+        unit_amount: isTestMode ? testAmount : 479000, // $1.00 test / $4,790 prod
       },
       'Full - Standard': {
         name: 'Full - Standard',
-        unit_amount: 549000, // $5,490
+        unit_amount: isTestMode ? testAmount : 549000, // $1.00 test / $5,490 prod
       },
       'Full - Late': {
         name: 'Full - Late',
-        unit_amount: 595000, // $5,950
+        unit_amount: isTestMode ? testAmount : 595000, // $1.00 test / $5,950 prod
       },
       'Deposit': {
         name: 'Deposit',
-        unit_amount: 180000, // $1,800
+        unit_amount: isTestMode ? testAmount : 180000, // $1.00 test / $1,800 prod
       },
     };
 
@@ -78,6 +86,9 @@ export async function POST(request: NextRequest) {
       metadata: {
         plan_label: planLabel,
         form_email: email,
+        first_name: first_name || '',
+        last_name: last_name || '',
+        phone: phone || '',
         retreat: retreat || 'Born to Create Project Retreat',
         retreat_start: retreat_start || 'February 14-22, 2026',
         retreat_location: retreat_location || 'Costa Rica',
