@@ -19,6 +19,9 @@ export async function POST(req: Request) {
     
     const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
     const SITE_URL = (process.env.SITE_URL || 'http://localhost:3000').replace(/\/+$/, ''); // no trailing slash
+    
+    // For emails, always use production URLs regardless of environment
+    const EMAIL_BASE_URL = 'https://www.thebtcp.com';
 
     // --- Verify signature with RAW body ---
     const sig = req.headers.get('stripe-signature') as string;
@@ -46,12 +49,12 @@ export async function POST(req: Request) {
 
       // Build URLs
       const urls = {
-        homepage: `${SITE_URL}/`,
-        itinerary: `${SITE_URL}/itinerary`,
-        faq: `${SITE_URL}/faq`,
-        packingList: `${SITE_URL}/packing`,
-        terms: `${SITE_URL}/terms`,
-        contact: `${SITE_URL}/contact`,
+        homepage: `${EMAIL_BASE_URL}/`,
+        itinerary: `${EMAIL_BASE_URL}/itinerary`,
+        faq: `${EMAIL_BASE_URL}/faq`,
+        packingList: `${EMAIL_BASE_URL}/packing`,
+        terms: `${EMAIL_BASE_URL}/terms`,
+        contact: `${EMAIL_BASE_URL}/contact`,
         successPortal: `${SITE_URL}/register/success?session_id=${session.id}`,
       };
 
