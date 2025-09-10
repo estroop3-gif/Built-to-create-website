@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       // Extract metadata
       const planLabel = session.metadata?.plan_label || 'Unknown Plan';
       const retreatName = session.metadata?.retreat || 'Born to Create Project Retreat';
-      const retreatStart = session.metadata?.retreat_start || 'February 14-22, 2026';
+      const retreatStart = session.metadata?.retreat_start || 'February 20-28, 2026';
       const retreatLocation = session.metadata?.retreat_location || 'Costa Rica';
 
       // Build URLs

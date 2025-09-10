@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
         last_name: last_name || '',
         phone: phone || '',
         retreat: retreat || 'Born to Create Project Retreat',
-        retreat_start: retreat_start || 'February 14-22, 2026',
+        retreat_start: retreat_start || 'February 20-28, 2026',
         retreat_location: retreat_location || 'Costa Rica',
       },
     });

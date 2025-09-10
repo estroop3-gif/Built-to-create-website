@@ -74,7 +74,7 @@ export default async function RegistrationSuccessPage({ searchParams }: PageProp
 
   // Extract retreat info from metadata
   const retreatName = session.metadata?.retreat || 'Born to Create Project Retreat';
-  const retreatStart = session.metadata?.retreat_start || 'February 14-22, 2026';
+  const retreatStart = session.metadata?.retreat_start || 'February 20-28, 2026';
   const retreatLocation = session.metadata?.retreat_location || 'Costa Rica';
 
   // Payment details - safely handle payment intent
