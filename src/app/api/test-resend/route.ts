@@ -1,10 +1,10 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST() {
   try {
+    // Initialize Resend inside the handler to avoid build-time environment variable issues
+    const resend = new Resend(process.env.RESEND_API_KEY);
     console.log('Testing Resend with EMAIL_FROM:', process.env.EMAIL_FROM);
     
     // Test 1: Send to verified email (should work)
