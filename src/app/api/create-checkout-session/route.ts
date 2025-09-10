@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const { email, retreat_option = 'with_equipment' } = body;
+    const { email, planLabel, retreat, retreat_start, retreat_location } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -20,18 +20,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!planLabel) {
+      return NextResponse.json(
+        { error: 'Plan label is required' },
+        { status: 400 }
+      );
+    }
+
     const pricing = {
-      with_equipment: {
-        name: 'Costa Rica Retreat - With Equipment Included',
-        unit_amount: 399700, // $3,997
+      'Full - Early Bird': {
+        name: 'Full - Early Bird',
+        unit_amount: 479000, // $4,790
       },
-      without_equipment: {
-        name: 'Costa Rica Retreat - Bring Your Own Equipment',
-        unit_amount: 369700, // $3,697
+      'Full - Standard': {
+        name: 'Full - Standard',
+        unit_amount: 549000, // $5,490
+      },
+      'Full - Late': {
+        name: 'Full - Late',
+        unit_amount: 595000, // $5,950
+      },
+      'Deposit': {
+        name: 'Deposit',
+        unit_amount: 180000, // $1,800
       },
     };
 
-    const selectedPricing = pricing[retreat_option as keyof typeof pricing];
+    const selectedPricing = pricing[planLabel as keyof typeof pricing];
+    
+    if (!selectedPricing) {
+      return NextResponse.json(
+        { error: 'Invalid plan label' },
+        { status: 400 }
+      );
+    }
     const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
 
     const session = await stripe.checkout.sessions.create({
@@ -54,10 +76,11 @@ export async function POST(request: NextRequest) {
       cancel_url: `${siteUrl}/register/cancel`,
       customer_email: email,
       metadata: {
-        retreat_option,
-        retreat: 'Born to Create Project Retreat',
-        retreat_start: 'February 14-22, 2026',
-        retreat_location: 'Costa Rica',
+        plan_label: planLabel,
+        form_email: email,
+        retreat: retreat || 'Born to Create Project Retreat',
+        retreat_start: retreat_start || 'February 14-22, 2026',
+        retreat_location: retreat_location || 'Costa Rica',
       },
     });
 

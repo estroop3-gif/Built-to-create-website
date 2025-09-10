@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
+import fs from 'fs';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -23,8 +24,8 @@ export async function POST(req: Request) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // Extract useful info
-      const email = session.customer_details?.email || '';
+      // Extract useful info with fallback chain
+      const clientEmail = session.customer_details?.email || session.customer_email || session.metadata?.form_email || '';
       const name = session.customer_details?.name || '';
       const [firstName, ...lastNameArr] = name.trim().split(' ');
       const lastName = lastNameArr.join(' ');
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
       const currency = (session.currency || 'usd').toUpperCase();
 
       // Extract metadata
+      const planLabel = session.metadata?.plan_label || 'Unknown Plan';
       const retreatName = session.metadata?.retreat || 'Born to Create Project Retreat';
       const retreatStart = session.metadata?.retreat_start || 'February 14-22, 2026';
       const retreatLocation = session.metadata?.retreat_location || 'Costa Rica';
@@ -48,14 +50,15 @@ export async function POST(req: Request) {
       };
 
       // Send customer confirmation email
-      if (email) {
+      if (clientEmail) {
         const subjectCustomer = `You're in! ${retreatName} — Registration Confirmed`;
         const htmlCustomer = generateCustomerEmailHtml({
           firstName: firstName || 'Friend',
           lastName,
-          email,
+          email: clientEmail,
           amountPaid,
           currency,
+          planLabel,
           retreatName,
           retreatStart,
           retreatLocation,
@@ -65,9 +68,10 @@ export async function POST(req: Request) {
         const textCustomer = generateCustomerEmailText({
           firstName: firstName || 'Friend',
           lastName,
-          email,
+          email: clientEmail,
           amountPaid,
           currency,
+          planLabel,
           retreatName,
           retreatStart,
           retreatLocation,
@@ -75,9 +79,14 @@ export async function POST(req: Request) {
           sessionId: session.id,
         });
 
+        // DEBUG: Capture client email payload for QA verification
+        fs.writeFileSync('/tmp/client_email_rendered.html', htmlCustomer);
+        fs.writeFileSync('/tmp/client_email_rendered.txt', textCustomer);
+        fs.writeFileSync('/tmp/client_email_meta.txt', `Subject: ${subjectCustomer}\nTo: ${clientEmail}\nFrom: ${EMAIL_FROM}\nReplyTo: parker@thebtcp.com`);
+
         const { error } = await resend.emails.send({
           from: EMAIL_FROM,
-          to: email,
+          to: clientEmail,
           subject: subjectCustomer,
           html: htmlCustomer,
           text: textCustomer,
@@ -95,9 +104,10 @@ export async function POST(req: Request) {
         const htmlAdmin = generateAdminEmailHtml({
           firstName,
           lastName,
-          email,
+          email: clientEmail,
           amountPaid,
           currency,
+          planLabel,
           retreatName,
           retreatStart,
           retreatLocation,
@@ -107,9 +117,10 @@ export async function POST(req: Request) {
         const textAdmin = generateAdminEmailText({
           firstName,
           lastName,
-          email,
+          email: clientEmail,
           amountPaid,
           currency,
+          planLabel,
           retreatName,
           retreatStart,
           retreatLocation,
@@ -117,13 +128,18 @@ export async function POST(req: Request) {
           sessionId: session.id,
         });
 
+        // DEBUG: Capture admin email payload for QA verification
+        fs.writeFileSync('/tmp/admin_email_rendered.html', htmlAdmin);
+        fs.writeFileSync('/tmp/admin_email_rendered.txt', textAdmin);
+        fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: parker@thebtcp.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${clientEmail || 'undefined'}`);
+
         const { error } = await resend.emails.send({
           from: EMAIL_FROM,
           to: 'parker@thebtcp.com',
           subject: subjectAdmin,
           html: htmlAdmin,
           text: textAdmin,
-          replyTo: email || undefined,
+          replyTo: clientEmail || undefined,
         });
 
         if (error) {
@@ -147,6 +163,7 @@ type SharedEmailData = {
   email: string;
   amountPaid: number;
   currency: string;
+  planLabel: string;
   retreatName: string;
   retreatStart: string;
   retreatLocation: string;
@@ -209,6 +226,7 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
         <div class="card">
           <div class="row"><span class="label">Name:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</div>
           <div class="row"><span class="label">Email:</span> ${escapeHtml(d.email)}</div>
+          <div class="row"><span class="label">Plan:</span> ${escapeHtml(d.planLabel)}</div>
           <div class="row"><span class="label">Amount Paid:</span> ${amountFmt} ${escapeHtml(d.currency)}</div>
           <div class="row"><span class="label">Confirmation:</span> ${escapeHtml(d.sessionId)}</div>
         </div>
@@ -260,6 +278,7 @@ function generateCustomerEmailText(d: SharedEmailData): string {
     `Registration Details:`,
     `Name: ${d.firstName} ${d.lastName}`,
     `Email: ${d.email}`,
+    `Plan: ${d.planLabel}`,
     `Amount Paid: ${amountFmt}`,
     `Confirmation: ${d.sessionId}`,
     ``,
@@ -309,6 +328,7 @@ function generateAdminEmailHtml(d: SharedEmailData): string {
       <div class="payment">
         <div class="row"><span class="label">💰 Amount Received:</span> ${amountFmt} (${escapeHtml(d.currency)})</div>
         <div class="row"><span class="label">📧 Customer:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)} (${escapeHtml(d.email)})</div>
+        <div class="row"><span class="label">📋 Plan:</span> ${escapeHtml(d.planLabel)}</div>
       </div>
 
       <div class="row"><span class="label">🎯 Retreat:</span> ${escapeHtml(d.retreatName)}</div>
@@ -336,6 +356,7 @@ function generateAdminEmailText(d: SharedEmailData): string {
     ``,
     `💰 Amount Received: ${amountFmt}`,
     `📧 Customer: ${d.firstName} ${d.lastName} (${d.email})`,
+    `📋 Plan: ${d.planLabel}`,
     `🎯 Retreat: ${d.retreatName}`,
     `📅 Dates: ${d.retreatStart}`,
     `📍 Location: ${d.retreatLocation}`,
