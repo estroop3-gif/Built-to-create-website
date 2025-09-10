@@ -3,7 +3,7 @@ import { itinerary } from '@/lib/itinerary';
 import { getShortDateForDay } from './dateUtils';
 
 export const metadata: Metadata = {
-  title: 'Itinerary - Built to Create Project | 9-Day Christian Filmmaking Retreat',
+  title: 'Itinerary - The Born to Create Project | 9-Day Christian Filmmaking Retreat',
   description: 'Faith-centered documentary filmmaking retreat through Costa Rica. Nine days of spiritual growth and creative development.',
 };
 

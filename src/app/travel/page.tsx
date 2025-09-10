@@ -89,7 +89,7 @@ export default function TravelPage() {
                   <div className="space-y-2 text-sm text-charcoal/70">
                     <p>• Professional, air-conditioned vehicles</p>
                     <p>• English-speaking drivers</p>
-                    <p>• Meet at SJO arrivals with Built to Create Project sign</p>
+                    <p>• Meet at SJO arrivals with The Born to Create Project sign</p>
                     <p>• 45-minute drive to central San José</p>
                   </div>
                 </div>
@@ -109,14 +109,14 @@ export default function TravelPage() {
             <div className="space-y-6">
               <div className="flex items-center gap-4 p-4 bg-sand/30 rounded-lg">
                 <div className="bg-forest text-cream rounded-full w-10 h-10 flex items-center justify-center font-bold text-sm">
-                  1-3
+                  1-2
                 </div>
                 <div className="flex-grow">
                   <p className="font-semibold text-charcoal">San José</p>
-                  <p className="text-sm text-charcoal/60">Hotel Cultura Plaza • 3 nights</p>
+                  <p className="text-sm text-charcoal/60">Hotel Cultura Plaza • 2 nights</p>
                 </div>
                 <div className="text-right text-sm text-charcoal/60">
-                  Days 1-3
+                  Days 1-2
                 </div>
               </div>
 
@@ -124,19 +124,19 @@ export default function TravelPage() {
                 <svg className="w-6 h-6 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-                <p className="text-sm text-charcoal/70">Transfer: San José → Jacó (1.5 hours)</p>
+                <p className="text-sm text-charcoal/70">Transfer: San José → Jacó (Day 3, 1.5 hours)</p>
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-sand/30 rounded-lg">
                 <div className="bg-forest text-cream rounded-full w-10 h-10 flex items-center justify-center font-bold text-sm">
-                  4-6
+                  3-5
                 </div>
                 <div className="flex-grow">
                   <p className="font-semibold text-charcoal">Jacó</p>
                   <p className="text-sm text-charcoal/60">La Perlita • 3 nights</p>
                 </div>
                 <div className="text-right text-sm text-charcoal/60">
-                  Days 4-6
+                  Days 3-5
                 </div>
               </div>
 
@@ -144,19 +144,19 @@ export default function TravelPage() {
                 <svg className="w-6 h-6 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-                <p className="text-sm text-charcoal/70">Transfer: Jacó → Santiago de Puriscal (2 hours)</p>
+                <p className="text-sm text-charcoal/70">Transfer: Jacó → Santiago de Puriscal (Day 6, 2 hours)</p>
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-sand/30 rounded-lg">
                 <div className="bg-forest text-cream rounded-full w-10 h-10 flex items-center justify-center font-bold text-sm">
-                  7
+                  6-7
                 </div>
                 <div className="flex-grow">
                   <p className="font-semibold text-charcoal">Santiago de Puriscal</p>
-                  <p className="text-sm text-charcoal/60">Hotel Cabañas Ensueños • 1 night</p>
+                  <p className="text-sm text-charcoal/60">Hotel Cabañas Ensueños • 2 nights</p>
                 </div>
                 <div className="text-right text-sm text-charcoal/60">
-                  Day 7
+                  Days 6-7
                 </div>
               </div>
 
@@ -164,7 +164,7 @@ export default function TravelPage() {
                 <svg className="w-6 h-6 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-                <p className="text-sm text-charcoal/70">Transfer: Puriscal → San José (1.5 hours)</p>
+                <p className="text-sm text-charcoal/70">Transfer: Santiago de Puriscal → San José (Day 8, 1.5 hours)</p>
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-sand/30 rounded-lg">
@@ -173,7 +173,7 @@ export default function TravelPage() {
                 </div>
                 <div className="flex-grow">
                   <p className="font-semibold text-charcoal">San José</p>
-                  <p className="text-sm text-charcoal/60">Hotel Cultura Plaza • 2 nights</p>
+                  <p className="text-sm text-charcoal/60">Hotel Cultura Plaza • 1 night</p>
                 </div>
                 <div className="text-right text-sm text-charcoal/60">
                   Days 8-9
@@ -240,7 +240,7 @@ export default function TravelPage() {
           <p className="text-xl mb-8 text-cream/90">
             We're happy to help coordinate your travel plans and answer any logistics questions.
           </p>
-          <a href="mailto:parker@builttocreateproject.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+          <a href="mailto:parker@thebtcp.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
             Contact Our Team
           </a>
           <div className="mt-6 flex flex-col items-center space-y-2">

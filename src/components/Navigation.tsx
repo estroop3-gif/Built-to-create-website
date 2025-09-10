@@ -10,8 +10,12 @@ export default function Navigation() {
     <nav className="fixed w-full top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-stone/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-forest">Built to Create Project</span>
+          <Link href="/" className="flex items-center space-x-2" aria-label="THE BORN TO CREATE PROJECT">
+            <div className="font-bold text-forest flex flex-col">
+              <span className="text-xs leading-none mb-1">THE</span>
+              <span className="text-2xl leading-none">BORN TO CREATE</span>
+              <span className="text-xs leading-none mt-1">PROJECT</span>
+            </div>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">

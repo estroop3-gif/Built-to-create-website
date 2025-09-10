@@ -39,7 +39,7 @@ export default function About() {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-charcoal mb-4">Our Story</h2>
             <p className="text-charcoal/70 mb-4">
-              Built to Create Project is a Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling—narratives that reflect God's heart and reveal His character through the fundamentals of documentary filmmaking. Here, excellence becomes worship as we steward our creative gifts with intentionality and skill.
+              The Born to Create Project is a Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling—narratives that reflect God's heart and reveal His character through the fundamentals of documentary filmmaking. Here, excellence becomes worship as we steward our creative gifts with intentionality and skill.
             </p>
             <p className="text-charcoal/70">
               All are welcome to join this community where faith and filmmaking intersect. Our rhythm includes morning devotion and prayer, optional quiet hours for Scripture and reflection, testimony circles for sharing God's work in our lives, and worship and ministry nights that celebrate His faithfulness in our creative journey.
@@ -143,11 +143,6 @@ export default function About() {
             </p>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-charcoal/20">
-            <p className="text-sm text-charcoal/60 text-center">
-              Built to Create Project is a project by Built to Create.
-            </p>
-          </div>
 
         </div>
       </section>

@@ -6,7 +6,7 @@ import { TIMEZONE, DEPOSIT, TAX_RATE, EARLY_BIRD_START, EARLY_BIRD_END, FULL_PAY
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Packing List - Built to Create Project | What to Bring',
+  title: 'Packing List - The Born to Create Project | What to Bring',
   description: 'Essential packing list for your Costa Rica filmmaking retreat. Camera gear, clothing, and personal items for 9 days of creative exploration.',
 };
 
@@ -376,7 +376,7 @@ export default function PackingPage() {
           <p className="text-xl mb-8 text-cream/90">
             We're here to help you prepare for your creative journey.
           </p>
-          <a href="mailto:parker@builttocreateproject.com" className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+          <a href="mailto:parker@thebtcp.com" className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
             Contact Us
           </a>
         </div>

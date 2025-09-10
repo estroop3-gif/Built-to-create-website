@@ -9,7 +9,9 @@
       "Read(//mnt/c/Users/estro/Downloads/**)",
       "Read(//mnt/c/Users/estro/OneDrive/Pictures/**)",
       "Bash(gh:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm install:*)",
+      "Bash(stripe login:*)"
     ],
     "deny": [],
     "ask": []

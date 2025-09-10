@@ -13,12 +13,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!day) {
     return {
-      title: 'Day Not Found - Built to Create Project',
+      title: 'Day Not Found - The Born to Create Project',
     };
   }
 
   return {
-    title: `Day ${day.id}: ${day.title} - Built to Create Project`,
+    title: `Day ${day.id}: ${day.title} - The Born to Create Project`,
     description: `${day.theme} - ${day.spiritualAnchor}`,
   };
 }

@@ -42,7 +42,7 @@ export default function Footer() {
               href="/" 
               className="font-heading text-3xl font-bold text-forest-800 hover:text-forest-900 transition-colors"
             >
-              Built to Create Project
+              The Born to Create Project
             </Link>
             <p className="font-body text-sm text-ink-500 mt-2">A project by Second Watch Network</p>
             <p className="font-body text-lg text-ink-600 mt-4 max-w-2xl mx-auto leading-relaxed">
@@ -100,10 +100,10 @@ export default function Footer() {
             <div className="space-y-4">
               <p className="font-body text-ink-600">
                 <a
-                  href="mailto:parker@builttocreateproject.com"
+                  href="mailto:parker@thebtcp.com"
                   className="hover:text-forest-700 transition-colors duration-200 text-lg"
                 >
-                  parker@builttocreateproject.com
+                  parker@thebtcp.com
                 </a>
               </p>
               
@@ -147,7 +147,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="font-body text-sm text-ink-500">
-            <p>© 2024 Built to Create Project. All rights reserved.</p>
+            <p>© 2024 The Born to Create Project. All rights reserved.</p>
           </div>
         </div>
       </Container>

@@ -16,7 +16,7 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "Built to Create Project",
+  title: "The Born to Create Project",
   description: "Costa Rica 9-Day Filmmaking Retreat",
 };
 

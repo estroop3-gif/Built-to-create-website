@@ -25,9 +25,12 @@ export default function NavBar() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="font-heading text-2xl font-bold text-forest-800 hover:text-forest-900 transition-colors duration-200"
+            className="font-heading font-bold text-forest-800 hover:text-forest-900 transition-colors duration-200 flex flex-col"
+            aria-label="THE BORN TO CREATE PROJECT"
           >
-            Built to Create Project
+            <span className="text-xs leading-none -mb-0.5">THE</span>
+            <span className="text-2xl leading-none">BORN TO CREATE</span>
+            <span className="text-xs leading-none -mt-0.5 self-end">PROJECT</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}

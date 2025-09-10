@@ -8,7 +8,7 @@ import { paymentOptions, getPricingTiers, getActiveWindow, getCurrentTotal, calc
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 const metadata: Metadata = {
-  title: 'Pricing - Costa Rica Filmmaking Retreat | Built to Create Project',
+  title: 'Pricing - Costa Rica Filmmaking Retreat | The Born to Create Project',
   description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
 };
 

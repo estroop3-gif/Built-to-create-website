@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!day) {
     return {
-      title: 'Day Not Found - Built to Create',
+      title: 'Day Not Found - Born to Create',
     };
   }
   

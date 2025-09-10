@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center bg-forest-900 overflow-hidden">
+    <section className="relative min-h-[95vh] flex items-center justify-center bg-forest-900 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -23,7 +23,7 @@ export default function Hero() {
       <Container className="relative z-10" size="lg">
         <div className="text-center max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="font-heading font-bold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream-50 mb-8 leading-tight tracking-wide">
+          <h1 className="font-heading font-bold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream-50 mb-8 leading-tight tracking-wide mt-8">
             <span className="block">COSTA RICA</span>
             <span className="block">9-DAY FILMMAKING</span>
             <span className="block">RETREAT</span>
@@ -45,7 +45,7 @@ export default function Hero() {
           </p>
           
           {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Button as="link" href="/itinerary" size="lg" variant="ghost">
               View Itinerary
             </Button>
@@ -55,8 +55,8 @@ export default function Hero() {
           </div>
           
           {/* Equipment Badge */}
-          <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-cream-200/20 text-cream-100">
-            <div className="w-3 h-3 bg-forest-400 rounded-full mr-3 animate-pulse"></div>
+          <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-cream-200/20 text-cream-100 mb-20">
+            <div className="w-3 h-3 bg-forest-400 rounded-full mr-3"></div>
             <span className="font-body text-sm font-medium">
               Professional equipment kit included
             </span>
@@ -64,12 +64,6 @@ export default function Hero() {
         </div>
       </Container>
       
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-cream-200/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-cream-200/50 rounded-full mt-2 animate-pulse"></div>
-        </div>
-      </div>
     </section>
   );
 }

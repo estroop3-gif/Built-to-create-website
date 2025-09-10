@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import Container from '@/components/Container';
 
 export const metadata: Metadata = {
-  title: 'Terms & Agreement - Built to Create Project',
-  description: 'Terms and conditions for the Built to Create Project Christian filmmaking retreat in Costa Rica.',
+  title: 'Terms & Agreement - The Born to Create Project',
+  description: 'Terms and conditions for The Born to Create Project Christian filmmaking retreat in Costa Rica.',
   robots: 'noindex, nofollow'
 };
 
@@ -16,7 +16,7 @@ export default function TermsPage() {
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Terms & Agreement</h1>
           <p className="text-xl text-charcoal/70">
-            Terms and conditions for Built to Create Project retreat participation
+            Terms and conditions for The Born to Create Project retreat participation
           </p>
         </div>
       </section>
@@ -28,12 +28,12 @@ export default function TermsPage() {
               
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">1. Agreement to Terms</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                By registering for and participating in the Built to Create Project retreat ("the Retreat"), you agree to be bound by these Terms & Agreement. If you do not agree to these terms, you may not participate in the Retreat.
+                By registering for and participating in The Born to Create Project retreat ("the Retreat"), you agree to be bound by these Terms & Agreement. If you do not agree to these terms, you may not participate in the Retreat.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">2. Retreat Description and Dates</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
-                The Built to Create Project is a 9-day Christian filmmaking and storytelling retreat taking place February 20-28, 2026, in Costa Rica. The retreat includes:
+                The Born to Create Project is a 9-day Christian filmmaking and storytelling retreat taking place February 20-28, 2026, in Costa Rica. The retreat includes:
               </p>
               <ul className="list-disc list-inside text-ink-700 mb-6 ml-4 space-y-2">
                 <li>Professional filmmaking instruction and mentorship</li>
@@ -81,7 +81,7 @@ export default function TermsPage() {
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">7. Code of Conduct</h2>
               <p className="text-ink-700 mb-4 leading-relaxed">
-                The Built to Create Project maintains Christian values. Participants agree to:
+                The Born to Create Project maintains Christian values. Participants agree to:
               </p>
               <ul className="list-disc list-inside text-ink-700 mb-6 ml-4 space-y-2">
                 <li>Treat all participants, instructors, and staff with respect and kindness</li>
@@ -98,22 +98,22 @@ export default function TermsPage() {
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">9. Photography and Video Release</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                By participating, you grant Built to Create Project permission to photograph and video record your participation for promotional purposes. You waive any rights to compensation for such use and agree that all materials created become property of Built to Create Project.
+                By participating, you grant The Born to Create Project permission to photograph and video record your participation for promotional purposes. You waive any rights to compensation for such use and agree that all materials created become property of The Born to Create Project.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">10. Limitation of Liability</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Built to Create Project, its organizers, and partners are not liable for injuries, illness, loss of property, or other damages that may occur during the retreat. Participants assume all risks associated with international travel and retreat activities. Travel insurance is strongly recommended.
+                The Born to Create Project, its organizers, and partners are not liable for injuries, illness, loss of property, or other damages that may occur during the retreat. Participants assume all risks associated with international travel and retreat activities. Travel insurance is strongly recommended.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">11. Force Majeure</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                If the retreat must be cancelled or significantly modified due to circumstances beyond our control (including but not limited to natural disasters, political instability, pandemic restrictions, or acts of God), Built to Create Project will work to reschedule or provide alternative arrangements but cannot guarantee full refunds.
+                If the retreat must be cancelled or significantly modified due to circumstances beyond our control (including but not limited to natural disasters, political instability, pandemic restrictions, or acts of God), The Born to Create Project will work to reschedule or provide alternative arrangements but cannot guarantee full refunds.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">12. Intellectual Property</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Participants retain rights to their own creative works produced during the retreat. However, Built to Create Project retains rights to use participant works for promotional and educational purposes. All curriculum, teaching materials, and proprietary methods remain property of Built to Create Project.
+                Participants retain rights to their own creative works produced during the retreat. However, The Born to Create Project retains rights to use participant works for promotional and educational purposes. All curriculum, teaching materials, and proprietary methods remain property of The Born to Create Project.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">13. Dispute Resolution</h2>
@@ -123,12 +123,12 @@ export default function TermsPage() {
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">14. Changes to Terms</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Built to Create Project reserves the right to modify these terms with 30 days written notice to registered participants. Continued participation after notice constitutes acceptance of modified terms.
+                The Born to Create Project reserves the right to modify these terms with 30 days written notice to registered participants. Continued participation after notice constitutes acceptance of modified terms.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">15. Contact Information</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Questions regarding these terms should be directed to: <a href="mailto:parker@builttocreateproject.com" className="text-forest-700 hover:text-forest-800 underline">parker@builttocreateproject.com</a>
+                Questions regarding these terms should be directed to: <a href="mailto:parker@thebtcp.com" className="text-forest-700 hover:text-forest-800 underline">parker@thebtcp.com</a>
               </p>
 
               <hr className="my-8 border-sand-300" />
@@ -136,7 +136,7 @@ export default function TermsPage() {
               <p className="text-sm text-ink-600 leading-relaxed">
                 <strong>Last Updated:</strong> [Date]<br />
                 <strong>Effective Date:</strong> [Date]<br />
-                By registering for the Built to Create Project retreat, you acknowledge that you have read, understood, and agree to be bound by these Terms & Agreement.
+                By registering for The Born to Create Project retreat, you acknowledge that you have read, understood, and agree to be bound by these Terms & Agreement.
               </p>
 
             </div>
