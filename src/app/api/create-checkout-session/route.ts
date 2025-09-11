@@ -39,29 +39,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isTestMode = process.env.NODE_ENV !== 'production';
-    const testAmount = 100; // $1.00 for testing
-
-    const pricing = {
+    // Production pricing (in cents)
+    const basePricing = {
       'Full - Early Bird': {
         name: 'Full - Early Bird',
-        unit_amount: isTestMode ? testAmount : 479000, // $1.00 test / $4,790 prod
+        unit_amount: 479000, // $4,790
       },
       'Full - Standard': {
         name: 'Full - Standard',
-        unit_amount: isTestMode ? testAmount : 549000, // $1.00 test / $5,490 prod
+        unit_amount: 549000, // $5,490
       },
       'Full - Late': {
         name: 'Full - Late',
-        unit_amount: isTestMode ? testAmount : 595000, // $1.00 test / $5,950 prod
+        unit_amount: 595000, // $5,950
       },
       'Deposit': {
         name: 'Deposit',
-        unit_amount: isTestMode ? testAmount : 180000, // $1.00 test / $1,800 prod
+        unit_amount: 180000, // $1,800
       },
     };
 
-    const selectedPricing = pricing[planLabel as keyof typeof pricing];
+    const selectedPricing = basePricing[planLabel as keyof typeof basePricing];
+    
+    // Apply $300 discount for bringing own camera (for non-deposit plans only)
+    const cameraDiscount = 30000; // $300 in cents
+    let finalAmount = selectedPricing.unit_amount;
+    let discountApplied = false;
+    
+    if (bring_own_camera && planLabel !== 'Deposit') {
+      finalAmount -= cameraDiscount;
+      discountApplied = true;
+    }
     
     if (!selectedPricing) {
       return NextResponse.json(
@@ -78,10 +86,12 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: selectedPricing.name,
-              description: '9-day Christian filmmaking retreat in Costa Rica',
+              name: discountApplied ? `${selectedPricing.name} (w/ Camera Discount)` : selectedPricing.name,
+              description: discountApplied ? 
+                '9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera' :
+                '9-day Christian filmmaking retreat in Costa Rica',
             },
-            unit_amount: selectedPricing.unit_amount,
+            unit_amount: finalAmount,
           },
           quantity: 1,
         },
