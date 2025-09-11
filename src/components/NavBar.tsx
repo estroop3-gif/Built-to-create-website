@@ -91,7 +91,7 @@ export default function NavBar() {
               </div>
               
               {/* Mobile CTA Button */}
-              <div className="pt-4">
+              <div className="pt-4" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   as="link" 
                   href="/register" 

@@ -300,7 +300,7 @@ function DueTodayPanel() {
             <div className="text-2xl font-bold text-charcoal mb-2">
               ${depositDue.toLocaleString()}
             </div>
-            <p className="text-xs text-charcoal/70">Due today (includes sales tax)</p>
+            <p className="text-xs text-charcoal/70">Due today</p>
           </div>
         )}
         
@@ -309,14 +309,11 @@ function DueTodayPanel() {
           <div className="text-2xl font-bold text-charcoal mb-2">
             ${fullDue.toLocaleString()}
           </div>
-          <p className="text-xs text-charcoal/70">Due today (includes sales tax)</p>
+          <p className="text-xs text-charcoal/70">Due today</p>
         </div>
       </div>
       
       <div className="mt-6 text-center">
-        <p className="text-sm text-charcoal/70 mb-4">
-          Sales tax (7%) is applied to every charge
-        </p>
         {afterDeadline && (
           <p className="text-sm text-forest font-semibold">
             Full payment is required after the deadline

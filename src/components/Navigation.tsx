@@ -57,22 +57,22 @@ export default function Navigation() {
       {isMenuOpen && (
         <div className="md:hidden bg-cream border-t border-stone/20">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link href="/" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
-            <Link href="/itinerary" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/itinerary" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Itinerary
             </Link>
-            <Link href="/pricing" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/pricing" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Pricing
             </Link>
-            <Link href="/packing" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/packing" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Packing
             </Link>
-            <Link href="/faq" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/faq" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               FAQ
             </Link>
-            <Link href="/register" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200">
+            <Link href="/register" className="block px-3 py-2 text-charcoal hover:text-forest transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Register
             </Link>
           </div>

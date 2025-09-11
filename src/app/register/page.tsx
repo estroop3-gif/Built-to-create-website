@@ -3,7 +3,7 @@
 // import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { pricing, DEPOSIT, TAX_RATE, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, getActiveWindow } from '@/lib/pricing';
+import { pricing, DEPOSIT, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, getActiveWindow, LATE_TOTAL } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 // const metadata: Metadata = {
@@ -46,6 +46,29 @@ export default function RegisterPage() {
     });
   };
 
+  const getBaseTuition = () => {
+    return LATE_TOTAL; // Always use late price as base
+  };
+
+  const getDiscount = () => {
+    const activeWindow = getActiveWindow();
+    const baseTuition = getBaseTuition();
+    const currentPrice = getCurrentTotal();
+    return baseTuition - currentPrice;
+  };
+
+  const getDiscountLabel = () => {
+    const activeWindow = getActiveWindow();
+    switch (activeWindow) {
+      case 'EARLY_BIRD':
+        return 'Early Bird Discount';
+      case 'STANDARD':
+        return 'Standard Pricing Discount';
+      default:
+        return null;
+    }
+  };
+
   const calculateSubtotal = () => {
     let total = getCurrentTotal();
     if (formData.bringOwnCamera) {
@@ -62,24 +85,12 @@ export default function RegisterPage() {
     return DEPOSIT;
   };
 
-  // const calculateFirstPayment = () => {
-  //   return 0;
-  // };
-
-  const calculateSalesTaxToday = () => {
-    if (formData.paymentOption === 'full' || isAfterFullPaymentDeadline()) {
-      return Math.round(calculateTotal() * TAX_RATE);
-    }
-    return Math.round(calculateDeposit() * TAX_RATE);
-  };
-
   const calculateDueToday = () => {
-    const salesTax = calculateSalesTaxToday();
     if (formData.paymentOption === 'full' || isAfterFullPaymentDeadline()) {
-      // For full payment, only charge the total (deposit is already included in total)
-      return calculateTotal() + salesTax;
+      // For full payment, charge the total
+      return calculateTotal();
     }
-    return calculateDeposit() + salesTax;
+    return calculateDeposit();
   };
 
   const getRemainingBalance = () => {
@@ -387,7 +398,7 @@ export default function RegisterPage() {
                         <div className="bg-sand-50 p-4 rounded-lg border border-sand-200">
                           <h4 className="text-sm font-semibold text-charcoal mb-2">Payment Schedule</h4>
                           <div className="space-y-1 text-sm text-charcoal/70">
-                            <p>Deposit due today: ${DEPOSIT.toLocaleString()} plus applicable sales tax</p>
+                            <p>Deposit due today: ${DEPOSIT.toLocaleString()}</p>
                             <p>Remaining balance due by: {formatPaymentDate(FULL_PAYMENT_DEADLINE)}</p>
                             <div className="flex flex-col space-y-1">
                               <button
@@ -439,8 +450,15 @@ export default function RegisterPage() {
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span>Base tuition:</span>
-                    <span>${pricing.standardTuition.toLocaleString()}</span>
+                    <span>${getBaseTuition().toLocaleString()}</span>
                   </div>
+                  
+                  {getDiscount() > 0 && (
+                    <div className="flex justify-between text-sage">
+                      <span>{getDiscountLabel()}:</span>
+                      <span>-${getDiscount().toLocaleString()}</span>
+                    </div>
+                  )}
                   
                   {formData.bringOwnCamera && (
                     <div className="flex justify-between text-sage">
@@ -454,7 +472,7 @@ export default function RegisterPage() {
                       <span>Subtotal:</span>
                       <span>
                         ${calculateSubtotal().toLocaleString()}
-                        {isEarlyBirdPeriod() && <span className="text-sage text-xs ml-2">Early Bird Applied</span>}
+                        {getDiscountLabel() && <span className="text-sage text-xs ml-2">{getDiscountLabel()} Applied</span>}
                       </span>
                     </div>
                   </div>
@@ -465,11 +483,6 @@ export default function RegisterPage() {
                       <span>${calculateDeposit().toLocaleString()}</span>
                     </div>
                   )}
-                  
-                  <div className="flex justify-between">
-                    <span>Sales Tax (7%):</span>
-                    <span>${calculateSalesTaxToday().toLocaleString()}</span>
-                  </div>
                   
                   <div className="border-t border-cream/20 pt-3">
                     <div className="flex justify-between font-semibold">
@@ -487,7 +500,7 @@ export default function RegisterPage() {
 
                 <div className="mt-6 p-4 bg-cream/10 rounded-lg">
                   <p className="text-xs text-cream/90">
-                    <strong>Next Steps:</strong> After submitting this form, you'll receive payment instructions and detailed retreat information within 24 hours.
+                    <strong>Next Steps:</strong> After clicking "Continue to Payment", you'll be securely redirected to complete your payment. Upon successful payment, you'll receive detailed retreat information and itinerary via email.
                   </p>
                 </div>
               </div>
