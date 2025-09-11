@@ -130,7 +130,7 @@ export async function POST(request: Request) {
     }
 
     // Test table access
-    const { data: testData, error: testError } = await supabaseAdmin
+    const { error: testError } = await supabaseAdmin
       .from('registrations')
       .select('*')
       .limit(1)
