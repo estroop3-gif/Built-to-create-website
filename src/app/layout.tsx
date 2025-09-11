@@ -18,6 +18,14 @@ const roboto = Roboto({
 export const metadata = {
   title: "The Born to Create Project",
   description: "Costa Rica 9-Day Filmmaking Retreat",
+  icons: {
+    icon: [
+      {
+        url: '/logo.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

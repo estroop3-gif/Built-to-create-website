@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <style>
+      .logo-text { fill: #2d5016; font-family: serif; font-weight: bold; }
+      .logo-icon { fill: #2d5016; }
+      .logo-bg { fill: #f5f1e8; }
+    </style>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" class="logo-bg"/>
+  
+  <!-- Film clapboard -->
+  <g class="logo-icon" transform="translate(100, 80)">
+    <!-- Main clapboard body -->
+    <rect x="-25" y="-10" width="50" height="30" rx="3"/>
+    
+    <!-- Clapboard top -->
+    <rect x="-25" y="-18" width="50" height="8" rx="2"/>
+    
+    <!-- Film strips on clapboard -->
+    <rect x="-20" y="-15" width="8" height="3"/>
+    <rect x="-8" y="-15" width="8" height="3"/>
+    <rect x="4" y="-15" width="8" height="3"/>
+    <rect x="16" y="-15" width="4" height="3"/>
+    
+    <!-- Clapboard holes -->
+    <circle cx="-18" cy="-14" r="1.5"/>
+    <circle cx="18" cy="-14" r="1.5"/>
+  </g>
+  
+  <!-- Plant/leaf design -->
+  <g class="logo-icon" transform="translate(100, 110)">
+    <!-- Stem -->
+    <rect x="-1" y="0" width="2" height="15"/>
+    
+    <!-- Left leaf -->
+    <path d="M -1,5 Q -8,2 -12,8 Q -8,14 -1,11 Z"/>
+    
+    <!-- Right leaf -->
+    <path d="M 1,8 Q 8,5 12,11 Q 8,17 1,14 Z"/>
+    
+    <!-- Small leaves -->
+    <path d="M -1,2 Q -5,0 -7,4 Q -5,8 -1,6 Z"/>
+    <path d="M 1,12 Q 5,10 7,14 Q 5,18 1,16 Z"/>
+  </g>
+  
+  <!-- Mountain silhouette in background -->
+  <g class="logo-icon" opacity="0.3" transform="translate(100, 85)">
+    <path d="M -30,-5 L -20,-15 L -10,-8 L 0,-18 L 10,-12 L 20,-20 L 30,-8 L 30,20 L -30,20 Z"/>
+  </g>
+  
+  <!-- Text (simplified for favicon) -->
+  <g class="logo-text">
+    <!-- "BORN TO CREATE" curved text at top -->
+    <path id="topCurve" d="M 30,100 A 70,70 0 0,1 170,100" fill="none"/>
+    <text font-size="14" font-weight="bold">
+      <textPath href="#topCurve" startOffset="50%" text-anchor="middle">
+        BORN TO CREATE
+      </textPath>
+    </text>
+    
+    <!-- "PROJECT" curved text at bottom -->
+    <path id="bottomCurve" d="M 170,100 A 70,70 0 0,1 30,100" fill="none"/>
+    <text font-size="14" font-weight="bold">
+      <textPath href="#bottomCurve" startOffset="50%" text-anchor="middle">
+        PROJECT
+      </textPath>
+    </text>
+  </g>
+</svg>
