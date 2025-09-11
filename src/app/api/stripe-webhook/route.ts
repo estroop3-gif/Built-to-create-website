@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 import fs from 'fs';
+import { upsertRegistration, type RegistrationData } from '@/lib/supabaseAdmin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -109,6 +110,45 @@ export async function POST(req: Request) {
         contact: `${EMAIL_BASE_URL}/contact`,
         successPortal: `${SITE_URL}/register/success?session_id=${session.id}`,
       };
+
+      // Store registration in Supabase
+      try {
+        const registrationData: RegistrationData = {
+          stripe_session_id: session.id,
+          email: profile.email,
+          first_name: profile.firstName,
+          last_name: profile.lastName,
+          phone: profile.phone,
+          date_of_birth: profile.dateOfBirth,
+          address_line1: profile.address.line1,
+          address_line2: profile.address.line2,
+          city: profile.address.city,
+          state_province: profile.address.state,
+          postal_code: profile.address.postalCode,
+          country: profile.address.country,
+          emergency_contact_name: profile.emergency.name,
+          emergency_contact_phone: profile.emergency.phone,
+          emergency_contact_relationship: profile.emergency.relationship,
+          experience_level: profile.preferences.experienceLevel,
+          bring_own_camera: profile.preferences.bringOwnCamera,
+          camera_equipment_details: profile.preferences.cameraEquipmentDetails,
+          dietary_restrictions: profile.preferences.dietaryRestrictions,
+          medical_conditions: profile.preferences.medicalConditions,
+          how_did_you_hear: profile.preferences.howDidYouHear,
+          special_requests: profile.preferences.specialRequests,
+          plan_label: profile.plan.label,
+          amount_paid: profile.plan.amountPaid,
+          currency: profile.plan.currency,
+          retreat: profile.retreat.name,
+          retreat_start: profile.retreat.start,
+          retreat_location: profile.retreat.location
+        };
+
+        await upsertRegistration(registrationData);
+        console.log('✅ Registration stored in Supabase:', registrationData.email);
+      } catch (error) {
+        console.error('❌ Failed to store registration in Supabase:', error);
+      }
 
       // Send customer confirmation email
       if (clientEmail) {
