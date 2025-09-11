@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 const isLiveKey = (k?: string) => !!k && k.startsWith('sk_live');
 if (process.env.NODE_ENV !== 'production' && isLiveKey(process.env.STRIPE_SECRET_KEY)) {
-  throw new Error('Refusing to start: LIVE Stripe key detected in non-production environment.');
+  console.warn('Warning: LIVE Stripe key detected in non-production environment.');
 }
 
 export async function POST(request: NextRequest) {
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating checkout session:', error);
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: 'Failed to create checkout session', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

@@ -158,7 +158,29 @@ export default function RegisterPage() {
         body: JSON.stringify({
           email: formData.email,
           planLabel: planLabel,
-          customer_data: formData // Include form data for future use
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          phone: formData.phone,
+          date_of_birth: '',
+          address_line1: '',
+          address_line2: '',
+          city: '',
+          state_province: '',
+          postal_code: '',
+          country: '',
+          emergency_contact_name: formData.emergencyContact,
+          emergency_contact_phone: formData.emergencyPhone,
+          emergency_contact_relationship: '',
+          experience_level: formData.experience,
+          bring_own_camera: formData.bringOwnCamera,
+          camera_equipment_details: '',
+          dietary_restrictions: formData.dietaryNotes,
+          medical_conditions: '',
+          how_did_you_hear: '',
+          special_requests: formData.goals,
+          retreat: 'Born to Create Project Retreat',
+          retreat_start: 'February 20-28, 2026',
+          retreat_location: 'Costa Rica'
         }),
       });
 
