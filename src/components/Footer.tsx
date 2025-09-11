@@ -142,6 +142,12 @@ export default function Footer() {
               >
                 Terms & Agreement
               </Link>
+              <Link 
+                href="/privacy" 
+                className="font-body text-sm text-ink-600 hover:text-forest-700 underline transition-colors duration-200"
+              >
+                Privacy Policy
+              </Link>
             </div>
           </div>
 
