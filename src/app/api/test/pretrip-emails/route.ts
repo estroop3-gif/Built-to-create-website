@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import fs from 'fs'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -79,7 +80,6 @@ export async function POST(request: Request) {
         }
 
         // Save email content for inspection
-        const fs = require('fs')
         fs.writeFileSync(`/tmp/test_pretrip_${daysAhead}d.html`, emailData.html)
         fs.writeFileSync(`/tmp/test_pretrip_${daysAhead}d.txt`, emailData.text)
         fs.writeFileSync(`/tmp/test_pretrip_${daysAhead}d_subject.txt`, emailData.subject)

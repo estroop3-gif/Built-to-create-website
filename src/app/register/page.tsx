@@ -3,7 +3,7 @@
 // import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { pricing, DEPOSIT, getCurrentTotal, isEarlyBirdPeriod, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, getActiveWindow, LATE_TOTAL } from '@/lib/pricing';
+import { pricing, DEPOSIT, getCurrentTotal, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, LATE_TOTAL, getActiveWindow } from '@/lib/pricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 // const metadata: Metadata = {
@@ -51,7 +51,6 @@ export default function RegisterPage() {
   };
 
   const getDiscount = () => {
-    const activeWindow = getActiveWindow();
     const baseTuition = getBaseTuition();
     const currentPrice = getCurrentTotal();
     return baseTuition - currentPrice;
