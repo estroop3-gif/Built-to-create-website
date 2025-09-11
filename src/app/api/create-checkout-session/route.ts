@@ -16,7 +16,14 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const { email, planLabel, retreat, retreat_start, retreat_location, first_name, last_name, phone } = body;
+    const { 
+      email, planLabel, retreat, retreat_start, retreat_location, first_name, last_name, phone,
+      // Extended registration fields
+      date_of_birth, address_line1, address_line2, city, state_province, postal_code, country,
+      emergency_contact_name, emergency_contact_phone, emergency_contact_relationship,
+      experience_level, bring_own_camera, camera_equipment_details,
+      dietary_restrictions, medical_conditions, how_did_you_hear, special_requests
+    } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -89,6 +96,28 @@ export async function POST(request: NextRequest) {
         first_name: first_name || '',
         last_name: last_name || '',
         phone: phone || '',
+        date_of_birth: date_of_birth || '',
+        // Address fields
+        address_line1: address_line1 || '',
+        address_line2: address_line2 || '',
+        city: city || '',
+        state_province: state_province || '',
+        postal_code: postal_code || '',
+        country: country || '',
+        // Emergency contact
+        emergency_contact_name: emergency_contact_name || '',
+        emergency_contact_phone: emergency_contact_phone || '',
+        emergency_contact_relationship: emergency_contact_relationship || '',
+        // Preferences and equipment
+        experience_level: experience_level || '',
+        bring_own_camera: String(!!bring_own_camera),
+        camera_equipment_details: (camera_equipment_details || '').substring(0, 500),
+        // Medical and dietary
+        dietary_restrictions: (dietary_restrictions || '').substring(0, 500),
+        medical_conditions: (medical_conditions || '').substring(0, 500),
+        how_did_you_hear: how_did_you_hear || '',
+        special_requests: (special_requests || '').substring(0, 500),
+        // Retreat details
         retreat: retreat || 'Born to Create Project Retreat',
         retreat_start: retreat_start || 'February 20-28, 2026',
         retreat_location: retreat_location || 'Costa Rica',

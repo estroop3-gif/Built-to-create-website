@@ -32,20 +32,72 @@ export async function POST(req: Request) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // Extract useful info with fallback chain
+      // Build comprehensive profile object from session data
       const clientEmail = session.customer_details?.email || session.customer_email || session.metadata?.form_email || '';
-      const name = session.customer_details?.name || '';
-      const [firstName, ...lastNameArr] = name.trim().split(' ');
-      const lastName = lastNameArr.join(' ');
-      const phone = session.customer_details?.phone || session.metadata?.phone || '';
-      const amountPaid = (session.amount_total ?? 0) / 100; // USD
+      const fullName = session.customer_details?.name || [session.metadata?.first_name, session.metadata?.last_name].filter(Boolean).join(' ');
+      const firstName = session.metadata?.first_name || (fullName?.split(' ')[0] || '');
+      const lastName = session.metadata?.last_name || (fullName?.split(' ').slice(1).join(' ') || '');
+      const amountPaid = (session.amount_total ?? 0) / 100;
       const currency = (session.currency || 'usd').toUpperCase();
 
-      // Extract metadata
-      const planLabel = session.metadata?.plan_label || 'Unknown Plan';
-      const retreatName = session.metadata?.retreat || 'Born to Create Project Retreat';
-      const retreatStart = session.metadata?.retreat_start || 'February 20-28, 2026';
-      const retreatLocation = session.metadata?.retreat_location || 'Costa Rica';
+      const profile = {
+        firstName,
+        lastName,
+        email: clientEmail,
+        phone: session.customer_details?.phone || session.metadata?.phone || '',
+        dateOfBirth: session.metadata?.date_of_birth || '',
+        address: {
+          line1: session.metadata?.address_line1 || '',
+          line2: session.metadata?.address_line2 || '',
+          city: session.metadata?.city || '',
+          state: session.metadata?.state_province || '',
+          postalCode: session.metadata?.postal_code || '',
+          country: session.metadata?.country || ''
+        },
+        emergency: {
+          name: session.metadata?.emergency_contact_name || '',
+          phone: session.metadata?.emergency_contact_phone || '',
+          relationship: session.metadata?.emergency_contact_relationship || ''
+        },
+        preferences: {
+          experienceLevel: session.metadata?.experience_level || '',
+          bringOwnCamera: session.metadata?.bring_own_camera === 'true',
+          cameraEquipmentDetails: session.metadata?.camera_equipment_details || '',
+          dietaryRestrictions: session.metadata?.dietary_restrictions || '',
+          medicalConditions: session.metadata?.medical_conditions || '',
+          howDidYouHear: session.metadata?.how_did_you_hear || '',
+          specialRequests: session.metadata?.special_requests || ''
+        },
+        plan: {
+          label: session.metadata?.plan_label || 'Unknown Plan',
+          amountPaid,
+          currency
+        },
+        retreat: {
+          name: session.metadata?.retreat || 'Born to Create Project Retreat',
+          start: session.metadata?.retreat_start || 'February 20-28, 2026',
+          location: session.metadata?.retreat_location || 'Costa Rica'
+        },
+        stripe: {
+          sessionId: session.id,
+          createdAtISO: new Date((session.created || 0) * 1000).toISOString()
+        },
+        links: {
+          itinerary: `${EMAIL_BASE_URL}/itinerary`,
+          packingList: `${EMAIL_BASE_URL}/packing`,
+          faq: `${EMAIL_BASE_URL}/faq`,
+          terms: `${EMAIL_BASE_URL}/terms`,
+          contact: `${EMAIL_BASE_URL}/contact`,
+          successPortal: `${SITE_URL}/register/success?session_id=${session.id}`
+        }
+      };
+
+      // Legacy compatibility extracts (to avoid breaking existing customer email)
+      const planLabel = profile.plan.label;
+      const retreatName = profile.retreat.name;
+      const retreatStart = profile.retreat.start;
+      const retreatLocation = profile.retreat.location;
+      const phone = profile.phone;
 
       // Build URLs
       const urls = {
@@ -111,40 +163,14 @@ export async function POST(req: Request) {
 
       // Send internal notification to Parker
       {
-        const subjectAdmin = `New Registration: ${firstName} ${lastName} — ${retreatName}`;
-        const htmlAdmin = generateAdminEmailHtml({
-          firstName,
-          lastName,
-          email: clientEmail,
-          phone,
-          amountPaid,
-          currency,
-          planLabel,
-          retreatName,
-          retreatStart,
-          retreatLocation,
-          urls,
-          sessionId: session.id,
-        });
-        const textAdmin = generateAdminEmailText({
-          firstName,
-          lastName,
-          email: clientEmail,
-          phone,
-          amountPaid,
-          currency,
-          planLabel,
-          retreatName,
-          retreatStart,
-          retreatLocation,
-          urls,
-          sessionId: session.id,
-        });
+        const subjectAdmin = `New Registration — ${profile.firstName || 'Guest'} ${profile.lastName || ''} • ${profile.plan.label}`;
+        const htmlAdmin = generateAdminEmailHtml(profile);
+        const textAdmin = generateAdminEmailText(profile);
 
         // DEBUG: Capture admin email payload for QA verification
         fs.writeFileSync('/tmp/admin_email_rendered.html', htmlAdmin);
         fs.writeFileSync('/tmp/admin_email_rendered.txt', textAdmin);
-        fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: parker@thebtcp.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${clientEmail || 'undefined'}`);
+        fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: parker@thebtcp.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${profile.email || 'undefined'}`);
 
         const { error } = await resend.emails.send({
           from: EMAIL_FROM,
@@ -152,7 +178,7 @@ export async function POST(req: Request) {
           subject: subjectAdmin,
           html: htmlAdmin,
           text: textAdmin,
-          replyTo: clientEmail || undefined,
+          replyTo: profile.email || undefined,
         });
 
         if (error) {
@@ -191,6 +217,58 @@ type SharedEmailData = {
     successPortal: string;
   };
   sessionId: string;
+};
+
+type RegistrantProfile = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  address: {
+    line1: string;
+    line2: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  };
+  emergency: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
+  preferences: {
+    experienceLevel: string;
+    bringOwnCamera: boolean;
+    cameraEquipmentDetails: string;
+    dietaryRestrictions: string;
+    medicalConditions: string;
+    howDidYouHear: string;
+    specialRequests: string;
+  };
+  plan: {
+    label: string;
+    amountPaid: number;
+    currency: string;
+  };
+  retreat: {
+    name: string;
+    start: string;
+    location: string;
+  };
+  stripe: {
+    sessionId: string;
+    createdAtISO: string;
+  };
+  links: {
+    itinerary: string;
+    packingList: string;
+    faq: string;
+    terms: string;
+    contact: string;
+    successPortal: string;
+  };
 };
 
 /* ========== Customer Confirmation (HTML) ========== */
@@ -311,52 +389,110 @@ function generateCustomerEmailText(d: SharedEmailData): string {
 }
 
 /* ========== Internal Admin Notification (HTML) ========== */
-function generateAdminEmailHtml(d: SharedEmailData): string {
-  const amountFmt = d.amountPaid.toLocaleString(undefined, {
+function generateAdminEmailHtml(profile: RegistrantProfile): string {
+  const amountFmt = profile.plan.amountPaid.toLocaleString(undefined, {
     style: 'currency',
-    currency: d.currency || 'USD',
+    currency: profile.plan.currency || 'USD',
     minimumFractionDigits: 2,
   });
+
+  const formatAddress = () => {
+    const parts = [
+      profile.address.line1,
+      profile.address.line2,
+      profile.address.city,
+      profile.address.state,
+      profile.address.postalCode,
+      profile.address.country
+    ].filter(Boolean);
+    return parts.length > 0 ? parts.join(', ') : 'Not provided';
+  };
 
   return `
   <!doctype html>
   <html>
   <head>
     <meta charSet="utf-8" />
-    <title>New Registration — ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</title>
+    <title>New Registration — ${escapeHtml(profile.firstName)} ${escapeHtml(profile.lastName)}</title>
     <style>
-      body { font-family: Arial, sans-serif; color: #222; background: #fff; }
-      .wrap { max-width: 680px; margin: 0 auto; padding: 16px; }
-      .h { color: #2d5016; }
-      .row { margin: 6px 0; }
-      .label { font-weight: bold; color: #2d5016; }
+      body { font-family: Arial, sans-serif; color: #222; background: #fff; margin: 0; padding: 0; }
+      .wrap { max-width: 720px; margin: 0 auto; padding: 16px; }
+      .h { color: #2d5016; margin-bottom: 16px; }
+      .section { margin: 20px 0; }
+      .section-title { color: #2d5016; font-size: 16px; font-weight: bold; margin: 16px 0 8px; border-bottom: 2px solid #2d5016; padding-bottom: 4px; }
+      .payment { background: #e8f5e8; padding: 16px; border-radius: 6px; margin: 16px 0; }
+      .profile-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+      .profile-table th { background: #f7faf7; color: #2d5016; font-weight: bold; padding: 8px 12px; text-align: left; border: 1px solid #ddd; }
+      .profile-table td { padding: 8px 12px; border: 1px solid #ddd; vertical-align: top; }
+      .profile-table tr:nth-child(even) td { background: #f9f9f9; }
       a { color: #2d5016; }
       .box { background: #f7faf7; border-left: 4px solid #2d5016; padding: 12px; margin: 12px 0; }
-      .payment { background: #e8f5e8; padding: 12px; border-radius: 6px; }
+      .timestamp { color: #666; font-size: 12px; font-style: italic; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h2 class="h">🎉 New Registration Confirmed</h2>
+      <h2 class="h">🎉 New Registration: ${escapeHtml(profile.firstName)} ${escapeHtml(profile.lastName)}</h2>
       
       <div class="payment">
-        <div class="row"><span class="label">💰 Amount Received:</span> ${amountFmt} (${escapeHtml(d.currency)})</div>
-        <div class="row"><span class="label">📧 Customer:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)} (${escapeHtml(d.email)})</div>
-        ${d.phone ? `<div class="row"><span class="label">📞 Phone:</span> ${escapeHtml(d.phone)}</div>` : ''}
-        <div class="row"><span class="label">📋 Plan:</span> ${escapeHtml(d.planLabel)}</div>
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">💰 Payment Confirmed: ${amountFmt}</div>
+        <div>Plan: ${escapeHtml(profile.plan.label)} • Session: ${escapeHtml(profile.stripe.sessionId)}</div>
+        <div class="timestamp">Registered: ${new Date(profile.stripe.createdAtISO).toLocaleString()}</div>
       </div>
 
-      <div class="row"><span class="label">🎯 Retreat:</span> ${escapeHtml(d.retreatName)}</div>
-      <div class="row"><span class="label">📅 Dates:</span> ${escapeHtml(d.retreatStart)}</div>
-      <div class="row"><span class="label">📍 Location:</span> ${escapeHtml(d.retreatLocation)}</div>
-      <div class="row"><span class="label">🔗 Session ID:</span> ${escapeHtml(d.sessionId)}</div>
+      <div class="section-title">📋 Registrant Profile</div>
+      <table class="profile-table">
+        <tr><th>Name</th><td>${escapeHtml(profile.firstName)} ${escapeHtml(profile.lastName)}</td></tr>
+        <tr><th>Email</th><td>${escapeHtml(profile.email)}</td></tr>
+        ${profile.phone ? `<tr><th>Phone</th><td>${escapeHtml(profile.phone)}</td></tr>` : ''}
+        ${profile.dateOfBirth ? `<tr><th>Date of Birth</th><td>${escapeHtml(profile.dateOfBirth)}</td></tr>` : ''}
+        <tr><th>Address</th><td>${escapeHtml(formatAddress())}</td></tr>
+      </table>
+
+      ${profile.emergency.name ? `
+      <div class="section-title">🚨 Emergency Contact</div>
+      <table class="profile-table">
+        <tr><th>Name</th><td>${escapeHtml(profile.emergency.name)}</td></tr>
+        ${profile.emergency.phone ? `<tr><th>Phone</th><td>${escapeHtml(profile.emergency.phone)}</td></tr>` : ''}
+        ${profile.emergency.relationship ? `<tr><th>Relationship</th><td>${escapeHtml(profile.emergency.relationship)}</td></tr>` : ''}
+      </table>
+      ` : ''}
+
+      <div class="section-title">🎬 Filmmaking Preferences</div>
+      <table class="profile-table">
+        ${profile.preferences.experienceLevel ? `<tr><th>Experience Level</th><td>${escapeHtml(profile.preferences.experienceLevel)}</td></tr>` : ''}
+        <tr><th>Bringing Own Camera</th><td>${profile.preferences.bringOwnCamera ? 'Yes' : 'No'}</td></tr>
+        ${profile.preferences.cameraEquipmentDetails ? `<tr><th>Camera Equipment</th><td>${escapeHtml(profile.preferences.cameraEquipmentDetails)}</td></tr>` : ''}
+        ${profile.preferences.howDidYouHear ? `<tr><th>How Did You Hear</th><td>${escapeHtml(profile.preferences.howDidYouHear)}</td></tr>` : ''}
+      </table>
+
+      ${(profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests) ? `
+      <div class="section-title">🏥 Health & Special Needs</div>
+      <table class="profile-table">
+        ${profile.preferences.dietaryRestrictions ? `<tr><th>Dietary Restrictions</th><td>${escapeHtml(profile.preferences.dietaryRestrictions)}</td></tr>` : ''}
+        ${profile.preferences.medicalConditions ? `<tr><th>Medical Conditions</th><td>${escapeHtml(profile.preferences.medicalConditions)}</td></tr>` : ''}
+        ${profile.preferences.specialRequests ? `<tr><th>Special Requests</th><td>${escapeHtml(profile.preferences.specialRequests)}</td></tr>` : ''}
+      </table>
+      ` : ''}
+
+      <div class="section-title">🏝️ Retreat Information</div>
+      <table class="profile-table">
+        <tr><th>Retreat</th><td>${escapeHtml(profile.retreat.name)}</td></tr>
+        <tr><th>Dates</th><td>${escapeHtml(profile.retreat.start)}</td></tr>
+        <tr><th>Location</th><td>${escapeHtml(profile.retreat.location)}</td></tr>
+      </table>
 
       <div class="box">
-        <div><strong>Quick Links:</strong></div>
-        <div><a href="${d.urls.successPortal}">Registration Portal</a> • <a href="${d.urls.itinerary}">Itinerary</a> • <a href="${d.urls.packingList}">Packing</a> • <a href="${d.urls.faq}">FAQ</a> • <a href="${d.urls.terms}">Terms</a></div>
+        <div><strong>Quick Actions:</strong></div>
+        <div>
+          <a href="${profile.links.successPortal}">Registration Portal</a> • 
+          <a href="${profile.links.itinerary}">Itinerary</a> • 
+          <a href="${profile.links.faq}">FAQ</a> • 
+          <a href="${profile.links.contact}">Contact</a>
+        </div>
       </div>
       
-      <p><em>Customer confirmation email has been sent automatically.</em></p>
+      <p><em>Customer confirmation email has been sent automatically to ${escapeHtml(profile.email)}.</em></p>
     </div>
   </body>
   </html>
@@ -364,29 +500,89 @@ function generateAdminEmailHtml(d: SharedEmailData): string {
 }
 
 /* ========== Internal Admin Notification (Plain Text) ========== */
-function generateAdminEmailText(d: SharedEmailData): string {
-  const amountFmt = `${d.currency} ${d.amountPaid.toFixed(2)}`;
-  return [
-    `🎉 New Registration Confirmed`,
+function generateAdminEmailText(profile: RegistrantProfile): string {
+  const amountFmt = `${profile.plan.currency} ${profile.plan.amountPaid.toFixed(2)}`;
+  
+  const formatAddress = () => {
+    const parts = [
+      profile.address.line1,
+      profile.address.line2,
+      profile.address.city,
+      profile.address.state,
+      profile.address.postalCode,
+      profile.address.country
+    ].filter(Boolean);
+    return parts.length > 0 ? parts.join(', ') : 'Not provided';
+  };
+
+  const lines = [
+    `🎉 NEW REGISTRATION: ${profile.firstName} ${profile.lastName}`,
     ``,
-    `💰 Amount Received: ${amountFmt}`,
-    `📧 Customer: ${d.firstName} ${d.lastName} (${d.email})`,
-    ...(d.phone ? [`📞 Phone: ${d.phone}`] : []),
-    `📋 Plan: ${d.planLabel}`,
-    `🎯 Retreat: ${d.retreatName}`,
-    `📅 Dates: ${d.retreatStart}`,
-    `📍 Location: ${d.retreatLocation}`,
-    `🔗 Session ID: ${d.sessionId}`,
+    `💰 PAYMENT CONFIRMED: ${amountFmt}`,
+    `📋 Plan: ${profile.plan.label}`,
+    `🔗 Session: ${profile.stripe.sessionId}`,
+    `📅 Registered: ${new Date(profile.stripe.createdAtISO).toLocaleString()}`,
     ``,
-    `Quick Links:`,
-    `- Registration Portal: ${d.urls.successPortal}`,
-    `- Itinerary: ${d.urls.itinerary}`,
-    `- Packing List: ${d.urls.packingList}`,
-    `- FAQ: ${d.urls.faq}`,
-    `- Terms: ${d.urls.terms}`,
+    `👤 REGISTRANT PROFILE`,
+    `━━━━━━━━━━━━━━━━━━━━━`,
+    `Name: ${profile.firstName} ${profile.lastName}`,
+    `Email: ${profile.email}`,
+    ...(profile.phone ? [`Phone: ${profile.phone}`] : []),
+    ...(profile.dateOfBirth ? [`Date of Birth: ${profile.dateOfBirth}`] : []),
+    `Address: ${formatAddress()}`,
+    ``
+  ];
+
+  if (profile.emergency.name) {
+    lines.push(
+      `🚨 EMERGENCY CONTACT`,
+      `━━━━━━━━━━━━━━━━━━━━━`,
+      `Name: ${profile.emergency.name}`,
+      ...(profile.emergency.phone ? [`Phone: ${profile.emergency.phone}`] : []),
+      ...(profile.emergency.relationship ? [`Relationship: ${profile.emergency.relationship}`] : []),
+      ``
+    );
+  }
+
+  lines.push(
+    `🎬 FILMMAKING PREFERENCES`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    ...(profile.preferences.experienceLevel ? [`Experience Level: ${profile.preferences.experienceLevel}`] : []),
+    `Bringing Own Camera: ${profile.preferences.bringOwnCamera ? 'Yes' : 'No'}`,
+    ...(profile.preferences.cameraEquipmentDetails ? [`Camera Equipment: ${profile.preferences.cameraEquipmentDetails}`] : []),
+    ...(profile.preferences.howDidYouHear ? [`How Did You Hear: ${profile.preferences.howDidYouHear}`] : []),
+    ``
+  );
+
+  if (profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests) {
+    lines.push(
+      `🏥 HEALTH & SPECIAL NEEDS`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      ...(profile.preferences.dietaryRestrictions ? [`Dietary Restrictions: ${profile.preferences.dietaryRestrictions}`] : []),
+      ...(profile.preferences.medicalConditions ? [`Medical Conditions: ${profile.preferences.medicalConditions}`] : []),
+      ...(profile.preferences.specialRequests ? [`Special Requests: ${profile.preferences.specialRequests}`] : []),
+      ``
+    );
+  }
+
+  lines.push(
+    `🏝️ RETREAT INFORMATION`,
+    `━━━━━━━━━━━━━━━━━━━━━━`,
+    `Retreat: ${profile.retreat.name}`,
+    `Dates: ${profile.retreat.start}`,
+    `Location: ${profile.retreat.location}`,
     ``,
-    `Customer confirmation email sent automatically.`,
-  ].join('\n');
+    `🔗 QUICK LINKS`,
+    `━━━━━━━━━━━━━━`,
+    `Registration Portal: ${profile.links.successPortal}`,
+    `Itinerary: ${profile.links.itinerary}`,
+    `FAQ: ${profile.links.faq}`,
+    `Contact: ${profile.links.contact}`,
+    ``,
+    `📧 Customer confirmation email sent automatically to ${profile.email}.`
+  );
+
+  return lines.join('\n');
 }
 
 /* ========== util ========== */
