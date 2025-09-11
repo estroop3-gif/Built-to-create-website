@@ -4,6 +4,8 @@ import Stripe from 'stripe';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// Force production deployment with environment variables
+
 const isLiveKey = (k?: string) => !!k && k.startsWith('sk_live');
 if (process.env.NODE_ENV !== 'production' && isLiveKey(process.env.STRIPE_SECRET_KEY)) {
   console.warn('Warning: LIVE Stripe key detected in non-production environment.');

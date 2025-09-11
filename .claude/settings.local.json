@@ -11,7 +11,12 @@
       "Bash(gh:*)",
       "Bash(git add:*)",
       "Bash(npm install:*)",
-      "Bash(stripe login:*)"
+      "Bash(stripe login:*)",
+      "Bash(ss:*)",
+      "Read(//tmp/**)",
+      "Bash(sha256sum:*)",
+      "Bash(echo:*)",
+      "Bash(env)"
     ],
     "deny": [],
     "ask": []
