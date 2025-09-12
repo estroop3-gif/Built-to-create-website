@@ -18,40 +18,23 @@ const navItems = [
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
+  const handleMenuToggle = () => {
+    console.log('Menu toggle clicked, current state:', isMenuOpen);
+    setIsMenuOpen(!isMenuOpen);
+    console.log('Menu state will be:', !isMenuOpen);
+  };
+  
   useEffect(() => {
+    console.log('useEffect triggered, isMenuOpen:', isMenuOpen);
     if (isMenuOpen) {
-      document.body.setAttribute('data-lock-scroll', 'true');
-      // Simple focus trap
-      const focusableElements = document.querySelectorAll(
-        '#mobile-menu button, #mobile-menu a'
-      );
-      const firstElement = focusableElements[0] as HTMLElement;
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-      
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          setIsMenuOpen(false);
-        }
-        if (e.key === 'Tab') {
-          if (e.shiftKey && document.activeElement === firstElement) {
-            e.preventDefault();
-            lastElement?.focus();
-          } else if (!e.shiftKey && document.activeElement === lastElement) {
-            e.preventDefault();
-            firstElement?.focus();
-          }
-        }
-      };
-      
-      document.addEventListener('keydown', handleKeyDown);
-      firstElement?.focus();
-      
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-      };
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.removeAttribute('data-lock-scroll');
+      document.body.style.overflow = 'unset';
     }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isMenuOpen]);
 
   return (
@@ -97,7 +80,7 @@ export default function NavBar() {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={handleMenuToggle}
             className="lg:hidden p-2 rounded-lg text-ink-700 hover:text-forest-700 hover:bg-sage-50 focus:outline-none focus:ring-2 focus:ring-forest-500 transition-all duration-200"
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
@@ -114,81 +97,59 @@ export default function NavBar() {
         </div>
       </Container>
 
-      {/* Mobile Navigation Overlay */}
-      {isMenuOpen && (
-        <div 
-          id="mobile-menu"
-          className="fixed inset-0 z-[9999] flex flex-col overflow-y-auto bg-white lg:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mobile-menu-heading"
-        >
-          <div className="flex items-center justify-between p-4">
-            <h2 id="mobile-menu-heading" className="sr-only">Navigation Menu</h2>
-            <Link 
-              href="/" 
-              className="font-heading font-bold text-forest-800 hover:text-forest-900 transition-colors duration-200 flex flex-col"
-              aria-label="THE BORN TO CREATE PROJECT"
+      {/* Mobile Navigation Overlay - Debug version */}
+      <div 
+        id="mobile-menu"
+        className={`fixed inset-0 z-[9999] bg-white transition-transform duration-300 lg:hidden ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{ display: isMenuOpen ? 'block' : 'none' }}
+      >
+        <div className="flex items-center justify-between p-4 border-b">
+          <span className="font-heading font-bold text-forest-800">MENU</span>
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="p-2 rounded-lg text-ink-700"
+            aria-label="Close menu"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div className="p-4">
+          {/* Navigation Links */}
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="block py-3 px-2 text-lg font-medium text-ink-700 hover:text-forest-600 border-b border-sage-200"
               onClick={() => setIsMenuOpen(false)}
             >
-              <span className="text-xs leading-none -mb-0.5">THE</span>
-              <span className="text-2xl leading-none">BORN TO CREATE</span>
-              <span className="text-xs leading-none -mt-0.5 self-end">PROJECT</span>
+              {item.label}
             </Link>
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="p-2 rounded-lg text-ink-700 hover:text-forest-700 hover:bg-sage-50 focus:outline-none focus:ring-2 focus:ring-forest-500 transition-all duration-200"
-              aria-label="Close menu"
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+          ))}
           
-          <div className="flex-1 px-4 pb-4">
-            {/* Prominent Join Email List CTA */}
-            <div className="mb-8">
-              <Link href="/subscribe" onClick={() => setIsMenuOpen(false)}>
-                <Button 
-                  size="lg" 
-                  variant="secondary"
-                  className="w-full justify-center"
-                >
-                  Join the Email List
-                </Button>
-              </Link>
-            </div>
-            
-            {/* Mobile Navigation Links */}
-            <div className="space-y-1 mb-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block font-body font-medium text-ink-700 hover:text-forest-600 hover:bg-sage-50 transition-all duration-200 py-4 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            
-            {/* Mobile Register Button */}
-            <div>
-              <Link href="/register" onClick={() => setIsMenuOpen(false)}>
-                <Button 
-                  size="lg" 
-                  variant="primary" 
-                  className="w-full justify-center"
-                >
-                  Register Now
-                </Button>
-              </Link>
-            </div>
+          {/* CTAs */}
+          <div className="mt-6 space-y-3">
+            <Link 
+              href="/subscribe" 
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full py-3 px-4 text-center bg-sage-100 text-forest-700 rounded-lg font-medium"
+            >
+              Join Email List
+            </Link>
+            <Link 
+              href="/register" 
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full py-3 px-4 text-center bg-forest-700 text-white rounded-lg font-medium"
+            >
+              Register Now
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
