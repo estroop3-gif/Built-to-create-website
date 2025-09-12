@@ -1,15 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Metadata } from 'next';
-
-// This will be handled by middleware, but we add the meta tag as well
-export const metadata: Metadata = {
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
 
 interface ChecklistItem {
   id: string;
