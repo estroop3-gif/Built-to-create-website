@@ -149,16 +149,15 @@ export default function NavBar() {
           <div className="flex-1 px-4 pb-4">
             {/* Prominent Join Email List CTA */}
             <div className="mb-8">
-              <Button 
-                as="link" 
-                href="/subscribe" 
-                size="lg" 
-                variant="secondary"
-                className="w-full justify-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Join the Email List
-              </Button>
+              <Link href="/subscribe" onClick={() => setIsMenuOpen(false)}>
+                <Button 
+                  size="lg" 
+                  variant="secondary"
+                  className="w-full justify-center"
+                >
+                  Join the Email List
+                </Button>
+              </Link>
             </div>
             
             {/* Mobile Navigation Links */}
@@ -177,16 +176,15 @@ export default function NavBar() {
             
             {/* Mobile Register Button */}
             <div>
-              <Button 
-                as="link" 
-                href="/register" 
-                size="lg" 
-                variant="primary" 
-                className="w-full justify-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Register Now
-              </Button>
+              <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                <Button 
+                  size="lg" 
+                  variant="primary" 
+                  className="w-full justify-center"
+                >
+                  Register Now
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
