@@ -312,9 +312,9 @@ class MarketingEmailService {
           console.log(`❌ Failed "${result.templateKey}" to ${subscriber.email}: ${result.error}`);
         }
         
-        // Small delay to avoid rate limiting
+        // Rate limiting delay - adjusted for Resend's 2 req/sec limit
         if (!dryRun) {
-          await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise(resolve => setTimeout(resolve, 600));
         }
       }
       

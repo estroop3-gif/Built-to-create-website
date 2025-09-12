@@ -3,6 +3,21 @@
     {
       "path": "/api/cron/pretrip-emails",
       "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/cron/marketing-emails",
+      "schedule": "0 9 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "src/app/api/cron/marketing-emails/route.ts": {
+      "maxDuration": 300
+    },
+    "src/app/api/admin/marketing/test-all-emails/route.ts": {
+      "maxDuration": 180
+    },
+    "src/app/api/admin/marketing/send-test-sequence/route.ts": {
+      "maxDuration": 180
+    }
+  }
 }

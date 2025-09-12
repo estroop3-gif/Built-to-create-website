@@ -5,6 +5,15 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
+    // Verify cron authentication in production
+    const authHeader = request.headers.get('authorization');
+    const cronSecret = process.env.CRON_SECRET;
+    
+    if (process.env.NODE_ENV === 'production' && cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+      console.log('❌ Unauthorized cron request');
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    
     // Parse query parameters
     const url = new URL(request.url);
     const dryRun = url.searchParams.get('dryRun') === 'true';
