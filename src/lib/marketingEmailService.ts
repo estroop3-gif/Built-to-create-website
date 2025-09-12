@@ -389,5 +389,20 @@ class MarketingEmailService {
   }
 }
 
-export const marketingEmailService = new MarketingEmailService();
+// Lazy initialization to avoid build-time environment variable access
+let marketingEmailServiceInstance: MarketingEmailService | null = null;
+
+export function getMarketingEmailService(): MarketingEmailService {
+  if (!marketingEmailServiceInstance) {
+    marketingEmailServiceInstance = new MarketingEmailService();
+  }
+  return marketingEmailServiceInstance;
+}
+
+export const marketingEmailService = {
+  sendToSubscribers: () => getMarketingEmailService().sendToSubscribers(),
+  sendTestEmail: (email: string, templateKey: string) => getMarketingEmailService().sendTestEmail(email, templateKey),
+  getEmailStats: () => getMarketingEmailService().getEmailStats()
+};
+
 export default MarketingEmailService;
