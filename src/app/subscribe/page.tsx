@@ -255,7 +255,7 @@ export default function SubscribePage() {
               First email arrives with the phone-exposure mini workshop.
             </p>
             <p className="text-xs text-ink-400">
-              Join 1,000+ filmmakers who trust Born to Create Project for their creative education
+              Born to Create Project - where creativity meets calling
             </p>
           </div>
         </div>

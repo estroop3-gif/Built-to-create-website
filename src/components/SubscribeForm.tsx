@@ -255,7 +255,7 @@ export default function SubscribeForm({
           
           {variant !== 'modal' && (
             <p className="text-xs text-ink-500 text-center">
-              Free download • No spam • Unsubscribe anytime
+              Free email series • No spam • Unsubscribe anytime
             </p>
           )}
         </div>
