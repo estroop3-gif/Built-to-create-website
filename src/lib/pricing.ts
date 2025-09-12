@@ -107,8 +107,7 @@ export const calculateRemainingBalance = (grandTotal: number) => {
 export const calculateDueToday = (paymentOption: 'deposit' | 'full', grandTotal: number) => {
   const afterDeadline = isAfterFullPaymentDeadline();
   const baseDueToday = (paymentOption === 'deposit' && !afterDeadline) ? DEPOSIT : grandTotal;
-  const salesTaxToday = Math.round(baseDueToday * TAX_RATE);
-  return baseDueToday + salesTaxToday;
+  return baseDueToday;
 };
 
 export const getPricingTiers = () => {
