@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       return new NextResponse('Not Found', { status: 404 });
     }
 
-    const { valid, payload } = verifyToken(token);
+    const { valid, payload } = await verifyToken(token);
     if (!valid) {
       return new NextResponse('Not Found', { status: 404 });
     }
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
 
     const stream = await renderToStream(pdfComponent);
 
-    return new NextResponse(stream as any, {
+    return new NextResponse(stream as unknown as ReadableStream, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="filmmaker-gear-checklist${selectedItems.length > 0 ? '-personalized' : ''}.pdf"`,

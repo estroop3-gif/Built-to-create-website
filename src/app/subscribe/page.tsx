@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import SubscribeForm from '@/components/SubscribeForm';
 
 export default function SubscribePage() {
@@ -10,8 +11,8 @@ export default function SubscribePage() {
     setIsSubscribed(true);
     
     // Track analytics
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'subscribe_success', {
+    if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'subscribe_success', {
         event_category: 'engagement',
         event_label: 'dedicated_page'
       });
@@ -72,12 +73,12 @@ export default function SubscribePage() {
                 >
                   Reserve Your Spot in Costa Rica
                 </a>
-                <a 
+                <Link 
                   href="/" 
                   className="inline-flex items-center justify-center px-8 py-4 border-2 border-ink-200 text-ink-700 font-semibold rounded-lg hover:border-ink-300 hover:bg-ink-50 transition-colors"
                 >
                   Back to Home
-                </a>
+                </Link>
               </div>
             </div>
           </div>

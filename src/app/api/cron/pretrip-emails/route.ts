@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { emailService } from '@/lib/services/email';
 
 export const runtime = 'edge';
@@ -157,16 +157,16 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Cron job error:', error);
     return NextResponse.json(
-      { error: 'Cron job failed', details: error.message },
+      { error: 'Cron job failed', details: (error as Error).message },
       { status: 500 }
     );
   }
 }
 
-async function checkAndTriggerScarcityEmails(supabase: any) {
+async function checkAndTriggerScarcityEmails(_supabase: SupabaseClient) {
   // This is a placeholder for scarcity logic
-  const CAPACITY_THRESHOLD = 0.8; // Trigger at 80% capacity
-  const MAX_REGISTRATIONS = 20; // Adjust based on actual capacity
+  // const CAPACITY_THRESHOLD = 0.8; // Trigger at 80% capacity
+  // const MAX_REGISTRATIONS = 20; // Adjust based on actual capacity
   
   try {
     // Example implementation - uncomment and modify based on your registrations table

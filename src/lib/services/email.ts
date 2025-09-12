@@ -37,7 +37,7 @@ class EmailService {
       const registerUrl = this.getRegisterUrl(0);
       const unsubscribeUrl = this.getUnsubscribeUrl(email);
       
-      const emailHtml = render(Email1Welcome({
+      const emailHtml = await render(Email1Welcome({
         firstName: firstName || undefined,
         checklistUrl,
         registerUrl,
@@ -58,8 +58,8 @@ class EmailService {
       return { success: true, messageId: response.data?.id };
     } catch (error) {
       console.error('Welcome email send error:', error);
-      await this.logEmailEvent(email, 'send_failed', 0, 'Welcome to Born to Create Project', null, { error: error.message });
-      return { success: false, error: error.message };
+      await this.logEmailEvent(email, 'send_failed', 0, 'Welcome to Born to Create Project', undefined, { error: (error as Error).message });
+      return { success: false, error: (error as Error).message };
     }
   }
 
@@ -77,7 +77,7 @@ class EmailService {
       
       switch (sequenceStage) {
         case 1:
-          emailHtml = render(Email2Story({
+          emailHtml = await render(Email2Story({
             firstName: firstName || undefined,
             registerUrl,
             unsubscribeUrl
@@ -86,7 +86,7 @@ class EmailService {
           break;
           
         case 2:
-          emailHtml = render(Email3ManualMode({
+          emailHtml = await render(Email3ManualMode({
             firstName: firstName || undefined,
             registerUrl,
             unsubscribeUrl
@@ -114,8 +114,8 @@ class EmailService {
       return { success: true, messageId: response.data?.id };
     } catch (error) {
       console.error(`Sequence email send error (stage ${sequenceStage}):`, error);
-      await this.logEmailEvent(email, 'send_failed', sequenceStage, `Stage ${sequenceStage}`, null, { error: error.message });
-      return { success: false, error: error.message };
+      await this.logEmailEvent(email, 'send_failed', sequenceStage, `Stage ${sequenceStage}`, undefined, { error: (error as Error).message });
+      return { success: false, error: (error as Error).message };
     }
   }
 
@@ -133,7 +133,7 @@ class EmailService {
     sequenceStage?: number,
     templateId?: string,
     messageId?: string,
-    metadata?: any
+    metadata?: Record<string, unknown>
   ) {
     try {
       // Get lead_id from email
@@ -161,14 +161,14 @@ class EmailService {
     }
   }
 
-  async handleWebhookEvent(event: any) {
+  async handleWebhookEvent(event: Record<string, unknown>) {
     const eventType = event.type;
-    const emailData = event.data;
-    const email = emailData?.to?.[0] || emailData?.email;
-    const messageId = emailData?.email_id || event.id;
+    const emailData = event.data as Record<string, unknown>;
+    const email = (emailData?.to as string[])?.[0] || (emailData?.email as string);
+    const messageId = (emailData?.email_id as string) || (event.id as string);
 
     // Log the event
-    await this.logEmailEvent(email, eventType, undefined, undefined, messageId);
+    await this.logEmailEvent(email, eventType as string, undefined, undefined, messageId);
 
     // Handle specific Resend events
     switch (eventType) {

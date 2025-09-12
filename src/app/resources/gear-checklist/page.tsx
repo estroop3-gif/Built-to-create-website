@@ -94,8 +94,8 @@ export default function GearChecklistPage() {
 
   useEffect(() => {
     // Track page view
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'checklist_view', {
+    if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'checklist_view', {
         event_category: 'engagement',
         event_label: 'gear_checklist_page'
       });
@@ -142,8 +142,8 @@ export default function GearChecklistPage() {
       URL.revokeObjectURL(url);
 
       // Track download
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'checklist_download', {
+      if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+        (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'checklist_download', {
           event_category: 'engagement',
           event_label: type,
           value: Array.from(checkedItems).length

@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     // Check if email already exists
     const { data: existingLead } = await supabase
       .from('leads')
-      .select('id, email, registered, consent_marketing')
+      .select('id, email, registered, consent_marketing, first_name, utm_source, utm_medium, utm_campaign, utm_content, referrer, source, sequence_stage')
       .eq('email', email.toLowerCase())
       .single();
 

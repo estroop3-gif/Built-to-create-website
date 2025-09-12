@@ -113,8 +113,8 @@ export default function SubscribeForm({
         setFirstName('');
         
         // Analytics event
-        if (typeof window !== 'undefined' && window.gtag) {
-          window.gtag('event', 'email_signup', {
+        if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+          (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'email_signup', {
             event_category: 'engagement',
             event_label: variant,
             value: 1
@@ -122,8 +122,8 @@ export default function SubscribeForm({
         }
         
         // Track modal opens for analytics
-        if (variant === 'modal' && typeof window !== 'undefined' && window.gtag) {
-          window.gtag('event', 'modal_signup', {
+        if (variant === 'modal' && typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+          (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'modal_signup', {
             event_category: 'engagement',
             event_label: 'exit_intent'
           });

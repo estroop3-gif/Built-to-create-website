@@ -23,8 +23,8 @@ export default function WelcomeModal() {
       localStorage.setItem('btcp_welcome_shown', 'true');
       
       // Track modal view for analytics
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'modal_view', {
+      if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+        (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'modal_view', {
           event_category: 'engagement',
           event_label: 'welcome_modal'
         });
