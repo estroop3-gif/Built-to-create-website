@@ -145,3 +145,8 @@ html {
 
 /* Additional utilities */
 /* Texture utilities can be used directly in HTML with class names */
+
+/* Body scroll lock for mobile menu overlay */
+body[data-lock-scroll="true"] {
+  overflow: hidden;
+}

@@ -113,83 +113,94 @@ export default function SubscribePage() {
               onSuccess={handleSuccess}
               showFirstName={true}
             />
+            <p className="text-xs text-ink-500 text-center mt-4">
+              We never sell your data. You can unsubscribe any time.
+            </p>
           </div>
 
-          {/* Value propositions */}
+          {/* Lesson preview section */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6 text-center">
-              What You'll Learn
+            <h2 className="text-2xl font-heading font-bold text-ink-900 mb-4 text-center">
+              Learn filmmaking and create from presence
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+            <p className="text-lg text-ink-600 text-center mb-8">
+              Get ten practical lesson emails that make you a stronger storyteller and invite you into our Costa Rica retreat
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Manual camera made simple</p>
+                    <p className="text-sm text-ink-600">Three exposure decisions that change everything</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Master Manual Mode</h3>
-                  <p className="text-ink-600">Learn camera settings faster than a semester-long course</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Anatomy of a lens and how to operate it</p>
+                    <p className="text-sm text-ink-600">Focal length focus aperture stabilization drills</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Lighting that serves the story</p>
+                    <p className="text-sm text-ink-600">Direction size distance contrast</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Smart Lens Choices</h3>
-                  <p className="text-ink-600">Pick the perfect lens for travel storytelling every time</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Sound basics</p>
+                    <p className="text-sm text-ink-600">Clean dialogue gain staging wind kit</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Lighting Simplified</h3>
-                  <p className="text-ink-600">Light anything beautifully with a simple, portable kit</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Story Structure</h3>
-                  <p className="text-ink-600">Craft compelling narratives that connect with audiences</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Editing basics</p>
+                    <p className="text-sm text-ink-600">From radio cut to rhythm</p>
+                  </div>
                 </div>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+              
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Color basics</p>
+                    <p className="text-sm text-ink-600">Natural skin then mood</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Travel Filmmaking</h3>
-                  <p className="text-ink-600">Capture authentic moments in stunning locations</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Story building basics</p>
+                    <p className="text-sm text-ink-600">Who wants what what stands in the way what changes</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-forest-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Interviews that unlock truth</p>
+                    <p className="text-sm text-ink-600">Question ladders silence second answers</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-ink-800 mb-2">Post-Production</h3>
-                  <p className="text-ink-600">Edit with rhythm, emotion, and professional polish</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Faith and creativity</p>
+                    <p className="text-sm text-ink-600">Presence over pressure daily practice</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-forest-600 mt-1">•</span>
+                  <div>
+                    <p className="font-semibold text-ink-800">Final action plan</p>
+                    <p className="text-sm text-ink-600">One story to finish one date to commit</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { emailService } from '@/lib/services/email';
 import { sendInternalNotification } from '@/lib/emailClient';
-import InternalNewSignup, { InternalNewSignupText } from '../../../../emails/InternalNewSignup';
+import InternalNewSignup, { InternalNewSignupText } from '@/emails/InternalNewSignup';
 
 export const runtime = 'nodejs';
 

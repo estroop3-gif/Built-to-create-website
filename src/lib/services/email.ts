@@ -2,9 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { render } from '@react-email/render';
 import { resend, emailConfig } from '@/lib/emailClient';
 import { checklistUrlForLead } from '@/lib/linkToken';
-import Email1Welcome from '../../../emails/Email1Welcome';
-import Email2Story from '../../../emails/Email2Story';
-import Email3ManualMode from '../../../emails/Email3ManualMode';
+import Email1Welcome from '@/emails/Email1Welcome';
+import Email2Story from '@/emails/Email2Story';
+import Email3ManualMode from '@/emails/Email3ManualMode';
 
 // Email service using Resend with React email templates
 class EmailService {
