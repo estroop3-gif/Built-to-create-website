@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from './src/lib/linkToken';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   // Only apply to the gear checklist page
   if (request.nextUrl.pathname === '/resources/gear-checklist') {
     const token = request.nextUrl.searchParams.get('t');
@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
       return new NextResponse(null, { status: 404 });
     }
     
-    const { valid } = verifyToken(token);
+    const { valid } = await verifyToken(token);
     
     if (!valid) {
       return new NextResponse(null, { status: 404 });

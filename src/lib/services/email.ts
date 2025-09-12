@@ -2,9 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { render } from '@react-email/render';
 import { resend, emailConfig } from '@/lib/emailClient';
 import { checklistUrlForLead } from '@/lib/linkToken';
-import Email1Welcome from '../../emails/Email1Welcome';
-import Email2Story from '../../emails/Email2Story';
-import Email3ManualMode from '../../emails/Email3ManualMode';
+import Email1Welcome from '../../../emails/Email1Welcome';
+import Email2Story from '../../../emails/Email2Story';
+import Email3ManualMode from '../../../emails/Email3ManualMode';
 
 // Email service using Resend with React email templates
 class EmailService {
@@ -33,7 +33,7 @@ class EmailService {
   async sendWelcomeEmail(email: string, firstName: string | null) {
     try {
       // Generate signed checklist URL for this specific lead
-      const checklistUrl = checklistUrlForLead(`lead:${email}`);
+      const checklistUrl = await checklistUrlForLead(`lead:${email}`);
       const registerUrl = this.getRegisterUrl(0);
       const unsubscribeUrl = this.getUnsubscribeUrl(email);
       
