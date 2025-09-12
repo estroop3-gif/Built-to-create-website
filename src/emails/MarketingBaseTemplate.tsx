@@ -22,7 +22,7 @@ export default function MarketingBaseTemplate({ children, previewText }: Marketi
       <Head>
         <Font
           fontFamily="system-ui"
-          fallbackFontFamily="Arial, sans-serif"
+          fallbackFontFamily="Arial"
         />
       </Head>
       <Preview>{previewText}</Preview>
