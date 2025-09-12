@@ -16,7 +16,7 @@ import Marketing09Interviews from '@/emails/Marketing09Interviews';
 import Marketing10FaithAndAction from '@/emails/Marketing10FaithAndAction';
 
 // Template component mapping
-const templateComponents: Record<string, React.ComponentType<{ firstName: string; registerUrl: string }>> = {
+const templateComponents: Record<string, React.FC<{ firstName: string; registerUrl: string }>> = {
   'welcome-call': Marketing01Welcome,
   'manual-camera': Marketing02ManualMode,
   'lens-anatomy': Marketing03LensAnatomy,

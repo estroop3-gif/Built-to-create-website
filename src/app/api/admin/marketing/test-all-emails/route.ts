@@ -20,7 +20,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-const templateComponents: Record<string, React.ComponentType<{ firstName: string; registerUrl: string }>> = {
+const templateComponents: Record<string, React.FC<{ firstName: string; registerUrl: string }>> = {
   'welcome-call': Marketing01Welcome,
   'manual-camera': Marketing02ManualMode,
   'lens-anatomy': Marketing03LensAnatomy,
