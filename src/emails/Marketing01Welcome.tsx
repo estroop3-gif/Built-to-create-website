@@ -13,62 +13,115 @@ export default function Marketing01Welcome({
   unsubscribeUrl 
 }: Marketing01WelcomeProps) {
   return (
-    <MarketingBaseTemplate previewText="Start here and build with us">
+    <MarketingBaseTemplate previewText="A mini workshop using AE/AF Lock, HDR, and the exposure slider">
       <Section>
-        <Heading style={h1}>Create from presence, not pressure</Heading>
+        <Text style={paragraph}>
+          Hey {firstName}
+        </Text>
+        
+        <Heading style={h1}>Exposure you can trust on your phone</Heading>
         
         <Text style={verse}>
-          <em>"And I have filled him with the Spirit of God, with wisdom, with understanding, with knowledge and with all kinds of skills—to make artistic designs for work in gold, silver and bronze, to cut and set stones, to work in wood, and to engage in all kinds of crafts."</em> — Exodus 31:3-5
+          <em>Psalm 119:105</em>
         </Text>
+        
+        <Heading as="h2" style={h2}>Why this matters</Heading>
         
         <Text style={paragraph}>
-          Hello {firstName},
+          You cannot shape meaning if you cannot control exposure. Your phone already has what you need to get reliable results in any light.
         </Text>
         
-        <Text style={paragraph}>
-          You were born to create. Not for applause. For impact. This retreat is an invitation to create with God and to ship real work that lasts.
-        </Text>
-        
-        <Text style={paragraph}>
-          Over the next several weeks, I'm going to share the foundational filmmaking techniques that will transform your ability to tell compelling stories. Each lesson builds on the last, taking you from technical basics to creative mastery.
-        </Text>
-        
-        <Heading as="h2" style={h2}>Core Ideas to Remember</Heading>
+        <Heading as="h2" style={h2}>Tools already on your phone</Heading>
         
         <Text style={bulletList}>
-          • Identity first, output second — who you are in Christ shapes what you create<br/>
-          • Excellence as worship — technical skill honors God and serves others<br/>
-          • Eternal impact over trends — focus on stories that matter beyond the moment
+          • AE AF Lock long press to lock focus and exposure<br/>
+          • Exposure slider drag to brighten or darken after locking<br/>
+          • HDR toggle or auto HDR preserves highlights when used wisely<br/>
+          • Histogram or zebras if your camera app offers them optional
         </Text>
         
-        <Heading as="h2" style={h2}>Why Costa Rica?</Heading>
-        
-        <Text style={paragraph}>
-          February 20–28, 2026, we're gathering in one of the world's most beautiful locations to put these principles into practice. You'll work alongside other called creatives, learning advanced techniques while documenting real stories of God's work in Costa Rica.
-        </Text>
-        
-        <Text style={paragraph}>
-          This isn't just a filmmaking workshop—it's a calling intensive. You'll return home with:
-        </Text>
+        <Heading as="h2" style={h2}>Two minute setup</Heading>
         
         <Text style={bulletList}>
-          • Professional-level technical skills<br/>
-          • A completed short documentary<br/>
-          • Clear vision for your creative ministry<br/>
-          • A community of like-minded creators<br/>
-          • Renewed passion for your calling
+          • Tap and hold on your subject to lock AE AF then adjust the exposure slider until the face has detail without shiny hotspots<br/>
+          • If HDR is available leave it on when you have bright backgrounds and turn it off if it makes skin look flat during low contrast scenes<br/>
+          • If your app supports zebras set them near ninety to warn of bright whites clipping
         </Text>
         
-        <Heading as="h2" style={h2}>Your Action Steps This Week</Heading>
+        <Heading as="h2" style={h2}>Targets you can trust without a meter</Heading>
         
         <Text style={bulletList}>
-          • Block one hour this week for focused practice with your camera<br/>
-          • Choose one simple story to capture before sunset today<br/>
-          • Reply to this email with one sentence about why you feel called to create
+          • Faces should show pore level detail in the cheek highlight and never glow like plastic<br/>
+          • White shirts should look white with visible folds not pure blank white<br/>
+          • Shadows should hold texture when you lift your screen brightness down to normal
+        </Text>
+        
+        <Heading as="h2" style={h2}>How to place faces with only your phone</Heading>
+        
+        <Text style={bulletList}>
+          • Move the person into open shade or turn them so the brightest source is forty five degrees from camera<br/>
+          • Lock AE AF on the cheek then slide exposure until the brightest spot on the face keeps detail<br/>
+          • If the background is blowing out step sideways to hide the sun behind a tree sign or pillar and try again
+        </Text>
+        
+        <Heading as="h2" style={h2}>Three fast scenarios</Heading>
+        
+        <Text style={paragraph}>
+          <strong>Bright sun</strong><br/>
+          • Put the sun behind the subject for a rim and expose for the face using AE AF Lock
         </Text>
         
         <Text style={paragraph}>
-          The techniques I'm about to share with you aren't just theory—they're the same methods I've used to create content viewed by millions, work with major brands, and train storytellers around the world. More importantly, they're grounded in the understanding that we create because we're made in the image of the Creator.
+          <strong>Backlit window</strong><br/>
+          • Step closer and fill the frame with the face lock and lower exposure until the cheeks hold texture
+        </Text>
+        
+        <Text style={paragraph}>
+          <strong>Night street</strong><br/>
+          • Park the subject near a shop window or sign and keep the background dark rather than pushing ISO with the slider
+        </Text>
+        
+        <Heading as="h2" style={h2}>Drill you can do today</Heading>
+        
+        <Text style={bulletList}>
+          • Record the same ten second clip three times bright sun backlit window night street<br/>
+          • In each clip use AE AF Lock and the exposure slider to protect the face<br/>
+          • Play back with screen brightness at the middle setting and check for skin detail and controlled highlights
+        </Text>
+        
+        <Heading as="h2" style={h2}>Common pitfalls</Heading>
+        
+        <Text style={bulletList}>
+          • Riding exposure without locking first the meter will drift mid take<br/>
+          • Judging only by a bright phone screen lower your screen brightness to center and reassess<br/>
+          • Letting auto HDR flatten the scene use it to save windows but still set exposure for faces
+        </Text>
+        
+        <Heading as="h2" style={h2}>About the trip</Heading>
+        
+        <Text style={paragraph}>
+          Nine days in Costa Rica. Daily shoots. Morning devotions. Hands on workshops. You will create from presence and come home with work that carries weight.
+        </Text>
+        
+        <Heading as="h2" style={h2}>What is coming next</Heading>
+        
+        <Text style={bulletList}>
+          • Manual camera made simple<br/>
+          • Anatomy of a lens and how to operate it<br/>
+          • Lighting that serves the story<br/>
+          • Sound basics<br/>
+          • Editing basics<br/>
+          • Color basics<br/>
+          • Story building basics<br/>
+          • Interviews that unlock truth<br/>
+          • Faith and creativity<br/>
+          • Final action plan
+        </Text>
+        
+        <Heading as="h2" style={h2}>Action</Heading>
+        
+        <Text style={paragraph}>
+          • Reply with a screenshot from today's drill and tell me which scenario challenged you most I will send feedback
         </Text>
         
         <Section style={buttonContainer}>
@@ -76,18 +129,16 @@ export default function Marketing01Welcome({
             href={registerUrl}
             style={button}
           >
-            Reserve Your Spot in Costa Rica
+            Register for the Retreat
           </Button>
         </Section>
         
         <Text style={signature}>
-          Creating with purpose,<br/>
-          Parker Winder<br/>
-          <em>Born to Create Project</em>
+          Support parker@thebtcp.com
         </Text>
         
         <Text style={psalm}>
-          "May the favor of the Lord our God rest on us; establish the work of our hands for us—yes, establish the work of our hands." — Psalm 90:17
+          You can unsubscribe any time
         </Text>
       </Section>
     </MarketingBaseTemplate>

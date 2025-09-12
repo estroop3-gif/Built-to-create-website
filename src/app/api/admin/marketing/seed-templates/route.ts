@@ -20,8 +20,8 @@ import Marketing10FaithAndAction from '@/emails/Marketing10FaithAndAction';
 const marketingTemplates = [
   {
     template_key: 'welcome-call',
-    subject: 'Your creativity is a calling',
-    preview_text: 'Start here and build with us',
+    subject: 'Master phone exposure you can trust',
+    preview_text: 'A mini workshop using AE/AF Lock, HDR, and the exposure slider',
     order_sequence: 1,
     component: Marketing01Welcome,
     category: 'marketing',

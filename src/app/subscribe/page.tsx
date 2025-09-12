@@ -30,7 +30,7 @@ export default function SubscribePage() {
                 Welcome to the Community!
               </h1>
               <p className="text-xl text-ink-600 mb-8 leading-relaxed">
-                Thank you for joining Born to Create Project. Check your email for your free filmmaker's gear checklist!
+                Thank you for joining Born to Create Project. Check your email for the phone-exposure mini workshop!
               </p>
               
               <div className="bg-sage-50 rounded-xl p-6 mb-8">
@@ -42,7 +42,7 @@ export default function SubscribePage() {
                     </svg>
                     <div>
                       <strong className="text-ink-800">Instant Access:</strong>
-                      <span className="text-ink-600"> Download your free gear checklist from the welcome email</span>
+                      <span className="text-ink-600"> Start with the phone-exposure mini workshop from the welcome email</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -95,21 +95,33 @@ export default function SubscribePage() {
           <div className="text-center mb-12">
             <div className="text-6xl mb-6">🎬🌿</div>
             <h1 className="text-5xl font-heading font-bold text-ink-900 mb-6">
-              Join the Born to Create Project
+              Learn filmmaking and create from presence
             </h1>
             <p className="text-xl text-ink-600 leading-relaxed mb-4">
-              Connect with a community of filmmakers and storytellers who believe creativity is a calling.
-            </p>
-            <p className="text-lg text-ink-600">
-              Get your <strong>free filmmaker's gear checklist</strong> plus weekly pro tips leading up to our Costa Rica retreat.
+              Get a phone-only mini workshop in your first email, then a full series of practical lessons paired with Scripture to grow your craft and your voice.
             </p>
           </div>
 
           {/* Main signup form */}
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <div className="mb-6">
+              <h3 className="text-2xl font-heading font-bold text-ink-900 mb-2">
+                Your first email delivers a real lesson
+              </h3>
+              <p className="text-lg text-ink-600 mb-4">
+                Master phone exposure you can trust
+              </p>
+              <div className="space-y-2 text-left">
+                <p className="text-ink-600">• AE AF Lock long press to lock focus and exposure</p>
+                <p className="text-ink-600">• Exposure slider set faces with detail not shine</p>
+                <p className="text-ink-600">• HDR when to keep highlights and when to turn it off</p>
+                <p className="text-ink-600">• Three fast scenarios bright sun backlit window night street</p>
+                <p className="text-ink-600">• A simple drill record three ten second clips and check skin detail</p>
+              </div>
+            </div>
             <SubscribeForm
               variant="inline"
-              buttonText="Get My Free Gear Checklist"
+              buttonText="Get the Phone Exposure Workshop"
               onSuccess={handleSuccess}
               showFirstName={true}
             />
@@ -121,10 +133,10 @@ export default function SubscribePage() {
           {/* Lesson preview section */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-heading font-bold text-ink-900 mb-4 text-center">
-              Learn filmmaking and create from presence
+              What the email series covers next
             </h2>
             <p className="text-lg text-ink-600 text-center mb-8">
-              Get ten practical lesson emails that make you a stronger storyteller and invite you into our Costa Rica retreat
+              Each lesson includes a short Scripture to center your process.
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">
@@ -134,6 +146,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Manual camera made simple</p>
                     <p className="text-sm text-ink-600">Three exposure decisions that change everything</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Psalm 90 17</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -141,6 +154,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Anatomy of a lens and how to operate it</p>
                     <p className="text-sm text-ink-600">Focal length focus aperture stabilization drills</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Proverbs 4 7</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -148,6 +162,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Lighting that serves the story</p>
                     <p className="text-sm text-ink-600">Direction size distance contrast</p>
+                    <p className="text-xs text-ink-500 italic">Scripture James 1 17</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -155,6 +170,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Sound basics</p>
                     <p className="text-sm text-ink-600">Clean dialogue gain staging wind kit</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Proverbs 18 13</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -162,6 +178,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Editing basics</p>
                     <p className="text-sm text-ink-600">From radio cut to rhythm</p>
+                    <p className="text-xs text-ink-500 italic">Scripture 2 Timothy 1 7</p>
                   </div>
                 </div>
               </div>
@@ -171,7 +188,8 @@ export default function SubscribePage() {
                   <span className="text-forest-600 mt-1">•</span>
                   <div>
                     <p className="font-semibold text-ink-800">Color basics</p>
-                    <p className="text-sm text-ink-600">Natural skin then mood</p>
+                    <p className="text-sm text-ink-600">Natural skin first then mood</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Isaiah 1 18</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -179,6 +197,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Story building basics</p>
                     <p className="text-sm text-ink-600">Who wants what what stands in the way what changes</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Habakkuk 2 2</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -186,6 +205,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Interviews that unlock truth</p>
                     <p className="text-sm text-ink-600">Question ladders silence second answers</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Proverbs 20 5</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -193,6 +213,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Faith and creativity</p>
                     <p className="text-sm text-ink-600">Presence over pressure daily practice</p>
+                    <p className="text-xs text-ink-500 italic">Scripture John 15 5</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -200,6 +221,7 @@ export default function SubscribePage() {
                   <div>
                     <p className="font-semibold text-ink-800">Final action plan</p>
                     <p className="text-sm text-ink-600">One story to finish one date to commit</p>
+                    <p className="text-xs text-ink-500 italic">Scripture Matthew 5 14 to 16</p>
                   </div>
                 </div>
               </div>
@@ -230,7 +252,7 @@ export default function SubscribePage() {
           {/* Trust indicators */}
           <div className="text-center mt-8">
             <p className="text-sm text-ink-400 mb-3">
-              Free instant download • Weekly filmmaker tips • Unsubscribe anytime
+              First email arrives with the phone-exposure mini workshop.
             </p>
             <p className="text-xs text-ink-400">
               Join 1,000+ filmmakers who trust Born to Create Project for their creative education
