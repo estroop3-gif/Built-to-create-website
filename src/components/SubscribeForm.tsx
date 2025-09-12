@@ -108,7 +108,7 @@ export default function SubscribeForm({
 
       if (data.success) {
         setIsSuccess(true);
-        setMessage(data.message || 'Thank you! Check your email for the gear checklist.');
+        setMessage(data.message || 'Thank you! Check your email for the phone exposure workshop.');
         setEmail('');
         setFirstName('');
         

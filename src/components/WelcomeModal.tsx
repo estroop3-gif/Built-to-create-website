@@ -76,16 +76,16 @@ export default function WelcomeModal() {
               Welcome to Born to Create Project
             </h2>
             <p className="text-lg text-ink-600 leading-relaxed mb-4">
-              Join our community of filmmakers and storytellers who believe creativity is a calling.
+              Learn filmmaking and create from presence.
             </p>
             <p className="text-ink-600">
-              Get your <strong>free filmmaker's gear checklist</strong> plus weekly pro tips leading up to our Costa Rica retreat.
+              Get the <strong>phone exposure workshop</strong> plus 10 lessons on filmmaking fundamentals.
             </p>
           </div>
 
           <SubscribeForm
             variant="modal"
-            buttonText="Get My Free Gear Checklist"
+            buttonText="Get the Phone Exposure Workshop"
             onSuccess={handleSuccess}
             showFirstName={true}
           />
@@ -96,25 +96,25 @@ export default function WelcomeModal() {
               <svg className="w-5 h-5 text-forest-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>Master manual mode faster than a semester</span>
+              <span>Master phone exposure you can trust</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-ink-600">
               <svg className="w-5 h-5 text-forest-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>Lens choices for travel storytelling</span>
+              <span>Manual camera and lens fundamentals</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-ink-600">
               <svg className="w-5 h-5 text-forest-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>Light anything with a simple kit</span>
+              <span>Story, lighting, sound, and editing basics</span>
             </div>
           </div>
 
           <div className="text-center mt-8">
             <p className="text-xs text-ink-400 mb-3">
-              Free instant download • Weekly filmmaker tips • Unsubscribe anytime
+              Phone workshop + 10 emails • Weekly filmmaker tips • Unsubscribe anytime
             </p>
             <div className="flex items-center justify-center gap-2 text-xs text-ink-400">
               <span>February 20–28, 2026</span>
