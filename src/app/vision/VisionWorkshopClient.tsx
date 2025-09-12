@@ -7,8 +7,8 @@ export default function VisionWorkshopClient() {
 
   useEffect(() => {
     // Analytics - track page view
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'learn_page_view', {
+    if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'learn_page_view', {
         page_path: '/vision'
       });
     }
@@ -21,8 +21,8 @@ export default function VisionWorkshopClient() {
 
   const handleRegisterClick = () => {
     // Analytics - track CTA click
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'learn_cta_click', {
+    if (typeof window !== 'undefined' && (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag?.('event', 'learn_cta_click', {
         page_path: '/vision',
         cta: 'register'
       });

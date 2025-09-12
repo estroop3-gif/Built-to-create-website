@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ searchParams }: PageProps) {
-  const params = await searchParams;
+  const _params = await searchParams;
   
   const baseUrl = process.env.NODE_ENV === 'production' 
     ? 'https://thebtcp.com' 
