@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { emailService } from '@/lib/services/email';
+import { getMarketingEmailService } from '@/lib/marketingEmailService';
 import { sendInternalNotification } from '@/lib/emailClient';
 import InternalNewSignup, { InternalNewSignupText } from '@/emails/InternalNewSignup';
 
@@ -62,13 +62,13 @@ export async function POST(request: NextRequest) {
     // Initialize Supabase with service role key for server-side operations
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
+      process.env.SUPABASE_SERVICE_ROLE!
     );
 
     // Check if email already exists
     const { data: existingLead } = await supabase
       .from('leads')
-      .select('id, email, registered, consent_marketing, first_name, utm_source, utm_medium, utm_campaign, utm_content, referrer, source, sequence_stage')
+      .select('id, email, registered, consent_marketing, first_name, utm_source, utm_medium, utm_campaign, utm_content, referrer, source, sequence_stage, created_at, updated_at')
       .eq('email', email.toLowerCase())
       .single();
 
@@ -106,10 +106,18 @@ export async function POST(request: NextRequest) {
 
       // Send welcome email if they haven't registered and are re-consenting
       if (!existingLead.registered && consent) {
-        const emailResult = await emailService.sendWelcomeEmail(
-          email.toLowerCase(),
-          first_name || null
-        );
+        const marketingService = getMarketingEmailService();
+        const subscriber = {
+          lead_id: existingLead.id,
+          email: email.toLowerCase(),
+          first_name,
+          signup_date: existingLead.created_at,
+          days_since_signup: 0,
+          last_sent_at: existingLead.updated_at,
+          next_template_key: 'welcome-call'
+        };
+        
+        const emailResult = await marketingService.sendMarketingEmail(subscriber);
 
         if (!emailResult.success) {
           console.error('Welcome email failed:', emailResult.error);
@@ -165,10 +173,18 @@ export async function POST(request: NextRequest) {
       }
 
       // Send welcome email
-      const emailResult = await emailService.sendWelcomeEmail(
-        email.toLowerCase(),
-        first_name || null
-      );
+      const marketingService = getMarketingEmailService();
+      const subscriber = {
+        lead_id: 'new', // Will be updated after insert
+        email: email.toLowerCase(),
+        first_name,
+        signup_date: now,
+        days_since_signup: 0,
+        last_sent_at: now,
+        next_template_key: 'welcome-call'
+      };
+      
+      const emailResult = await marketingService.sendMarketingEmail(subscriber);
 
       if (!emailResult.success) {
         console.error('Welcome email failed:', emailResult.error);
@@ -200,7 +216,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Successfully subscribed! Check your email for the gear checklist.' 
+      message: 'Successfully subscribed! Check your email for the phone exposure workshop.' 
     });
 
   } catch (error) {

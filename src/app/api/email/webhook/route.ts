@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { emailService } from '@/lib/services/email';
 
 export const runtime = 'edge';
 
@@ -32,10 +31,29 @@ export async function POST(request: NextRequest) {
     const event = JSON.parse(payload);
 
     try {
-      await emailService.handleWebhookEvent(event);
+      // Log email events for monitoring
+      console.log(`📧 Resend webhook event: ${event.type} for ${event.data?.to || 'unknown'}`);
       
-      // Log successful processing
-      console.log(`Processed Resend webhook event: ${event.type} for ${event.data?.to}`);
+      // Handle specific Resend events if needed
+      switch (event.type) {
+        case 'email.bounced':
+        case 'email.complaint':
+          console.log(`⚠️  Email ${event.type} for ${event.data?.to}`);
+          // TODO: Update subscriber status in database if needed
+          break;
+        
+        case 'email.delivered':
+          console.log(`✅ Email delivered to ${event.data?.to}`);
+          break;
+          
+        case 'email.opened':
+          console.log(`📖 Email opened by ${event.data?.to}`);
+          break;
+          
+        case 'email.clicked':
+          console.log(`🖱️  Email link clicked by ${event.data?.to}`);
+          break;
+      }
       
     } catch (error) {
       console.error('Error processing webhook event:', error);
