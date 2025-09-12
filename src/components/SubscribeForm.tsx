@@ -133,7 +133,7 @@ export default function SubscribeForm({
       } else {
         setMessage(data.error || 'Something went wrong. Please try again.');
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage('Network error. Please try again.');
     } finally {
       setIsLoading(false);

@@ -4,7 +4,7 @@ import { emailService } from '@/lib/services/email';
 export const runtime = 'edge';
 
 // Resend webhook verification
-function verifyResendWebhook(payload: string, signature: string, secret: string): boolean {
+function verifyResendWebhook(_payload: string, signature: string, _secret: string): boolean {
   // Resend uses HMAC-SHA256 for webhook verification
   // In production, implement proper webhook signature verification using crypto
   // For now, return true if we have a signature
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle GET for webhook verification (if required by provider)
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   // Some providers require GET endpoint for verification
   return NextResponse.json({ status: 'Webhook endpoint active' });
 }
