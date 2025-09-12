@@ -2,6 +2,7 @@ import "./globals.css";
 import { Changa_One, Roboto } from "next/font/google";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import WelcomeModal from "@/components/WelcomeModal";
 
 const changaOne = Changa_One({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <Footer />
+          <WelcomeModal />
         </div>
       </body>
     </html>

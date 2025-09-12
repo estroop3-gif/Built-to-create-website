@@ -1,387 +1,219 @@
-import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
-import { getUpcomingRetreats } from '@/lib/supabaseAdmin'
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { emailService } from '@/lib/services/email';
 
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+export const runtime = 'edge';
 
-export async function POST(request: Request) {
+// Verify this is called by Vercel Cron or authorized source
+function isAuthorizedCronCall(request: NextRequest): boolean {
+  const authHeader = request.headers.get('authorization');
+  const cronSecret = process.env.CRON_SECRET || 'dev-cron-secret';
+  
+  // In development, allow calls without auth header
+  if (process.env.NODE_ENV === 'development') {
+    return true;
+  }
+  
+  // In production, verify the cron secret
+  return authHeader === `Bearer ${cronSecret}`;
+}
+
+export async function POST(request: NextRequest) {
+  // Verify authorization
+  if (!isAuthorizedCronCall(request)) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
-    const authHeader = request.headers.get('authorization')
-    const cronSecret = process.env.CRON_SECRET
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
-    if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const now = new Date().toISOString();
+
+    // Get leads ready for their next email
+    const { data: readyLeads, error: selectError } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('registered', false)
+      .eq('consent_marketing', true)
+      .lte('next_send_at', now)
+      .not('next_send_at', 'is', null)
+      .order('next_send_at', { ascending: true })
+      .limit(100); // Process in batches
+
+    if (selectError) {
+      console.error('Error selecting leads:', selectError);
+      return NextResponse.json(
+        { error: 'Database error', details: selectError.message },
+        { status: 500 }
+      );
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY!)
-    const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'
-    const EMAIL_BASE_URL = 'https://www.thebtcp.com'
+    const results = {
+      processed: 0,
+      sent: 0,
+      errors: 0,
+      completed_sequences: 0
+    };
 
-    let emailsSent = 0
-    const results = []
-
-    // Check for retreats starting in 30, 14, 7, or 1 days
-    const checkDays = [30, 14, 7, 1]
-    
-    for (const daysAhead of checkDays) {
+    for (const lead of readyLeads || []) {
       try {
-        const registrants = await getUpcomingRetreats(daysAhead)
+        results.processed++;
         
-        if (registrants.length === 0) {
-          results.push({ daysAhead, count: 0, message: 'No registrants found' })
-          continue
+        // Skip if sequence is complete (stage 10 or higher means sequence finished)
+        if (lead.sequence_stage >= 10) {
+          results.completed_sequences++;
+          
+          // Clear next_send_at to stop further processing
+          await supabase
+            .from('leads')
+            .update({ 
+              next_send_at: null,
+              updated_at: now 
+            })
+            .eq('id', lead.id);
+          
+          continue;
         }
 
-        console.log(`📧 Found ${registrants.length} registrants for retreat starting in ${daysAhead} days`)
+        // Send the email for the current stage
+        let emailResult;
+        
+        if (lead.sequence_stage === 0) {
+          // This shouldn't happen as welcome emails are sent immediately on subscribe
+          emailResult = await emailService.sendWelcomeEmail(lead.email, lead.first_name);
+        } else {
+          emailResult = await emailService.sendSequenceEmail(
+            lead.email,
+            lead.first_name,
+            lead.sequence_stage
+          );
+        }
 
-        for (const registrant of registrants) {
-          try {
-            const emailData = generatePretripEmail(registrant, daysAhead, EMAIL_BASE_URL)
+        if (emailResult.success) {
+          results.sent++;
+          
+          // Calculate next send time
+          const nextStage = lead.sequence_stage + 1;
+          let nextSendAt = null;
+          
+          if (nextStage < 10) { // Don't schedule beyond our sequence
+            nextSendAt = emailService.getNextSendTime(nextStage);
             
-            const { error } = await resend.emails.send({
-              from: EMAIL_FROM,
-              to: registrant.email,
-              subject: emailData.subject,
-              html: emailData.html,
-              text: emailData.text,
-              replyTo: 'parker@thebtcp.com'
-            })
-
-            if (error) {
-              console.error(`❌ Failed to send email to ${registrant.email}:`, error)
-              results.push({ 
-                daysAhead, 
-                email: registrant.email, 
-                status: 'failed', 
-                error: error.message 
-              })
-            } else {
-              console.log(`✅ Pre-trip email sent to ${registrant.email} (${daysAhead} days ahead)`)
-              emailsSent++
-              results.push({ 
-                daysAhead, 
-                email: registrant.email, 
-                status: 'sent' 
-              })
+            // Special case: if we're at stage 8 (countdown email), schedule relative to retreat date
+            if (nextStage === 9) {
+              const retreatDate = new Date('2026-02-20'); // February 20, 2026
+              const countdownDate = new Date(retreatDate);
+              countdownDate.setDate(countdownDate.getDate() - 30); // 30 days before
+              nextSendAt = countdownDate > new Date() ? countdownDate : null;
             }
-          } catch (emailError) {
-            console.error(`❌ Error processing email for ${registrant.email}:`, emailError)
-            results.push({ 
-              daysAhead, 
-              email: registrant.email, 
-              status: 'error', 
-              error: emailError instanceof Error ? emailError.message : String(emailError)
-            })
           }
+
+          // Update the lead with new stage and next send time
+          const { error: updateError } = await supabase
+            .from('leads')
+            .update({
+              sequence_stage: nextStage,
+              last_sent_at: now,
+              next_send_at: nextSendAt?.toISOString() || null,
+              updated_at: now
+            })
+            .eq('id', lead.id);
+
+          if (updateError) {
+            console.error(`Error updating lead ${lead.email}:`, updateError);
+            results.errors++;
+          }
+          
+        } else {
+          console.error(`Email failed for ${lead.email}:`, emailResult.error);
+          results.errors++;
+          
+          // Don't advance the stage if email failed - retry next time
         }
 
-        results.push({ 
-          daysAhead, 
-          count: registrants.length, 
-          message: `Processed ${registrants.length} registrants` 
-        })
-
-      } catch (dbError) {
-        console.error(`❌ Database error for ${daysAhead} days ahead:`, dbError)
-        results.push({ 
-          daysAhead, 
-          status: 'db_error', 
-          error: dbError instanceof Error ? dbError.message : String(dbError)
-        })
+      } catch (error) {
+        console.error(`Error processing lead ${lead.email}:`, error);
+        results.errors++;
       }
     }
 
+    // Check for scarcity threshold (optional feature)
+    await checkAndTriggerScarcityEmails(supabase);
+
+    console.log('Cron job completed:', results);
+
     return NextResponse.json({
       success: true,
-      emailsSent,
       results,
-      timestamp: new Date().toISOString()
-    })
+      timestamp: now
+    });
 
   } catch (error) {
-    console.error('❌ Cron job error:', error)
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : String(error),
-      timestamp: new Date().toISOString()
-    }, { status: 500 })
+    console.error('Cron job error:', error);
+    return NextResponse.json(
+      { error: 'Cron job failed', details: error.message },
+      { status: 500 }
+    );
   }
 }
 
-interface Registrant {
-  id: string
-  email: string
-  first_name: string
-  last_name: string
-  retreat: string
-  retreat_start: string
-  retreat_location: string
-  plan_label: string
-  amount_paid: number
-  currency: string
-}
-
-function generatePretripEmail(registrant: Registrant, daysAhead: number, baseUrl: string) {
-  const firstName = registrant.first_name || 'Friend'
-  const fullName = `${registrant.first_name || ''} ${registrant.last_name || ''}`.trim()
+async function checkAndTriggerScarcityEmails(supabase: any) {
+  // This is a placeholder for scarcity logic
+  const CAPACITY_THRESHOLD = 0.8; // Trigger at 80% capacity
+  const MAX_REGISTRATIONS = 20; // Adjust based on actual capacity
   
-  const urls = {
-    itinerary: `${baseUrl}/itinerary`,
-    packing: `${baseUrl}/packing`,
-    faq: `${baseUrl}/faq`,
-    contact: `${baseUrl}/contact`
-  }
-
-  // Email content varies by days ahead
-  let subject: string
-  let preHeader: string
-  let mainMessage: string
-  let actionItems: string[]
-  let urgency: 'high' | 'medium' | 'low'
-
-  switch (daysAhead) {
-    case 30:
-      subject = `🌟 30 Days to Costa Rica! Time to Get Ready`
-      preHeader = 'Your retreat is coming up soon - here\'s what you need to know'
-      mainMessage = 'Can you believe it? Your Costa Rica filmmaking retreat is just 30 days away! It\'s time to start preparing for this incredible journey.'
-      actionItems = [
-        '📋 Review the complete itinerary',
-        '🎒 Start gathering items from the packing list',
-        '✈️ Book your flights to San José (SJO) if you haven\'t already',
-        '🛡️ Consider travel insurance',
-        '🎬 Start thinking about what stories you want to tell'
-      ]
-      urgency = 'low'
-      break
+  try {
+    // Example implementation - uncomment and modify based on your registrations table
+    // const { count: registrationCount } = await supabase
+    //   .from('registrations')
+    //   .select('*', { count: 'exact' });
     
-    case 14:
-      subject = `⏰ 2 Weeks to Go! Final Preparations for Costa Rica`
-      preHeader = 'Last chance to handle travel essentials before your retreat'
-      mainMessage = 'We\'re getting close! Your Costa Rica retreat is just 2 weeks away. Time for some final preparations to ensure everything goes smoothly.'
-      actionItems = [
-        '✈️ Confirm your flight details and arrival time',
-        '🎒 Finalize your packing (check weather forecast)',
-        '📱 Download any travel apps you might need',
-        '💰 Notify your bank about international travel',
-        '📋 Double-check passport expiration date'
-      ]
-      urgency = 'medium'
-      break
+    // if (registrationCount && registrationCount >= MAX_REGISTRATIONS * CAPACITY_THRESHOLD) {
+    //   const { data: scarcityLeads } = await supabase
+    //     .from('leads')
+    //     .select('*')
+    //     .eq('registered', false)
+    //     .eq('consent_marketing', true)
+    //     .lte('sequence_stage', 8);
+        
+    //   for (const lead of scarcityLeads || []) {
+    //     const emailResult = await emailService.sendSequenceEmail(
+    //       lead.email,
+    //       lead.first_name,
+    //       9 // Scarcity email
+    //     );
+        
+    //     if (emailResult.success) {
+    //       await supabase
+    //         .from('leads')
+    //         .update({
+    //           sequence_stage: 10, // End sequence after scarcity email
+    //           last_sent_at: new Date().toISOString(),
+    //           next_send_at: null,
+    //           updated_at: new Date().toISOString()
+    //         })
+    //         .eq('id', lead.id);
+    //     }
+    //   }
+    // }
     
-    case 7:
-      subject = `🚀 1 Week Away! Final Details for Your Costa Rica Adventure`
-      preHeader = 'Last-minute essentials and what to expect on arrival'
-      mainMessage = 'This is it - just ONE WEEK until your Costa Rica filmmaking retreat! Here are the final details you need to know.'
-      actionItems = [
-        '🧳 Finish packing using our checklist',
-        '🔋 Charge all your devices and pack chargers',
-        '💊 Pack any medications you need',
-        '📱 Save important phone numbers offline',
-        '☀️ Check the weather forecast for Costa Rica'
-      ]
-      urgency = 'high'
-      break
-    
-    case 1:
-      subject = `✈️ Tomorrow is the Day! See You in Costa Rica`
-      preHeader = 'Final reminders for your departure tomorrow'
-      mainMessage = 'This is it! Your Costa Rica retreat starts TOMORROW. We can\'t wait to see you and begin this incredible creative journey together.'
-      actionItems = [
-        '🧳 Final packing check',
-        '📱 Confirm your flight departure time',
-        '🚗 Arrange transportation to the airport',
-        '💡 Get a good night\'s sleep',
-        '🎬 Get excited for the adventure ahead!'
-      ]
-      urgency = 'high'
-      break
-    
-    default:
-      subject = `Costa Rica Retreat Reminder`
-      preHeader = 'Information about your upcoming retreat'
-      mainMessage = 'Your Costa Rica retreat is coming up soon!'
-      actionItems = ['Review retreat information']
-      urgency = 'low'
-  }
-
-  const html = generatePretripEmailHtml({
-    firstName,
-    fullName,
-    daysAhead,
-    subject,
-    preHeader,
-    mainMessage,
-    actionItems,
-    urgency,
-    retreat: {
-      name: registrant.retreat,
-      start: registrant.retreat_start,
-      location: registrant.retreat_location
-    },
-    urls
-  })
-
-  const text = generatePretripEmailText({
-    firstName,
-    daysAhead,
-    mainMessage,
-    actionItems,
-    retreat: {
-      name: registrant.retreat,
-      start: registrant.retreat_start,
-      location: registrant.retreat_location
-    },
-    urls
-  })
-
-  return { subject, html, text }
-}
-
-interface EmailData {
-  firstName: string
-  fullName: string
-  daysAhead: number
-  subject: string
-  preHeader: string
-  mainMessage: string
-  actionItems: string[]
-  urgency: 'high' | 'medium' | 'low'
-  retreat: {
-    name: string
-    start: string
-    location: string
-  }
-  urls: {
-    itinerary: string
-    packing: string
-    faq: string
-    contact: string
+  } catch (error) {
+    console.error('Error in scarcity email check:', error);
   }
 }
 
-function generatePretripEmailHtml(data: EmailData): string {
-  const urgencyColors = {
-    high: '#d32f2f',
-    medium: '#f57c00',
-    low: '#2d5016'
+// Allow manual triggering in development
+export async function GET(request: NextRequest) {
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ error: 'Not available' }, { status: 404 });
   }
   
-  const urgencyColor = urgencyColors[data.urgency]
-
-  return `
-<!doctype html>
-<html>
-<head>
-  <meta charSet="utf-8" />
-  <title>${data.subject}</title>
-  <style>
-    body { font-family: Arial, sans-serif; color: #222; margin: 0; padding: 0; background: #f7faf7; }
-    .wrap { max-width: 640px; margin: 0 auto; background: #fff; }
-    .hero { background: ${urgencyColor}; color: #fff; padding: 24px; text-align: center; }
-    h1 { margin: 0 0 6px; font-size: 24px; }
-    .countdown { font-size: 18px; font-weight: bold; margin: 10px 0; }
-    p { line-height: 1.55; }
-    .content { padding: 24px; }
-    .card { background: #f4fbf4; border-left: 4px solid #2d5016; padding: 16px; margin: 16px 0; }
-    .urgent-card { background: #fff3e0; border-left: 4px solid ${urgencyColor}; padding: 16px; margin: 16px 0; }
-    .btn { display: inline-block; padding: 12px 20px; background: #2d5016; color: #fff !important; text-decoration: none; border-radius: 6px; margin: 8px 4px; }
-    .urgent-btn { background: ${urgencyColor}; }
-    .checklist { background: #f9fcf9; padding: 16px; border-radius: 6px; margin: 16px 0; }
-    .checklist li { margin: 10px 0; font-size: 16px; }
-    .button-group { text-align: center; margin: 20px 0; }
-    .countdown-big { font-size: 48px; font-weight: bold; margin: 16px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-    a { color: #2d5016; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="hero">
-      <div class="countdown-big">${data.daysAhead}</div>
-      <h1>${data.daysAhead === 1 ? 'Day' : 'Days'} to Go!</h1>
-      <p>Costa Rica Filmmaking Retreat</p>
-      <div class="countdown">${data.retreat.location} • ${data.retreat.start}</div>
-    </div>
-
-    <div class="content">
-      <p>Hi ${escapeHtml(data.firstName)},</p>
-      <p>${data.mainMessage}</p>
-
-      <div class="${data.urgency === 'high' ? 'urgent-card' : 'card'}">
-        <h3 style="margin-top: 0; color: ${urgencyColor};">🎯 Action Items:</h3>
-        <ul class="checklist">
-          ${data.actionItems.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-        </ul>
-      </div>
-
-      <div class="button-group">
-        <a class="btn" href="${data.urls.itinerary}">📋 View Itinerary</a>
-        <a class="btn" href="${data.urls.packing}">🎒 Packing List</a>
-        <a class="btn" href="${data.urls.faq}">❓ FAQ</a>
-        <a class="btn ${data.urgency === 'high' ? 'urgent-btn' : ''}" href="${data.urls.contact}">📱 Contact Us</a>
-      </div>
-
-      ${data.daysAhead <= 7 ? `
-      <div class="urgent-card">
-        <p style="margin: 0;"><strong>Need help or have questions?</strong> Don't wait - reach out to us now! We're here to make sure everything goes smoothly.</p>
-      </div>
-      ` : ''}
-
-      <div class="card">
-        <p style="margin: 0;"><strong>Questions?</strong> Just reply to this email and we'll get back to you quickly!</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-`
-}
-
-interface TextEmailData {
-  firstName: string
-  daysAhead: number
-  mainMessage: string
-  actionItems: string[]
-  retreat: {
-    name: string
-    start: string
-    location: string
-  }
-  urls: {
-    itinerary: string
-    packing: string
-    faq: string
-    contact: string
-  }
-}
-
-function generatePretripEmailText(data: TextEmailData): string {
-  return [
-    `🌟 ${data.daysAhead} ${data.daysAhead === 1 ? 'Day' : 'Days'} to Costa Rica!`,
-    `${data.retreat.location} • ${data.retreat.start}`,
-    ``,
-    `Hi ${data.firstName},`,
-    ``,
-    data.mainMessage,
-    ``,
-    `🎯 Action Items:`,
-    ...data.actionItems.map(item => `- ${item}`),
-    ``,
-    `📋 Quick Links:`,
-    `- Itinerary: ${data.urls.itinerary}`,
-    `- Packing List: ${data.urls.packing}`,
-    `- FAQ: ${data.urls.faq}`,
-    `- Contact Us: ${data.urls.contact}`,
-    ``,
-    `Questions? Just reply to this email and we'll get back to you quickly!`,
-    ``,
-    `See you soon in Costa Rica! 🌴🎬`
-  ].join('\n')
-}
-
-function escapeHtml(s: string) {
-  return (s || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  // Manual trigger for testing
+  return POST(request);
 }

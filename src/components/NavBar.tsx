@@ -82,12 +82,19 @@ export default function NavBar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="block font-body font-medium text-ink-700 hover:text-forest-600 transition-colors duration-200 py-3 border-b border-sage-100 last:border-0"
+                    className="block font-body font-medium text-ink-700 hover:text-forest-600 transition-colors duration-200 py-3 border-b border-sage-100"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 ))}
+                <Link
+                  href="/subscribe"
+                  className="block font-body font-medium text-forest-600 hover:text-forest-700 transition-colors duration-200 py-3 border-b border-sage-100 last:border-0"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Join Email List
+                </Link>
               </div>
               
               {/* Mobile CTA Button */}
