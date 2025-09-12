@@ -118,7 +118,7 @@ export default function NavBar() {
       {isMenuOpen && (
         <div 
           id="mobile-menu"
-          className="fixed inset-0 z-50 flex flex-col overflow-y-auto backdrop-blur bg-white/95 lg:hidden"
+          className="fixed inset-0 z-[9999] flex flex-col overflow-y-auto bg-white lg:hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-heading"
