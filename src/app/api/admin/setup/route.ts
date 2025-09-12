@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
 export async function POST(_request: NextRequest) {
   const startTime = Date.now();
   
   try {
+    // Initialize Supabase client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
     console.log('🔄 Running database setup...');
     
     // Create email_templates table

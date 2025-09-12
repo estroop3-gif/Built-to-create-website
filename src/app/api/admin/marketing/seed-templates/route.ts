@@ -14,10 +14,7 @@ import Marketing08ColorBasics from '@/emails/Marketing08ColorBasics';
 import Marketing09Interviews from '@/emails/Marketing09Interviews';
 import Marketing10FaithAndAction from '@/emails/Marketing10FaithAndAction';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// Supabase client will be initialized inside request handlers
 
 // Template definitions with comprehensive metadata
 const marketingTemplates = [
@@ -131,6 +128,11 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
+    // Initialize Supabase client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
     console.log('🌱 Seeding marketing email templates...');
     console.log(`📧 Processing ${marketingTemplates.length} templates`);
     

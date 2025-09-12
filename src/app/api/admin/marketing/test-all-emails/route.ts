@@ -16,9 +16,7 @@ import Marketing08ColorBasics from '@/emails/Marketing08ColorBasics';
 import Marketing09Interviews from '@/emails/Marketing09Interviews';
 import Marketing10FaithAndAction from '@/emails/Marketing10FaithAndAction';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// Supabase client will be initialized inside request handlers
 
 const templateComponents: Record<string, React.FC<{ firstName: string; registerUrl: string }>> = {
   'welcome-call': Marketing01Welcome,
@@ -50,6 +48,11 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
+    // Initialize Supabase client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
     // Get admin test email from environment
     const adminEmail = process.env.ADMIN_EMAIL || process.env.ADMIN_TEST_EMAIL;
     if (!adminEmail) {
