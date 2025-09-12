@@ -148,10 +148,12 @@ export async function POST(request: NextRequest) {
         const baseUrl = process.env.BASE_URL || 'https://thebtcp.com';
         const registerUrl = `${baseUrl}/register`;
         
-        const htmlContent = await render(template.component({ 
-          firstName: 'Friend',
-          registerUrl
-        }));
+        const htmlContent = await render(
+          template.component({ 
+            firstName: 'Friend',
+            registerUrl
+          }) as React.ReactElement
+        );
         
         const plainTextContent = stripHtml(htmlContent);
         

@@ -138,10 +138,12 @@ async function seedMarketingEmails() {
       console.log(`📧 Processing: ${template.template_key} - "${template.subject}"`);
       
       // Render HTML content with sample props
-      const htmlContent = await render(template.component({ 
-        firstName: 'Friend',
-        registerUrl: `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
-      }));
+      const htmlContent = await render(
+        template.component({ 
+          firstName: 'Friend',
+          registerUrl: `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+        }) as React.ReactElement
+      );
       
       // Generate plain text content
       const plainTextContent = stripHtml(htmlContent);

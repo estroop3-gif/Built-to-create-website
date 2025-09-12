@@ -98,10 +98,12 @@ export async function POST(request: NextRequest) {
         
         // Render template with test data
         const baseUrl = process.env.BASE_URL || 'https://thebtcp.com';
-        const htmlContent = await render(TemplateComponent({ 
-          firstName: 'Parker',
-          registerUrl: `${baseUrl}/register`
-        }));
+        const htmlContent = await render(
+          TemplateComponent({ 
+            firstName: 'Parker',
+            registerUrl: `${baseUrl}/register`
+          }) as React.ReactElement
+        );
         
         const plainTextContent = stripHtml(htmlContent);
         

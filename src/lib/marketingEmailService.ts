@@ -126,10 +126,12 @@ class MarketingEmailService {
       const baseUrl = process.env.BASE_URL || 'https://thebtcp.com';
       const registerUrl = `${baseUrl}/register`;
       
-      const htmlContent = await render(TemplateComponent({ 
-        firstName,
-        registerUrl
-      }));
+      const htmlContent = await render(
+        TemplateComponent({ 
+          firstName,
+          registerUrl
+        }) as React.ReactElement
+      );
       
       const plainTextContent = this.stripHtml(htmlContent);
       
