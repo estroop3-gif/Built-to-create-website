@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { render } from '@react-email/render';
+import React from 'react';
 
 if (!process.env.RESEND_API_KEY) {
   throw new Error('RESEND_API_KEY environment variable is not set');
@@ -52,7 +53,7 @@ export async function sendInternalNotification<T = Record<string, unknown>>({
     const allRecipients = [...new Set([...recipients, ...seedList])];
 
     // Render HTML template
-    const html = await render(Template(templateProps));
+    const html = await render(React.createElement(Template, templateProps));
     
     // Generate text version
     let text: string | undefined;
