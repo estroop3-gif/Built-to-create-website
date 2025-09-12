@@ -22,15 +22,7 @@ export default function MarketingBaseTemplate({ children, previewText }: Marketi
       <Head>
         <Font
           fontFamily="system-ui"
-          fallbackFontFamily={[
-            "-apple-system",
-            "BlinkMacSystemFont", 
-            "Segoe UI",
-            "Roboto",
-            "Helvetica Neue",
-            "Arial",
-            "sans-serif"
-          ]}
+          fallbackFontFamily="Arial, sans-serif"
         />
       </Head>
       <Preview>{previewText}</Preview>
