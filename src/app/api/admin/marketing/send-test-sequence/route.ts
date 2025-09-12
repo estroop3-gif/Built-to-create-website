@@ -17,7 +17,7 @@ import Marketing10FaithAndAction from '@/emails/Marketing10FaithAndAction';
 const templateConfigs = [
   {
     key: 'welcome-call',
-    subject: 'Your creativity is a calling',
+    subject: 'Master phone exposure you can trust',
     component: Marketing01Welcome,
     sequence: 1
   },
