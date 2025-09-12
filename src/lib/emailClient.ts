@@ -25,21 +25,21 @@ function shouldSendNotifications(): boolean {
   return process.env.SEND_NOTIFICATIONS !== 'false';
 }
 
-interface InternalNotificationOptions<T = Record<string, unknown>> {
+interface InternalNotificationOptions {
   to: string | string[];
   subject: string;
-  template: React.ComponentType<T>;
-  templateProps: T;
-  textTemplate?: (props: T) => string;
+  template: React.ComponentType<Record<string, unknown>>;
+  templateProps: Record<string, unknown>;
+  textTemplate?: (props: Record<string, unknown>) => string;
 }
 
-export async function sendInternalNotification<T = Record<string, unknown>>({
+export async function sendInternalNotification({
   to,
   subject,
   template: Template,
   templateProps,
   textTemplate
-}: InternalNotificationOptions<T>) {
+}: InternalNotificationOptions) {
   // Skip if notifications disabled
   if (!shouldSendNotifications()) {
     console.log('Internal notifications disabled, skipping email');
@@ -53,7 +53,7 @@ export async function sendInternalNotification<T = Record<string, unknown>>({
     const allRecipients = [...new Set([...recipients, ...seedList])];
 
     // Render HTML template
-    const html = await render(React.createElement(Template as any, templateProps));
+    const html = await render(React.createElement(Template, templateProps));
     
     // Generate text version
     let text: string | undefined;
