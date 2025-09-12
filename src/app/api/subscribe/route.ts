@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { emailService } from '@/lib/services/email';
+import { sendInternalNotification } from '@/lib/emailClient';
+import InternalNewSignup, { InternalNewSignupText } from '../../../../emails/InternalNewSignup';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // Input validation
 function isValidEmail(email: string): boolean {
@@ -113,6 +115,25 @@ export async function POST(request: NextRequest) {
           console.error('Welcome email failed:', emailResult.error);
           // Don't fail the subscription if email fails
         }
+
+        // Send internal notification for re-subscription
+        await sendInternalNotification({
+          to: 'parker@thebtcp.com',
+          subject: `New Email List Signup: ${email}`,
+          template: InternalNewSignup,
+          templateProps: {
+            email,
+            firstName: first_name,
+            timestamp: now,
+            utmSource: utm_source,
+            utmMedium: utm_medium,
+            utmCampaign: utm_campaign,
+            utmContent: utm_content,
+            referrer,
+            source: lead_source || page_path
+          },
+          textTemplate: InternalNewSignupText
+        });
       }
 
     } else {
@@ -153,6 +174,25 @@ export async function POST(request: NextRequest) {
         console.error('Welcome email failed:', emailResult.error);
         // Don't fail the subscription if email fails
       }
+
+      // Send internal notification for new signup
+      await sendInternalNotification({
+        to: 'parker@thebtcp.com',
+        subject: `New Email List Signup: ${email}`,
+        template: InternalNewSignup,
+        templateProps: {
+          email,
+          firstName: first_name,
+          timestamp: now,
+          utmSource: utm_source,
+          utmMedium: utm_medium,
+          utmCampaign: utm_campaign,
+          utmContent: utm_content,
+          referrer,
+          source: lead_source || page_path
+        },
+        textTemplate: InternalNewSignupText
+      });
     }
 
     // Track analytics event (could be sent to GA4 or other analytics)
