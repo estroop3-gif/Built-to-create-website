@@ -53,7 +53,7 @@ export async function sendInternalNotification<T = Record<string, unknown>>({
     const allRecipients = [...new Set([...recipients, ...seedList])];
 
     // Render HTML template
-    const html = await render(React.createElement(Template, templateProps));
+    const html = await render(React.createElement(Template as any, templateProps));
     
     // Generate text version
     let text: string | undefined;
