@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from './src/lib/linkToken';
 
 export async function middleware(request: NextRequest) {
-  // Only apply to the gear checklist page
-  if (request.nextUrl.pathname === '/resources/gear-checklist') {
+  const pathname = request.nextUrl.pathname;
+  
+  // Apply to gear checklist and learning pages
+  if (pathname === '/resources/gear-checklist' || 
+      pathname.startsWith('/vision') || 
+      pathname.startsWith('/learn')) {
+    
     const token = request.nextUrl.searchParams.get('t');
     
     if (!token) {
@@ -16,7 +21,7 @@ export async function middleware(request: NextRequest) {
       return new NextResponse(null, { status: 404 });
     }
     
-    // Add no-index headers
+    // Add no-index headers for all token-gated content
     const response = NextResponse.next();
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     return response;
@@ -26,5 +31,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/resources/gear-checklist'
+  matcher: ['/resources/gear-checklist', '/vision', '/learn/:path*']
 };

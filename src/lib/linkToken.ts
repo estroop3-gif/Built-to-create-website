@@ -84,3 +84,11 @@ export async function checklistUrlForLead(leadId: string): Promise<string> {
     : 'http://localhost:3000';
   return `${baseUrl}/resources/gear-checklist?t=${token}`;
 }
+
+export async function linkFor(path: string, leadId: string): Promise<string> {
+  const token = await signToken(`lead:${leadId}`);
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://thebtcp.com' 
+    : 'http://localhost:3000';
+  return `${baseUrl}${path}?t=${token}`;
+}
