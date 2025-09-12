@@ -185,15 +185,37 @@ class MarketingEmailService {
     const { email, first_name: firstName, next_template_key: templateKey } = subscriber;
     
     try {
-      // Get template data
-      const template = await this.getNextTemplateForSubscriber(email);
-      if (!template) {
-        return {
-          success: false,
-          error: 'No template available',
-          templateKey,
-          subscriberEmail: email
-        };
+      // Get template data - for new signups, use the specified templateKey instead of database function
+      let template;
+      if (templateKey === 'welcome-call') {
+        // For welcome emails, get the template directly to ensure we use the correct one
+        const { data, error } = await this.supabase
+          .from('email_templates')
+          .select('template_key, subject, preview_text, order_sequence')
+          .eq('template_key', templateKey)
+          .eq('active', true)
+          .single();
+        
+        if (error || !data) {
+          return {
+            success: false,
+            error: 'Welcome template not found',
+            templateKey,
+            subscriberEmail: email
+          };
+        }
+        template = data;
+      } else {
+        // For other emails, use the database function
+        template = await this.getNextTemplateForSubscriber(email);
+        if (!template) {
+          return {
+            success: false,
+            error: 'No template available',
+            templateKey,
+            subscriberEmail: email
+          };
+        }
       }
       
       // Render email content
