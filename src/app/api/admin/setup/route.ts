@@ -5,14 +5,14 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   const startTime = Date.now();
   
   try {
     console.log('🔄 Running database setup...');
     
     // Create email_templates table
-    const createTemplatesQuery = `
+    const _createTemplatesQuery = `
       CREATE TABLE IF NOT EXISTS email_templates (
         id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
         template_key text UNIQUE NOT NULL,
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     // Test database functions
     console.log('🔍 Testing database functions...');
     try {
-      const { data: functionTest, error: functionError } = await supabase.rpc('get_subscribers_ready_for_email', {
+      const { data: _functionTest, error: functionError } = await supabase.rpc('get_subscribers_ready_for_email', {
         p_reference_date: '2025-02-20T00:00:00Z',
         p_limit: 1
       });
@@ -134,6 +134,6 @@ export async function POST(request: NextRequest) {
 }
 
 // For convenience, also allow GET
-export async function GET(request: NextRequest) {
-  return POST(request);
+export async function GET(_request: NextRequest) {
+  return POST(_request);
 }

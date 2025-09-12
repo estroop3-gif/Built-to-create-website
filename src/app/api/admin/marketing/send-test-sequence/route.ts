@@ -1,4 +1,3 @@
-import React from 'react';
 import { NextRequest, NextResponse } from 'next/server';
 import { render } from '@react-email/render';
 import { resend, emailConfig } from '@/lib/emailClient';
@@ -209,6 +208,6 @@ export async function POST(request: NextRequest) {
 }
 
 // For convenience, also allow GET
-export async function GET(request: NextRequest) {
-  return POST(request);
+export async function GET(_request: NextRequest) {
+  return POST(_request);
 }

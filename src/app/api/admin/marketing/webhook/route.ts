@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     console.log(`📧 Webhook received: ${type} for message ${data.message_id}`);
     
     // Update email_sends record based on event type
-    let updateData: any = {};
+    let updateData: Record<string, string> = {};
     
     switch (type) {
       case 'email.delivered':
@@ -83,6 +83,6 @@ export async function POST(request: NextRequest) {
 }
 
 // Also handle GET for webhook verification if needed
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   return NextResponse.json({ message: 'Marketing email webhook endpoint' });
 }

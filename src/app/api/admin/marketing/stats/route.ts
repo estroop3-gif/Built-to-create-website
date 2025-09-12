@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { marketingEmailService } from '@/lib/marketingEmailService';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     console.log('📊 Fetching marketing email statistics...');
     
