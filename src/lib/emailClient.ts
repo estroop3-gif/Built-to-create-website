@@ -28,9 +28,12 @@ function shouldSendNotifications(): boolean {
 interface InternalNotificationOptions {
   to: string | string[];
   subject: string;
-  template: React.ComponentType<Record<string, unknown>>;
-  templateProps: Record<string, unknown>;
-  textTemplate?: (props: Record<string, unknown>) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  template: React.ComponentType<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  templateProps: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  textTemplate?: (props: any) => string;
 }
 
 export async function sendInternalNotification({
