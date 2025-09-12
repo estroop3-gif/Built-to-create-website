@@ -400,9 +400,8 @@ export function getMarketingEmailService(): MarketingEmailService {
 }
 
 export const marketingEmailService = {
-  sendToSubscribers: () => getMarketingEmailService().sendToSubscribers(),
-  sendTestEmail: (email: string, templateKey: string) => getMarketingEmailService().sendTestEmail(email, templateKey),
-  getEmailStats: () => getMarketingEmailService().getEmailStats()
+  getEmailStats: () => getMarketingEmailService().getEmailStats(),
+  processBatchEmails: (limit?: number, dryRun?: boolean) => getMarketingEmailService().processBatchEmails(limit, dryRun)
 };
 
 export default MarketingEmailService;
