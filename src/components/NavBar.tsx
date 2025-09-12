@@ -100,13 +100,18 @@ export default function NavBar() {
       {/* Mobile Navigation Overlay - Debug version */}
       <div 
         id="mobile-menu"
-        className={`fixed inset-0 z-[9999] bg-white transition-transform duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[9999] transition-transform duration-300 lg:hidden ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
-        style={{ display: isMenuOpen ? 'block' : 'none' }}
+        style={{ 
+          display: isMenuOpen ? 'block' : 'none',
+          backgroundColor: '#ffffff',
+          width: '100vw',
+          height: '100vh'
+        }}
       >
-        <div className="flex items-center justify-between p-4 border-b">
-          <span className="font-heading font-bold text-forest-800">MENU</span>
+        <div className="flex items-center justify-between p-4 border-b-2 border-sage-300 bg-sage-50">
+          <span className="font-heading font-bold text-forest-800 text-xl">MENU</span>
           <button
             onClick={() => setIsMenuOpen(false)}
             className="p-2 rounded-lg text-ink-700"
@@ -118,13 +123,13 @@ export default function NavBar() {
           </button>
         </div>
         
-        <div className="p-4">
+        <div className="p-4 bg-white min-h-screen">
           {/* Navigation Links */}
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="block py-3 px-2 text-lg font-medium text-ink-700 hover:text-forest-600 border-b border-sage-200"
+              className="block py-3 px-2 text-lg font-medium text-ink-700 hover:text-forest-600 hover:bg-sage-50 border-b border-sage-200 rounded"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
