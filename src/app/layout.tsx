@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Changa_One, Roboto } from "next/font/google";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/site/NavBar";
 import Footer from "@/components/Footer";
 import WelcomeModal from "@/components/WelcomeModal";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
