@@ -24,27 +24,50 @@ function GoogleAnalyticsInner({ measurementId }: GoogleAnalyticsProps) {
   useEffect(() => {
     if (!measurementId || !window.gtag) return;
 
-    const url = pathname + searchParams.toString();
+    const url = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
 
     window.gtag('config', measurementId, {
       page_path: url,
     });
+
+    // Send page view event
+    window.gtag('event', 'page_view', {
+      page_path: url,
+      page_title: document.title,
+    });
+
+    // Page view tracked
   }, [pathname, searchParams, measurementId]);
 
   return null;
 }
 
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
+  // Only load Google Analytics in production
+  if (process.env.NODE_ENV !== 'production') {
+    return null;
+  }
+
   // Don't render if no measurement ID
   if (!measurementId || measurementId === 'G-XXXXXXXXXX') {
     return null;
   }
+
+  const handleLoad = () => {
+    // Google Analytics loaded successfully
+  };
+
+  const handleError = () => {
+    // Failed to load Google Analytics
+  };
 
   return (
     <>
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        onLoad={handleLoad}
+        onError={handleError}
       />
       <Script
         id="google-analytics"
@@ -56,7 +79,12 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
             gtag('js', new Date());
             gtag('config', '${measurementId}', {
               page_path: window.location.pathname,
+              custom_map: {
+                custom_parameter: 'page_category'
+              }
             });
+
+            // Google Analytics initialized
           `,
         }}
       />

@@ -10,7 +10,7 @@ import Button from '../Button';
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  hamburgerRef?: React.RefObject<HTMLButtonElement>;
+  hamburgerRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDrawerProps) {
@@ -90,9 +90,9 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
   }, [isOpen, hamburgerRef]);
 
   const handleLinkClick = (href: string) => {
-    // Fire analytics for navigation link clicks
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'header_link_click', {
+    // Fire analytics for navigation link clicks (production only)
+    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', 'header_link_click', {
         event_category: 'navigation',
         path: href
       });
@@ -192,15 +192,10 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
 
           {/* CTAs for mobile */}
           <div className="mt-8 space-y-3 sm:hidden">
-            <Button
-              as="link"
-              href="/register"
-              size="md"
-              variant="primary"
-              className="w-full justify-center"
+            <div
               onClick={() => {
-                if (typeof window !== 'undefined' && (window as any).gtag) {
-                  (window as any).gtag('event', 'header_cta_register', {
+                if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+                  (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', 'header_cta_register', {
                     event_category: 'engagement',
                     event_label: 'mobile_drawer'
                   });
@@ -208,8 +203,16 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
                 onClose();
               }}
             >
-              Register Now
-            </Button>
+              <Button
+                as="link"
+                href="/register"
+                size="md"
+                variant="primary"
+                className="w-full justify-center"
+              >
+                Register Now
+              </Button>
+            </div>
           </div>
         </div>
       </div>

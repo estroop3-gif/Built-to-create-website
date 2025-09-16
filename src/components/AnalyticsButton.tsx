@@ -18,7 +18,7 @@ export default function AnalyticsButton({
   children
 }: AnalyticsButtonProps) {
   const handleClick = () => {
-    if (typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
       (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', eventName, {
         event_category: 'engagement',
         event_label: 'experience_page'

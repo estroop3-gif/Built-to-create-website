@@ -8,9 +8,9 @@ interface HeaderCTAProps {
 
 export default function HeaderCTA({ onMenuClose }: HeaderCTAProps) {
   const handleClick = () => {
-    // Fire analytics for header CTA click
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'header_cta_click', {
+    // Fire analytics for header CTA click (production only)
+    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', 'header_cta_click', {
         event_category: 'engagement',
         event_label: 'join_email_list'
       });

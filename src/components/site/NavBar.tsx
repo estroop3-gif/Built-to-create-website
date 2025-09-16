@@ -14,9 +14,9 @@ export default function NavBar() {
     const newState = !isMenuOpen;
     setIsMenuOpen(newState);
 
-    // Fire analytics for menu open/close
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', newState ? 'header_menu_open' : 'header_menu_close', {
+    // Fire analytics for menu open/close (production only)
+    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', newState ? 'header_menu_open' : 'header_menu_close', {
         event_category: 'navigation',
         event_label: 'hamburger_menu'
       });
@@ -26,9 +26,9 @@ export default function NavBar() {
   const handleMenuClose = () => {
     setIsMenuOpen(false);
 
-    // Fire analytics for menu close
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'header_menu_close', {
+    // Fire analytics for menu close (production only)
+    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {
+      (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag('event', 'header_menu_close', {
         event_category: 'navigation',
         event_label: 'hamburger_menu'
       });
