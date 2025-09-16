@@ -13,6 +13,7 @@ const navItems = [
   { href: '/packing', label: 'Packing' },
   { href: '/travel', label: 'Travel' },
   { href: '/faq', label: 'FAQ' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function NavBar() {

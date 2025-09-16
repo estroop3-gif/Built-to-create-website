@@ -8,9 +8,10 @@ const footerNavigation = {
     { name: 'Pricing', href: '/pricing' },
     { name: 'Travel', href: '/travel' },
   ],
-  resources: [
+  company: [
     { name: 'Packing List', href: '/packing' },
     { name: 'FAQ', href: '/faq' },
+    { name: 'Contact', href: '/contact' },
     { name: 'Register', href: '/register' },
   ],
   social: [
@@ -72,13 +73,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Resources */}
+            {/* Company */}
             <div>
               <h3 className="font-heading text-lg font-bold text-ink-900 mb-6">
-                Resources
+                Company
               </h3>
               <ul className="space-y-4">
-                {footerNavigation.resources.map((item) => (
+                {footerNavigation.company.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
