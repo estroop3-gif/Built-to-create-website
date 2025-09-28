@@ -1,14 +1,31 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Container from '../Container';
 import HeaderCTA from './HeaderCTA';
 import MobileDrawer from './MobileDrawer';
+import { createClient } from '@/lib/supabase/client';
+import { User } from '@supabase/supabase-js';
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Get initial user
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
 
   const handleMenuToggle = () => {
     const newState = !isMenuOpen;
@@ -85,6 +102,7 @@ export default function NavBar() {
         isOpen={isMenuOpen}
         onClose={handleMenuClose}
         hamburgerRef={hamburgerRef}
+        user={user}
       />
     </>
   );

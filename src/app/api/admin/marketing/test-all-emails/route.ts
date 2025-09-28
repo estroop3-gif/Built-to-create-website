@@ -2,7 +2,8 @@ import React from 'react';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { render } from '@react-email/render';
-import { resend, emailConfig } from '@/lib/emailClient';
+import { sendPromotionalEmail } from '@/lib/resend';
+import { emailConfig } from '@/lib/emailClient';
 
 // Import all marketing templates
 import Marketing01Welcome from '@/emails/Marketing01Welcome';
@@ -110,21 +111,12 @@ export async function POST(request: NextRequest) {
         
         const plainTextContent = stripHtml(htmlContent);
         
-        // Send via Resend with test prefix
-        const emailData = await resend.emails.send({
-          from: process.env.FROM_EMAIL || emailConfig.from,
+        // Send via enhanced promotional email helper
+        const emailData = await sendPromotionalEmail({
           to: adminEmail,
           subject: `[TEST ${template.order_sequence}/10] ${template.subject}`,
           html: htmlContent,
           text: plainTextContent,
-          headers: {
-            'X-Preview-Text': `Test email for ${template.template_key}: ${template.preview_text}`,
-          },
-          tags: [
-            { name: 'type', value: 'admin-test' },
-            { name: 'template', value: template.template_key },
-            { name: 'sequence', value: template.order_sequence.toString() }
-          ]
         });
         
         if (emailData.error) {

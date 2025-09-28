@@ -1,12 +1,6 @@
-import { Resend } from 'resend';
+import { sendTransactionalEmail } from '@/lib/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-
-if (!process.env.RESEND_API_KEY) {
-  throw new Error('RESEND_API_KEY environment variable is not set');
-}
-
-export const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const emailConfig = {
   from: 'Born to Create Project <noreply@thebtcp.com>',
@@ -64,9 +58,8 @@ export async function sendInternalNotification({
       text = textTemplate(templateProps);
     }
 
-    // Send email
-    const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
+    // Send email using transactional helper
+    const result = await sendTransactionalEmail({
       to: allRecipients,
       subject,
       html,
@@ -74,15 +67,15 @@ export async function sendInternalNotification({
       replyTo: emailConfig.replyTo,
     });
 
-    if (error) {
-      console.error('Internal notification email error:', error);
-      return { success: false, error: error.message };
+    if (result.error) {
+      console.error('Internal notification email error:', result.error);
+      return { success: false, error: result.error.message };
     }
 
     console.log(`Internal notification sent to: ${allRecipients.join(', ')}`);
-    return { 
-      success: true, 
-      messageId: data?.id, 
+    return {
+      success: true,
+      messageId: result.data?.id,
       recipients: allRecipients.length,
       seedListIncluded: seedList.length > 0
     };

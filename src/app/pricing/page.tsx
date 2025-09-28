@@ -1,325 +1,298 @@
-'use client';
+import { Metadata } from 'next';
+import Section from '@/components/Section';
+import Button from '@/components/Button';
 
-// import { Metadata } from 'next';
-import Link from 'next/link';
-import { useState } from 'react';
-import EquipmentList from '@/components/EquipmentList';
-import { getPricingTiers, getActiveWindow, getCurrentTotal, calculateDueToday, isAfterFullPaymentDeadline, formatPaymentDate } from '@/lib/pricing';
-import { RefundPolicyContent } from '@/shared/refundPolicyContent';
-
-// const metadata: Metadata = {
-//   title: 'Pricing - Costa Rica Filmmaking Retreat | The Born to Create Project',
-//   description: 'All-inclusive 9-day Christian filmmaking retreat. Complete equipment kit included.',
-// };
+export const metadata: Metadata = {
+  title: 'Pricing — Born to Create Project',
+  description: 'See tuition for the online course and global retreats. First retreat includes a filmmaking kit. Returning students save $500 per trip.',
+};
 
 export default function PricingPage() {
   return (
-    <>
-      <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-forest/20 to-sage/30 nature-texture opacity-20"></div>
-        
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-[40vh] flex items-center justify-center overflow-hidden bg-forest-50">
+        <div className="absolute inset-0 bg-gradient-to-br from-forest-900/20 to-sage-600/30 nature-texture opacity-20"></div>
+
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Retreat Pricing</h1>
-          <p className="text-xl text-charcoal/70">
-            All-inclusive experience with professional equipment kit
+          <h1 className="font-heading text-5xl sm:text-6xl font-bold text-ink-900 mb-6">Pricing</h1>
+          <p className="font-body text-xl text-ink-600">
+            Investment in your filmmaking journey and calling
           </p>
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Christian retreat intro */}
-          <div className="text-center mb-12">
-            <p className="text-lg text-charcoal/80 max-w-3xl mx-auto">
-              Join our Christian retreat where presence takes priority over performance, and Spirit-led creativity guides every frame. We believe in truth in storytelling and excellence as worship through the fundamentals of documentary filmmaking.
+      {/* Online Course Pricing */}
+      <Section spacing="xl" background="white">
+        <div className="text-center mb-16">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
+            Online Course Tuition
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* 1-Year Program */}
+          <div className="bg-sage-50 rounded-lg p-8 shadow-soft">
+            <div className="text-center mb-6">
+              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-4">
+                1-Year Program
+              </h3>
+              <div className="text-4xl font-bold text-forest-600 mb-2">
+                $35,000
+              </div>
+              <div className="text-lg text-ink-600 mb-4">
+                Monthly: $2,995 for 12 months
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">Video curriculum, mentorship, assignments, feedback</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">Private community, retreat preparation</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">Includes one-on-one mentorship session</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700"><strong>Outcome:</strong> Proficient solo filmmaker, retreat-ready</span>
+              </div>
+            </div>
+
+            <Button as="link" href="/course" size="md" variant="primary" className="w-full justify-center">
+              Learn More
+            </Button>
+          </div>
+
+          {/* 2-Year Mastery Program */}
+          <div className="bg-sage-50 rounded-lg p-8 shadow-soft border-2 border-forest-200">
+            <div className="text-center mb-6">
+              <div className="inline-block bg-forest-100 text-forest-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                Most Comprehensive
+              </div>
+              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-4">
+                2-Year Mastery Program
+              </h3>
+              <div className="text-4xl font-bold text-forest-600 mb-2">
+                Year 1: $35,000 <span className="text-base text-ink-500">or $2,995/mo</span>
+              </div>
+              <div className="text-4xl font-bold text-forest-600 mb-4">
+                Year 2: $32,000 <span className="text-base text-ink-500">or $2,795/mo</span>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">All 1-Year benefits + advanced workshops</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">Festival-ready post workflow, deeper discipleship</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700">Includes one-on-one mentorship session each year</span>
+              </div>
+              <div className="flex items-start">
+                <div className="w-2 h-2 bg-forest-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                <span className="font-body text-ink-700"><strong>Outcome:</strong> specialization and mastery with deeper discipleship</span>
+              </div>
+            </div>
+
+            <Button as="link" href="/course" size="md" variant="primary" className="w-full justify-center">
+              Learn More
+            </Button>
+          </div>
+        </div>
+      </Section>
+
+      {/* Retreat Pricing */}
+      <Section spacing="xl" background="sage">
+        <div className="text-center mb-16">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
+            Retreat Tuition
+          </h2>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          {/* Per-Retreat Pricing */}
+          <div className="bg-white rounded-lg p-8 shadow-soft mb-8">
+            <div className="text-center mb-8">
+              <h3 className="font-heading text-3xl font-bold text-ink-900 mb-4">
+                Per-Retreat Tuition (Standalone)
+              </h3>
+              <div className="text-5xl font-bold text-forest-600 mb-4">
+                $5,950
+              </div>
+              <p className="font-body text-lg text-ink-600">
+                9-day intensive with instruction, on-location production support, lodging, most ground transport, most meals, permits where applicable
+              </p>
+            </div>
+
+            <div className="bg-forest-50 rounded-lg p-6 mb-6">
+              <div className="flex items-center justify-center mb-3">
+                <div className="w-12 h-12 bg-forest-600 rounded-full flex items-center justify-center mr-4">
+                  <svg className="w-6 h-6 text-cream-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-heading text-xl font-bold text-ink-900">First Retreat Bonus</h4>
+                  <p className="font-body text-ink-600">The Filmmaking Kit is included with your first retreat only</p>
+                </div>
+              </div>
+              <p className="font-body text-sm text-ink-500 text-center italic">
+                Kit value: $2,800
+              </p>
+            </div>
+
+            <div className="bg-sage-50 rounded-lg p-6">
+              <div className="flex items-center justify-center mb-3">
+                <div className="w-12 h-12 bg-forest-600 rounded-full flex items-center justify-center mr-4">
+                  <svg className="w-6 h-6 text-cream-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-heading text-xl font-bold text-ink-900">Returning-Student Discount</h4>
+                  <p className="font-body text-ink-600">$500 off each additional retreat after your first</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="font-body text-sm text-ink-500 mt-6 text-center">
+              Airfare not included. Some specialty activities, rentals, or optional excursions may incur additional costs; see each retreat page.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Deposit & Payment Plans */}
+      <Section spacing="xl" background="cream">
+        <div className="text-center mb-16">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
+            Deposit & Payment Plans
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="bg-white rounded-lg p-6 shadow-soft text-center">
+            <div className="w-16 h-16 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 className="font-heading text-xl font-bold text-ink-900 mb-3">Deposit</h3>
+            <div className="text-2xl font-bold text-forest-600 mb-2">$750</div>
+            <p className="font-body text-ink-600 text-sm">
+              To reserve your spot (applied to tuition, non-refundable)
             </p>
           </div>
 
-          <PricingTiersSection />
-
-          <DueTodayPanel />
-
-          <div className="grid lg:grid-cols-2 gap-12 mb-16">
-            <div className="bg-cream rounded-2xl p-8 shadow-lg">
-              <h2 className="text-2xl font-bold text-charcoal mb-6">What's Included</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-forest mb-3">Expert Instruction</h3>
-                  <ul className="space-y-2 text-charcoal/70">
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      9 days of intensive filmmaking workshops
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Expert mentorship and individual guidance
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Small group size (maximum 12 participants)
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Daily production support and feedback
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-forest mb-3">Accommodations & Transport</h3>
-                  <ul className="space-y-2 text-charcoal/70">
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Hotel Cultura Plaza (San José) - 5 nights total
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      La Perlita (Jacó) - 3 nights beachfront
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Hotel Cabañas Ensueños (Puriscal) - 1 night mountain lodge
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Airport transfers to/from SJO
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      All ground transportation between locations
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-forest mb-3">Meals & Special Events</h3>
-                  <ul className="space-y-2 text-charcoal/70">
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      All meals included - 3 meals daily (breakfast, lunch, dinner)
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Welcome dinner on arrival
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Farewell celebration dinner
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sage mr-2">•</span>
-                      Private film screening and feedback session
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div className="bg-white rounded-lg p-6 shadow-soft text-center">
+            <div className="w-16 h-16 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a4 4 0 118 0v4m-4 16l-4-4m4 4l4-4m-4 4V9" />
+              </svg>
             </div>
-
-            <div className="bg-forest text-cream rounded-2xl p-8 shadow-lg">
-              <div className="space-y-4">
-                <EquipmentList />
-              </div>
-              
-              <div className="mt-8 p-4 bg-cream/10 rounded-xl">
-                <p className="text-center text-cream/90">
-                  <strong>Bring your own camera?</strong><br />
-                  Save $300 on your tuition
-                </p>
-              </div>
-            </div>
+            <h3 className="font-heading text-xl font-bold text-ink-900 mb-3">Payment Plans</h3>
+            <p className="font-body text-ink-600 text-sm">
+              Monthly or milestone-based plans available through the site checkout
+            </p>
           </div>
 
-          <div className="bg-earth/10 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-charcoal mb-6">What's Not Included</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-lg font-semibold text-forest mb-3">Travel & Personal</h3>
-                <ul className="space-y-2 text-charcoal/70">
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    International flights to/from San José (SJO)
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Travel insurance (strongly recommended)
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Personal expenses and souvenirs
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Passport and visa fees (if applicable)
-                  </li>
-                </ul>
+          <div className="bg-white rounded-lg p-6 shadow-soft text-center">
+            <div className="w-16 h-16 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="font-heading text-xl font-bold text-ink-900 mb-3">Final Balance</h3>
+            <p className="font-body text-ink-600 text-sm">
+              Due 30 days before departure
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* What's Included */}
+      <Section spacing="xl" background="white">
+        <div className="text-center mb-16">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
+            What's Included
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="space-y-6">
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
               </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-forest mb-3">Extras & Upgrades</h3>
-                <ul className="space-y-2 text-charcoal/70">
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Alcoholic beverages
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-earth mr-2">•</span>
-                    Optional activities and excursions
-                  </li>
-                </ul>
+              <span className="font-body text-lg text-ink-700">Instruction and mentorship</span>
+            </div>
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
               </div>
+              <span className="font-body text-lg text-ink-700">Curriculum and assignments</span>
+            </div>
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
+              </div>
+              <span className="font-body text-lg text-ink-700">Production support and location coordination</span>
+            </div>
+          </div>
+          <div className="space-y-6">
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
+              </div>
+              <span className="font-body text-lg text-ink-700">Lodging, in-country transport, most meals</span>
+            </div>
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
+              </div>
+              <span className="font-body text-lg text-ink-700">Filmmaking Kit on your first retreat</span>
+            </div>
+            <div className="flex items-start">
+              <div className="w-6 h-6 bg-forest-600 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                <div className="w-2 h-2 bg-cream-50 rounded-full"></div>
+              </div>
+              <span className="font-body text-lg text-ink-700">Community, accountability, and post-retreat feedback</span>
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-forest text-cream">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Filmmaking?</h2>
-          <p className="text-xl mb-8 text-cream/90">
-            Limited to 20 participants for personalized attention and meaningful connections.
+      {/* CTA Section */}
+      <Section spacing="xl" background="forest">
+        <div className="text-center max-w-4xl mx-auto">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-cream-50 mb-6">
+            Ready to Begin?
+          </h2>
+          <p className="font-body text-xl text-cream-200 mb-12">
+            Start your filmmaking journey with confidence. Every path leads to transformation.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/register" 
-              className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transform hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              Register Now
-            </Link>
-            <Link 
-              href="/faq" 
-              className="inline-block border-2 border-cream text-cream px-8 py-4 rounded-full text-lg font-semibold hover:bg-cream hover:text-forest transition-all duration-200"
-            >
-              View FAQ
-            </Link>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button as="link" href="/register" size="lg" variant="primary">
+              Register for Retreat
+            </Button>
+            <Button as="link" href="/course" size="lg" variant="ghost">
+              Explore Online Course
+            </Button>
           </div>
         </div>
-      </section>
-    </>
-  );
-}
-
-function PricingTiersSection() {
-  const activeWindow = getActiveWindow();
-  const tiers = getPricingTiers();
-  const [showRefundModal, setShowRefundModal] = useState(false);
-
-  return (
-    <div className="mb-16">
-      <h2 className="text-3xl font-bold text-charcoal mb-8 text-center">Retreat Pricing Tiers</h2>
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
-        {tiers.map((tier) => {
-          const isActive = tier.window === activeWindow;
-          return (
-            <div key={tier.window} className={`relative rounded-2xl p-6 shadow-lg ${isActive ? 'bg-forest-700 text-cream-100 ring-2 ring-forest-700' : 'bg-cream'}`}>
-              {isActive && (
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-cream-100 text-forest-700 px-3 py-1 rounded-full text-xs font-semibold">
-                    Currently Active
-                  </span>
-                </div>
-              )}
-              
-              <div className={`text-center mb-4 ${isActive ? 'mt-8' : ''}`}>
-                <h3 className={`text-xl font-bold mb-1 ${isActive ? 'text-cream-100' : 'text-charcoal'}`}>{tier.label}</h3>
-                <p className={`text-xs ${isActive ? 'text-cream-100/60' : 'text-charcoal/60'}`}>
-                  {formatPaymentDate(tier.startDate)} - {formatPaymentDate(tier.endDate)}
-                </p>
-              </div>
-              
-              <div className="text-center mb-4">
-                <div className={`text-3xl font-bold ${isActive ? 'text-cream-100' : 'text-forest'}`}>
-                  ${tier.total.toLocaleString()}
-                </div>
-                <p className={`text-xs mt-1 ${isActive ? 'text-cream-100/70' : 'text-charcoal/70'}`}>{tier.description}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <p className="text-center text-sm text-charcoal/60 mb-4">
-        Selected automatically based on today's date
-      </p>
-      <div className="text-center flex flex-col items-center space-y-1">
-        <button
-          onClick={() => setShowRefundModal(true)}
-          className="text-forest underline text-xs hover:text-forest-600 transition-colors"
-        >
-          Refund policy
-        </button>
-        <Link
-          href="/terms"
-          className="text-forest underline text-xs hover:text-forest-600 transition-colors"
-        >
-          Terms & Agreement
-        </Link>
-      </div>
-
-      {/* Refund Policy Modal */}
-      {showRefundModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-charcoal">Refund Policy</h3>
-              <button
-                onClick={() => setShowRefundModal(false)}
-                className="text-charcoal/60 hover:text-charcoal transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <RefundPolicyContent />
-            <button
-              onClick={() => setShowRefundModal(false)}
-              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DueTodayPanel() {
-  const grandTotal = getCurrentTotal();
-  const afterDeadline = isAfterFullPaymentDeadline();
-  const depositDue = calculateDueToday('deposit', grandTotal);
-  const fullDue = calculateDueToday('full', grandTotal);
-
-  return (
-    <div className="bg-sand/30 rounded-2xl p-8 mb-16">
-      <h2 className="text-3xl font-bold text-charcoal mb-8 text-center">Payment Options</h2>
-      <div className="grid md:grid-cols-2 gap-8">
-        {!afterDeadline && (
-          <div className="bg-cream rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-forest mb-2">Deposit Only</h3>
-            <div className="text-2xl font-bold text-charcoal mb-2">
-              ${depositDue.toLocaleString()}
-            </div>
-            <p className="text-xs text-charcoal/70">Due today</p>
-          </div>
-        )}
-        
-        <div className="bg-cream rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-forest mb-2">Full Payment</h3>
-          <div className="text-2xl font-bold text-charcoal mb-2">
-            ${fullDue.toLocaleString()}
-          </div>
-          <p className="text-xs text-charcoal/70">Due today</p>
-        </div>
-      </div>
-      
-      <div className="mt-6 text-center">
-        {afterDeadline && (
-          <p className="text-sm text-forest font-semibold">
-            Full payment is required after the deadline
-          </p>
-        )}
-      </div>
-    </div>
+      </Section>
+    </main>
   );
 }

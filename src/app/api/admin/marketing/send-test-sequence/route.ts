@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { render } from '@react-email/render';
-import { resend, emailConfig } from '@/lib/emailClient';
+import { sendPromotionalEmail } from '@/lib/resend';
+import { emailConfig } from '@/lib/emailClient';
 
 // Import all marketing templates
 import Marketing01Welcome from '@/emails/Marketing01Welcome';
@@ -126,21 +127,12 @@ export async function POST(request: NextRequest) {
         
         const plainTextContent = stripHtml(htmlContent);
         
-        // Send via Resend with test prefix
-        const emailData = await resend.emails.send({
-          from: process.env.FROM_EMAIL || emailConfig.from,
+        // Send via enhanced promotional email helper
+        const emailData = await sendPromotionalEmail({
           to: adminEmail,
           subject: `[TEST ${template.sequence}/10] ${template.subject}`,
           html: htmlContent,
           text: plainTextContent,
-          headers: {
-            'X-Preview-Text': `Test email for ${template.key} - Marketing sequence ${template.sequence}/10`,
-          },
-          tags: [
-            { name: 'type', value: 'admin-test-sequence' },
-            { name: 'template', value: template.key },
-            { name: 'sequence', value: template.sequence.toString() }
-          ]
         });
         
         if (emailData.error) {
