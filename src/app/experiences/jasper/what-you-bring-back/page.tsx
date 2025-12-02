@@ -13,7 +13,7 @@ export default function WhatYouBringBackPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/itinerary-header.jpg')"
+            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
           }}
         ></div>
 

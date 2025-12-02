@@ -32,7 +32,7 @@ export default function Hero() {
           {/* Supporting Text */}
           <div className="space-y-4 mb-10">
             <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
-              February 20–28, 2026
+              Two sessions: February 13–21, 2026 & April 17–25, 2026
             </p>
             <p className="font-body text-lg sm:text-xl text-cream-300 max-w-2xl mx-auto leading-relaxed">
               San José • Jacó • Santiago de Puriscal

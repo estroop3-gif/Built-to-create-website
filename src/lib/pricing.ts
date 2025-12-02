@@ -1,3 +1,28 @@
+// Costa Rica Retreat Sessions
+// Session 1: February 13-21, 2026 (9 days)
+// Session 2: April 17-25, 2026 (9 days, same structure)
+
+export const costaRicaSessions = [
+  {
+    id: 'session-1',
+    label: 'Session 1',
+    travelStart: 'February 13, 2026',
+    retreatStart: 'February 13, 2026',
+    retreatEnd: 'February 21, 2026',
+    travelEnd: 'February 21, 2026',
+    fullDateRange: 'February 13–21, 2026'
+  },
+  {
+    id: 'session-2',
+    label: 'Session 2',
+    travelStart: 'April 17, 2026',
+    retreatStart: 'April 17, 2026',
+    retreatEnd: 'April 25, 2026',
+    travelEnd: 'April 25, 2026',
+    fullDateRange: 'April 17–25, 2026'
+  }
+];
+
 export const pricingTiers = [
   {
     tier: "Early Bird",

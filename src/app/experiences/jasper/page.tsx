@@ -42,6 +42,9 @@ export default function JasperExperience() {
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
                 A mountain retreat for church media leaders who need focus, stillness, and a clear path forward in their calling.
               </p>
+              <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
+                Two sessions: January 28–30, 2026 & May 6–8, 2026
+              </p>
             </div>
 
             {/* Call to Action Buttons */}
@@ -158,6 +161,52 @@ export default function JasperExperience() {
         </Container>
       </Section>
 
+      {/* Who Will Be Leading This Retreat Section */}
+      <Section spacing="xl" background="sage">
+        <Container size="lg">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
+              Who Will Be Leading This Retreat
+            </h2>
+            <div className="space-y-6 text-left">
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                The Jasper retreat is led by filmmaker and camera operator Edward Parker Stroop, a faith based storyteller with nearly a decade of experience across TV, documentary, motorsports, and narrative work. Parker grew up in the local church and has spent much of his career capturing testimonial interviews and long form stories that highlight real people and what God is doing in their lives.
+              </p>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                His credits include work with major TV networks and brands, docu follow series, reality and lifestyle shows, and fast paced motorsports projects, alongside faith driven projects. That mix means your media team will be learning from someone who understands both the technical demands of high level production and the heart behind telling honest, God centered stories.
+              </p>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                As a leader, you can expect your team to be coached by someone who:
+              </p>
+              <ul className="space-y-3 ml-6">
+                <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
+                  <span className="text-forest-600 mr-3">•</span>
+                  <span>Speaks the language of directors, camera ops, and editors, while honoring pastors, elders, and church leadership</span>
+                </li>
+                <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
+                  <span className="text-forest-600 mr-3">•</span>
+                  <span>Builds simple, repeatable systems for testimonies, multi camera services, and community stories that can work on normal Sundays</span>
+                </li>
+                <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
+                  <span className="text-forest-600 mr-3">•</span>
+                  <span>Gives clear, practical feedback on framing, movement, audio, and pacing without shaming or overwhelming your team</span>
+                </li>
+                <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
+                  <span className="text-forest-600 mr-3">•</span>
+                  <span>Cares as much about your team's spiritual health and sense of calling as their technical skill set</span>
+                </li>
+              </ul>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                Alongside Parker, a trusted local pastor will be part of the retreat to provide spiritual guidance, teaching, and pastoral care. This gives your media leaders space to process what God is doing in them, not just what they are doing with a camera. Sessions, prayer times, and conversations are anchored in Scripture and a local church perspective, so you can trust that what they receive here will support the discipleship and culture you are already building at home.
+              </p>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                For senior pastors and church leaders, the heart of this retreat is simple: send your media team away to be invested in, challenged, and refreshed, and they will come home with clearer vision, healthier rhythms, and practical tools that directly serve your people and your Sunday gatherings.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       {/* What To Expect Section */}
       <Section spacing="xl" background="white">
         <Container size="lg">
@@ -193,10 +242,28 @@ export default function JasperExperience() {
                   <span className="text-forest-600 mr-3">•</span>
                   <span>Honest conversations about calling, money, and what it means to build a life as a Christian creative</span>
                 </li>
+                <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
+                  <span className="text-forest-600 mr-3">•</span>
+                  <span>A glamping style camp setup where we are tent camping, but full cots, cot mattresses, and comfort items are provided so you can actually rest between full days of shooting and learning</span>
+                </li>
               </ul>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                You only need to bring a sleeping bag.
+              </p>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                We are building out the property specifically for this experience, with simple but intentional shared spaces for teaching, meals, editing, and hanging out around the fire. The facilities are designed to be comfortable without being distracting, so you can step away from your normal routine, breathe in the mountain air, and focus on God, your craft, and the people you are here to serve.
+              </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 The pace is full but intentional. The goal is not to crush you with work. The goal is to stretch you in a setting where you feel safe to try, miss, adjust, and grow.
               </p>
+              <div className="mt-8 text-center">
+                <Link
+                  href="/experiences/jasper/details"
+                  className="inline-block bg-forest-600 text-cream-50 px-6 py-3 rounded-lg font-medium hover:bg-forest-700 transition-colors"
+                >
+                  View Retreat Details
+                </Link>
+              </div>
             </div>
           </div>
         </Container>

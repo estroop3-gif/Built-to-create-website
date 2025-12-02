@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const { 
-      email, planLabel, retreat, retreat_start, retreat_location, first_name, last_name, phone,
+    const {
+      email, planLabel, retreat, retreat_start, retreat_location, retreat_type, first_name, last_name, phone,
       // Extended registration fields
       date_of_birth, address_line1, address_line2, city, state_province, postal_code, country,
       emergency_contact_name, emergency_contact_phone, emergency_contact_relationship,
@@ -41,43 +41,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Production pricing (in cents)
-    const basePricing = {
-      'Full - Early Bird': {
-        name: 'Full - Early Bird',
-        unit_amount: 479000, // $4,790
-      },
-      'Full - Standard': {
-        name: 'Full - Standard',
-        unit_amount: 549000, // $5,490
-      },
-      'Full - Late': {
-        name: 'Full - Late',
-        unit_amount: 595000, // $5,950
-      },
-      'Deposit': {
-        name: 'Deposit',
-        unit_amount: 180000, // $1,800
-      },
+    // Determine which retreat pricing to use
+    const isJasper = retreat_type === 'jasper';
+
+    // Costa Rica pricing (in cents)
+    const costaRicaPricing = {
+      'Full - Early Bird': { name: 'Full - Early Bird', unit_amount: 479000 }, // $4,790
+      'Full - Standard': { name: 'Full - Standard', unit_amount: 549000 },     // $5,490
+      'Full - Late': { name: 'Full - Late', unit_amount: 595000 },             // $5,950
+      'Deposit': { name: 'Deposit', unit_amount: 180000 },                     // $1,800
     };
 
+    // Jasper pricing (in cents)
+    const jasperPricing = {
+      'Full - Early Bird': { name: 'Full - Early Bird', unit_amount: 325000 }, // $3,250
+      'Full - Standard': { name: 'Full - Standard', unit_amount: 400000 },     // $4,000
+      'Full - Late': { name: 'Full - Late', unit_amount: 425000 },             // $4,250
+      'Deposit': { name: 'Deposit', unit_amount: 100000 },                     // $1,000
+    };
+
+    // Select the correct pricing based on retreat type
+    const basePricing = isJasper ? jasperPricing : costaRicaPricing;
     const selectedPricing = basePricing[planLabel as keyof typeof basePricing];
-    
-    // Apply $300 discount for bringing own camera (for non-deposit plans only)
-    const cameraDiscount = 30000; // $300 in cents
-    let finalAmount = selectedPricing.unit_amount;
-    let discountApplied = false;
-    
-    if (bring_own_camera && planLabel !== 'Deposit') {
-      finalAmount -= cameraDiscount;
-      discountApplied = true;
-    }
-    
+
     if (!selectedPricing) {
       return NextResponse.json(
         { error: 'Invalid plan label' },
         { status: 400 }
       );
+    }
+
+    // Apply $300 discount for bringing own camera (Costa Rica only, non-deposit plans only)
+    const cameraDiscount = 30000; // $300 in cents
+    let finalAmount = selectedPricing.unit_amount;
+    let discountApplied = false;
+
+    if (bring_own_camera && !isJasper && planLabel !== 'Deposit') {
+      finalAmount -= cameraDiscount;
+      discountApplied = true;
     }
     const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
 
@@ -89,9 +90,11 @@ export async function POST(request: NextRequest) {
             currency: 'usd',
             product_data: {
               name: discountApplied ? `${selectedPricing.name} (w/ Camera Discount)` : selectedPricing.name,
-              description: discountApplied ? 
-                '9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera' :
-                '9-day Christian filmmaking retreat in Costa Rica',
+              description: isJasper
+                ? `3-day church media retreat in Jasper, GA - ${retreat_start}`
+                : discountApplied
+                  ? `9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera - ${retreat_start}`
+                  : `9-day Christian filmmaking retreat in Costa Rica - ${retreat_start}`,
             },
             unit_amount: finalAmount,
           },
@@ -131,8 +134,9 @@ export async function POST(request: NextRequest) {
         special_requests: (special_requests || '').substring(0, 500),
         // Retreat details
         retreat: retreat || 'Born to Create Project Retreat',
-        retreat_start: retreat_start || 'February 20-28, 2026',
-        retreat_location: retreat_location || 'Costa Rica',
+        retreat_start: retreat_start || '',
+        retreat_location: retreat_location || '',
+        retreat_type: retreat_type || 'costa-rica',
       },
     });
 

@@ -36,14 +36,14 @@ export const RETREATS: Record<string, RetreatData> = {
     title: 'Costa Rica Retreat',
     country: 'Costa Rica',
     city: 'San José • Jacó • Santiago de Puriscal',
-    startDate: '2026-02-20',
-    endDate: '2026-02-28',
+    startDate: '2026-02-13',
+    endDate: '2026-02-21',
     theme: 'Fundamentals of Documentary',
     heroImage: '/images/hero-costa-rica.jpg',
     ogImage: '/images/og-costa-rica.jpg',
     registerUrl: '/register',
     emailCtaText: 'Join the Email List',
-    seoDescription: 'Costa Rica 9-day filmmaking retreat Feb 20-28, 2026. Faith-forward documentary fundamentals in breathtaking locations.',
+    seoDescription: 'Costa Rica 9-day filmmaking retreat. Two sessions: Feb 13-21 & Apr 17-25, 2026. Faith-forward documentary fundamentals in breathtaking locations.',
     overview: 'Where creativity meets calling. Join us for a transformative filmmaking and storytelling retreat in the heart of Costa Rica\'s breathtaking landscapes.',
     learningOutcomes: [
       'Master documentary fundamentals and storytelling techniques',
@@ -111,7 +111,7 @@ export const RETREATS: Record<string, RetreatData> = {
     faqs: [
       {
         question: 'What are the exact dates?',
-        answer: 'The Costa Rica retreat runs from February 20-28, 2026 (Friday to Saturday, 9 days total).'
+        answer: 'The Costa Rica retreat is offered twice. Session 1 runs February 13-21, 2026. Session 2 runs April 17-25, 2026. Both are 9 days total.'
       },
       {
         question: 'What\'s included in the retreat?',

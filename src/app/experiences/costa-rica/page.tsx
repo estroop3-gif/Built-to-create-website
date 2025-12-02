@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Costa Rica Experience — The Born to Create Project',
-  description: 'Costa Rica 9-Day Filmmaking Retreat — February 20-28, 2026',
+  description: 'Costa Rica 9-Day Filmmaking Retreat — Two sessions: February 13-21 & April 17-25, 2026',
 };
 
 export default function CostaRicaExperience() {

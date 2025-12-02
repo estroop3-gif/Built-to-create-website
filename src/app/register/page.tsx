@@ -1,18 +1,20 @@
 'use client';
 
-// import { Metadata } from 'next';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { pricing, DEPOSIT, getCurrentTotal, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, LATE_TOTAL, getActiveWindow } from '@/lib/pricing';
+import { JASPER_DEPOSIT, getJasperCurrentTotal, isJasperAfterFullPaymentDeadline, calculateJasperRemainingBalance, formatJasperPaymentDate, JASPER_FULL_PAYMENT_DEADLINE, JASPER_LATE_TOTAL, getJasperActiveWindow } from '@/lib/jasperPricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-// const metadata: Metadata = {
-//   title: 'Register - Costa Rica Filmmaking Retreat | The Born to Create Project',
-//   description: 'Register for the Costa Rica 9-day filmmaking retreat. Complete equipment kit included or save $300 by bringing your own camera.',
-// };
+type RetreatType = 'costa-rica' | 'jasper';
+type CostaRicaSession = 'session-1' | 'session-2' | '';
+type JasperSession = 'session-1' | 'session-2' | '';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
+    retreat: '' as RetreatType | '',
+    costaRicaSession: '' as CostaRicaSession,
+    jasperSession: '' as JasperSession,
     firstName: '',
     lastName: '',
     email: '',
@@ -27,36 +29,70 @@ export default function RegisterPage() {
     paymentOption: 'deposit'
   });
 
-  // const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showRefundModal, setShowRefundModal] = useState(false);
 
-  // Force full payment if after deadline
+  // Force full payment if after deadline for selected retreat
   useEffect(() => {
-    if (isAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
+    if (formData.retreat === 'costa-rica' && isAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
+      setFormData({ ...formData, paymentOption: 'full' });
+    }
+    if (formData.retreat === 'jasper' && isJasperAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
       setFormData({ ...formData, paymentOption: 'full' });
     }
   }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
-    });
+    const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+
+    // Reset sessions when retreat changes
+    if (name === 'retreat') {
+      setFormData({
+        ...formData,
+        [name]: newValue,
+        costaRicaSession: '',
+        jasperSession: '',
+        bringOwnCamera: false // Reset camera option when switching retreats
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: newValue
+      });
+    }
   };
 
   const getBaseTuition = () => {
-    return LATE_TOTAL; // Always use late price as base
+    if (formData.retreat === 'jasper') {
+      return JASPER_LATE_TOTAL;
+    }
+    return LATE_TOTAL;
   };
 
   const getDiscount = () => {
-    const baseTuition = getBaseTuition();
+    if (formData.retreat === 'jasper') {
+      const baseTuition = JASPER_LATE_TOTAL;
+      const currentPrice = getJasperCurrentTotal();
+      return baseTuition - currentPrice;
+    }
+    const baseTuition = LATE_TOTAL;
     const currentPrice = getCurrentTotal();
     return baseTuition - currentPrice;
   };
 
   const getDiscountLabel = () => {
+    if (formData.retreat === 'jasper') {
+      const activeWindow = getJasperActiveWindow();
+      switch (activeWindow) {
+        case 'EARLY_BIRD':
+          return 'Early Bird Discount';
+        case 'STANDARD':
+          return 'Standard Pricing Discount';
+        default:
+          return null;
+      }
+    }
     const activeWindow = getActiveWindow();
     switch (activeWindow) {
       case 'EARLY_BIRD':
@@ -69,8 +105,9 @@ export default function RegisterPage() {
   };
 
   const calculateSubtotal = () => {
-    let total = getCurrentTotal();
-    if (formData.bringOwnCamera) {
+    let total = formData.retreat === 'jasper' ? getJasperCurrentTotal() : getCurrentTotal();
+    // Only apply camera discount for Costa Rica
+    if (formData.retreat === 'costa-rica' && formData.bringOwnCamera) {
       total -= pricing.cameraDiscount;
     }
     return total;
@@ -81,57 +118,78 @@ export default function RegisterPage() {
   };
 
   const calculateDeposit = () => {
-    return DEPOSIT;
+    return formData.retreat === 'jasper' ? JASPER_DEPOSIT : DEPOSIT;
   };
 
   const calculateDueToday = () => {
-    if (formData.paymentOption === 'full' || isAfterFullPaymentDeadline()) {
-      // For full payment, charge the total
+    const isAfterDeadline = formData.retreat === 'jasper'
+      ? isJasperAfterFullPaymentDeadline()
+      : isAfterFullPaymentDeadline();
+
+    if (formData.paymentOption === 'full' || isAfterDeadline) {
       return calculateTotal();
     }
     return calculateDeposit();
   };
 
   const getRemainingBalance = () => {
-    if (formData.paymentOption === 'full' || isAfterFullPaymentDeadline()) {
+    const isAfterDeadline = formData.retreat === 'jasper'
+      ? isJasperAfterFullPaymentDeadline()
+      : isAfterFullPaymentDeadline();
+
+    if (formData.paymentOption === 'full' || isAfterDeadline) {
       return 0;
+    }
+
+    if (formData.retreat === 'jasper') {
+      return calculateJasperRemainingBalance(calculateTotal());
     }
     return calculateRemainingBalance(calculateTotal());
   };
 
-  // const getSelectedPaymentOption = () => {
-  //   return paymentOptions[0];
-  // };
-
-  // const calculateMonthlyPayment = () => {
-  //   return 0;
-  // };
-
-  // const getRemainingPaymentCount = () => {
-  //   return 0;
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!formData.retreat) {
+      alert('Please select a retreat');
+      return;
+    }
+
+    if (formData.retreat === 'costa-rica' && !formData.costaRicaSession) {
+      alert('Please select a Costa Rica session');
+      return;
+    }
+
+    if (formData.retreat === 'jasper' && !formData.jasperSession) {
+      alert('Please select a Jasper session');
+      return;
+    }
+
     if (!formData.email) {
       alert('Please enter your email address');
       return;
     }
-    
+
     // Force full payment if after deadline
-    if (isAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
+    const isAfterDeadline = formData.retreat === 'jasper'
+      ? isJasperAfterFullPaymentDeadline()
+      : isAfterFullPaymentDeadline();
+
+    if (isAfterDeadline && formData.paymentOption === 'deposit') {
       setFormData({ ...formData, paymentOption: 'full' });
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       // Determine the correct plan label based on current pricing tier and payment option
-      const activeWindow = getActiveWindow();
+      const activeWindow = formData.retreat === 'jasper'
+        ? getJasperActiveWindow()
+        : getActiveWindow();
+
       let planLabel = '';
-      
+
       if (formData.paymentOption === 'deposit') {
         planLabel = 'Deposit';
       } else {
@@ -147,6 +205,29 @@ export default function RegisterPage() {
             break;
           default:
             planLabel = 'Full - Standard';
+        }
+      }
+
+      // Determine retreat details
+      let retreatName = '';
+      let retreatDates = '';
+      let retreatLocation = '';
+
+      if (formData.retreat === 'costa-rica') {
+        retreatName = 'Born to Create Project - Costa Rica';
+        retreatLocation = 'Costa Rica';
+        if (formData.costaRicaSession === 'session-1') {
+          retreatDates = 'Session 1: February 13-21, 2026';
+        } else {
+          retreatDates = 'Session 2: April 17-25, 2026';
+        }
+      } else if (formData.retreat === 'jasper') {
+        retreatName = 'Born to Create Project - Jasper, GA';
+        retreatLocation = 'Jasper, Georgia';
+        if (formData.jasperSession === 'session-1') {
+          retreatDates = 'Session 1: January 28-30, 2026 (Travel: Jan 27 & 31)';
+        } else {
+          retreatDates = 'Session 2: May 6-8, 2026 (Travel: May 5 & 9)';
         }
       }
 
@@ -172,15 +253,18 @@ export default function RegisterPage() {
           emergency_contact_phone: formData.emergencyPhone,
           emergency_contact_relationship: '',
           experience_level: formData.experience,
-          bring_own_camera: formData.bringOwnCamera,
+          bring_own_camera: formData.retreat === 'costa-rica' ? formData.bringOwnCamera : false,
           camera_equipment_details: '',
           dietary_restrictions: formData.dietaryNotes,
           medical_conditions: '',
           how_did_you_hear: '',
           special_requests: formData.goals,
-          retreat: 'Born to Create Project Retreat',
-          retreat_start: 'February 20-28, 2026',
-          retreat_location: 'Costa Rica'
+          retreat: retreatName,
+          retreat_start: retreatDates,
+          retreat_location: retreatLocation,
+          retreat_type: formData.retreat,
+          costa_rica_session: formData.retreat === 'costa-rica' ? formData.costaRicaSession : undefined,
+          jasper_session: formData.retreat === 'jasper' ? formData.jasperSession : undefined
         }),
       });
 
@@ -201,17 +285,27 @@ export default function RegisterPage() {
     }
   };
 
-  // Removed submitted state - now redirects directly to Stripe checkout
+  const getPaymentDeadline = () => {
+    return formData.retreat === 'jasper'
+      ? formatJasperPaymentDate(JASPER_FULL_PAYMENT_DEADLINE)
+      : formatPaymentDate(FULL_PAYMENT_DEADLINE);
+  };
+
+  const isAfterDeadlineForSelectedRetreat = () => {
+    return formData.retreat === 'jasper'
+      ? isJasperAfterFullPaymentDeadline()
+      : isAfterFullPaymentDeadline();
+  };
 
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-forest/20 to-sage/30 nature-texture opacity-20"></div>
-        
+
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Register</h1>
+          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Register for a Retreat</h1>
           <p className="text-xl text-charcoal/70">
-            Secure your spot for the Costa Rica filmmaking retreat
+            Use this form to register for any of our current retreats. Start by choosing your retreat and dates, then tell us who you are and how we can best serve you.
           </p>
         </div>
       </section>
@@ -222,6 +316,72 @@ export default function RegisterPage() {
             <div className="lg:col-span-2">
               <div className="bg-cream rounded-2xl p-8 shadow-lg">
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Retreat Selection */}
+                  <div className="border-b border-stone/20 pb-6">
+                    <h3 className="text-lg font-semibold text-charcoal mb-4">Choose Your Retreat</h3>
+
+                    <div>
+                      <label htmlFor="retreat" className="block text-sm font-semibold text-charcoal mb-2">
+                        Select Retreat *
+                      </label>
+                      <select
+                        id="retreat"
+                        name="retreat"
+                        required
+                        value={formData.retreat}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                      >
+                        <option value="">Choose a retreat...</option>
+                        <option value="costa-rica">Costa Rica – Filmmaking Retreat</option>
+                        <option value="jasper">Jasper, GA – Church Media Retreat</option>
+                      </select>
+                    </div>
+
+                    {/* Costa Rica Session Selection */}
+                    {formData.retreat === 'costa-rica' && (
+                      <div className="mt-4">
+                        <label htmlFor="costaRicaSession" className="block text-sm font-semibold text-charcoal mb-2">
+                          Select Session *
+                        </label>
+                        <select
+                          id="costaRicaSession"
+                          name="costaRicaSession"
+                          required
+                          value={formData.costaRicaSession}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                        >
+                          <option value="">Choose a session...</option>
+                          <option value="session-1">Session 1 – February 13–21, 2026 (9 days)</option>
+                          <option value="session-2">Session 2 – April 17–25, 2026 (9 days)</option>
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Jasper Session Selection */}
+                    {formData.retreat === 'jasper' && (
+                      <div className="mt-4">
+                        <label htmlFor="jasperSession" className="block text-sm font-semibold text-charcoal mb-2">
+                          Select Session *
+                        </label>
+                        <select
+                          id="jasperSession"
+                          name="jasperSession"
+                          required
+                          value={formData.jasperSession}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                        >
+                          <option value="">Choose a session...</option>
+                          <option value="session-1">Session 1 – Retreat January 28–30, 2026 (Travel January 27 and 31)</option>
+                          <option value="session-2">Session 2 – Retreat May 6–8, 2026 (Travel May 5 and 9)</option>
+                        </select>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Personal Information */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-semibold text-charcoal mb-2">
@@ -381,23 +541,26 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="border-t border-stone/20 pt-6">
-                    <h3 className="text-lg font-semibold text-charcoal mb-4">Equipment & Accommodation</h3>
-                    
+                    <h3 className="text-lg font-semibold text-charcoal mb-4">Equipment & Payment</h3>
+
                     <div className="space-y-4">
-                      <div className="flex items-start">
-                        <input
-                          type="checkbox"
-                          id="bringOwnCamera"
-                          name="bringOwnCamera"
-                          checked={formData.bringOwnCamera}
-                          onChange={handleChange}
-                          className="mt-1 mr-3"
-                        />
-                        <label htmlFor="bringOwnCamera" className="text-sm text-charcoal">
-                          <strong>I'll bring my own camera equipment</strong><br />
-                          <span className="text-sage font-semibold">Save $300 on tuition</span>
-                        </label>
-                      </div>
+                      {/* Bring Own Camera - Costa Rica Only */}
+                      {formData.retreat === 'costa-rica' && (
+                        <div className="flex items-start">
+                          <input
+                            type="checkbox"
+                            id="bringOwnCamera"
+                            name="bringOwnCamera"
+                            checked={formData.bringOwnCamera}
+                            onChange={handleChange}
+                            className="mt-1 mr-3"
+                          />
+                          <label htmlFor="bringOwnCamera" className="text-sm text-charcoal">
+                            <strong>I'll bring my own camera equipment</strong><br />
+                            <span className="text-sage font-semibold">Save $300 on tuition</span>
+                          </label>
+                        </div>
+                      )}
 
                       <div>
                         <label htmlFor="paymentOption" className="block text-sm font-semibold text-charcoal mb-2">
@@ -410,17 +573,17 @@ export default function RegisterPage() {
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
                         >
-                          <option value="deposit" disabled={isAfterFullPaymentDeadline()}>Deposit Only (Required Today)</option>
+                          <option value="deposit" disabled={isAfterDeadlineForSelectedRetreat()}>Deposit Only (Required Today)</option>
                           <option value="full">Pay Full Amount Today</option>
                         </select>
                       </div>
 
-                      {formData.paymentOption === 'deposit' && !isAfterFullPaymentDeadline() && (
+                      {formData.paymentOption === 'deposit' && !isAfterDeadlineForSelectedRetreat() && (
                         <div className="bg-sand-50 p-4 rounded-lg border border-sand-200">
                           <h4 className="text-sm font-semibold text-charcoal mb-2">Payment Schedule</h4>
                           <div className="space-y-1 text-sm text-charcoal/70">
-                            <p>Deposit due today: ${DEPOSIT.toLocaleString()}</p>
-                            <p>Remaining balance due by: {formatPaymentDate(FULL_PAYMENT_DEADLINE)}</p>
+                            <p>Deposit due today: ${calculateDeposit().toLocaleString()}</p>
+                            <p>Remaining balance due by: {getPaymentDeadline()}</p>
                             <div className="flex flex-col space-y-1">
                               <button
                                 type="button"
@@ -445,7 +608,7 @@ export default function RegisterPage() {
 
                   <button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={isLoading || !formData.retreat}
                     className="w-full bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-forest-500 hover:text-white focus:bg-forest-500 focus:text-white active:bg-forest-500 active:text-white focus:outline-none focus:ring-2 focus:ring-forest-400 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {isLoading ? (
@@ -467,57 +630,61 @@ export default function RegisterPage() {
             <div className="lg:col-span-1">
               <div className="bg-forest text-cream rounded-2xl p-6 shadow-lg sticky top-24">
                 <h2 className="text-xl font-bold mb-4">Registration Summary</h2>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>Base tuition:</span>
-                    <span>${getBaseTuition().toLocaleString()}</span>
-                  </div>
-                  
-                  {getDiscount() > 0 && (
-                    <div className="flex justify-between text-sage">
-                      <span>{getDiscountLabel()}:</span>
-                      <span>-${getDiscount().toLocaleString()}</span>
-                    </div>
-                  )}
-                  
-                  {formData.bringOwnCamera && (
-                    <div className="flex justify-between text-sage">
-                      <span>Camera discount:</span>
-                      <span>-${pricing.cameraDiscount}</span>
-                    </div>
-                  )}
-                  
-                  <div className="border-t border-cream/20 pt-3">
+
+                {formData.retreat ? (
+                  <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
-                      <span>Subtotal:</span>
-                      <span>
-                        ${calculateSubtotal().toLocaleString()}
-                        {getDiscountLabel() && <span className="text-sage text-xs ml-2">{getDiscountLabel()} Applied</span>}
-                      </span>
+                      <span>Base tuition:</span>
+                      <span>${getBaseTuition().toLocaleString()}</span>
                     </div>
+
+                    {getDiscount() > 0 && (
+                      <div className="flex justify-between text-sage">
+                        <span>{getDiscountLabel()}:</span>
+                        <span>-${getDiscount().toLocaleString()}</span>
+                      </div>
+                    )}
+
+                    {formData.retreat === 'costa-rica' && formData.bringOwnCamera && (
+                      <div className="flex justify-between text-sage">
+                        <span>Camera discount:</span>
+                        <span>-${pricing.cameraDiscount}</span>
+                      </div>
+                    )}
+
+                    <div className="border-t border-cream/20 pt-3">
+                      <div className="flex justify-between">
+                        <span>Subtotal:</span>
+                        <span>
+                          ${calculateSubtotal().toLocaleString()}
+                          {getDiscountLabel() && <span className="text-sage text-xs ml-2">{getDiscountLabel()} Applied</span>}
+                        </span>
+                      </div>
+                    </div>
+
+                    {formData.paymentOption === 'deposit' && (
+                      <div className="flex justify-between">
+                        <span>Non-refundable deposit:</span>
+                        <span>${calculateDeposit().toLocaleString()}</span>
+                      </div>
+                    )}
+
+                    <div className="border-t border-cream/20 pt-3">
+                      <div className="flex justify-between font-semibold">
+                        <span>Due Today:</span>
+                        <span>${calculateDueToday().toLocaleString()}</span>
+                      </div>
+                    </div>
+
+                    {formData.paymentOption === 'deposit' && !isAfterDeadlineForSelectedRetreat() && getRemainingBalance() > 0 && (
+                      <div className="text-cream/90 text-sm mt-2">
+                        <p>Remaining balance ${getRemainingBalance().toLocaleString()} due by {getPaymentDeadline()}</p>
+                      </div>
+                    )}
                   </div>
-                  
-                  {formData.paymentOption === 'deposit' && (
-                    <div className="flex justify-between">
-                      <span>Non-refundable deposit:</span>
-                      <span>${calculateDeposit().toLocaleString()}</span>
-                    </div>
-                  )}
-                  
-                  <div className="border-t border-cream/20 pt-3">
-                    <div className="flex justify-between font-semibold">
-                      <span>Due Today:</span>
-                      <span>${calculateDueToday().toLocaleString()}</span>
-                    </div>
-                  </div>
-                  
-                  {formData.paymentOption === 'deposit' && !isAfterFullPaymentDeadline() && getRemainingBalance() > 0 && (
-                    <div className="text-cream/90 text-sm mt-2">
-                      <p>Remaining balance ${getRemainingBalance().toLocaleString()} due by {formatPaymentDate(FULL_PAYMENT_DEADLINE)}</p>
-                    </div>
-                  )}
-                </div>
+                ) : (
+                  <p className="text-cream/70 text-sm">Please select a retreat to see pricing details.</p>
+                )}
 
                 <div className="mt-6 p-4 bg-cream/10 rounded-lg">
                   <p className="text-xs text-cream/90">

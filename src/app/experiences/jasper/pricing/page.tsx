@@ -9,7 +9,13 @@ export default function JasperPricingPage() {
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-forest/20 to-sage/30 nature-texture opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-sage/30 to-sand nature-texture opacity-20"></div>
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{
+            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+          }}
+        ></div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Jasper Retreat Pricing</h1>
@@ -17,8 +23,9 @@ export default function JasperPricingPage() {
             Clear tiered pricing for the Jasper, Georgia filmmaking retreat so you can plan your investment with confidence.
           </p>
           <div className="text-lg text-charcoal/80 space-y-1">
-            <p><strong>Retreat Dates:</strong> January 28-30, 2026</p>
-            <p className="text-base text-charcoal/70">Arrival: January 27 • Departure: January 31</p>
+            <p><strong>Session 1:</strong> January 28-30, 2026 • Travel: Jan 27 & 31</p>
+            <p><strong>Session 2:</strong> May 6-8, 2026 • Travel: May 5 & 9</p>
+            <p className="text-base text-charcoal/70">Pricing shown applies to both sessions</p>
           </div>
         </div>
       </section>

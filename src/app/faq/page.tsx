@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import FAQItem from '@/components/FAQItem';
-import { faqData } from '@/lib/faq';
+import { costaRicaFaqData, jasperFaqData } from '@/lib/faq';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Costa Rica Filmmaking Retreat | The Born to Create Project',
-  description: 'Frequently asked questions about the Costa Rica filmmaking retreat. Equipment, travel, pricing, and logistics information.',
+  title: 'FAQ - Retreat Information | The Born to Create Project',
+  description: 'Frequently asked questions about the Costa Rica and Jasper, GA filmmaking retreats. Equipment, travel, pricing, and logistics information.',
 };
 
 export default function FAQPage() {
@@ -16,17 +16,35 @@ export default function FAQPage() {
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">FAQ</h1>
           <p className="text-xl text-charcoal/70">
-            Common questions about your Costa Rica filmmaking adventure
+            Common questions about our retreats
           </p>
         </div>
       </section>
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-cream rounded-2xl p-8 shadow-lg">
-            {faqData.map((faq, index) => (
-              <FAQItem key={index} question={faq.question} answer={faq.answer} />
-            ))}
+          {/* Costa Rica FAQ Section */}
+          <div className="mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-charcoal mb-8 text-center">
+              Costa Rica Retreat FAQ
+            </h2>
+            <div className="bg-cream rounded-2xl p-8 shadow-lg">
+              {costaRicaFaqData.map((faq, index) => (
+                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </div>
+          </div>
+
+          {/* Jasper, GA FAQ Section */}
+          <div className="mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-charcoal mb-8 text-center">
+              Jasper, GA Retreat FAQ
+            </h2>
+            <div className="bg-cream rounded-2xl p-8 shadow-lg">
+              {jasperFaqData.map((faq, index) => (
+                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </div>
           </div>
 
           <div className="mt-12 text-center bg-sand/30 rounded-xl p-8">

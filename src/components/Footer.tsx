@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Container from './Container';
 
@@ -16,15 +19,28 @@ const footerNavigation = {
     { name: 'Contact', href: '/contact' },
     { name: 'Register', href: '/register' },
   ],
-  retreats: [
-    { name: 'Costa Rica', href: '/retreats/costa-rica' },
-    { name: 'Greece', href: '/retreats/greece' },
-    { name: 'Africa', href: '/retreats/africa' },
-    { name: 'Japan', href: '/retreats/japan' },
-    { name: 'Panama', href: '/retreats/panama' },
-    { name: 'London', href: '/retreats/london' },
-    { name: 'Germany', href: '/retreats/germany' },
-    { name: 'Thailand', href: '/retreats/thailand' },
+  experiences: [
+    {
+      name: 'Costa Rica',
+      items: [
+        { name: 'Overview', href: '/experiences/costa-rica' },
+        { name: 'Itinerary', href: '/experiences/costa-rica/itinerary' },
+        { name: 'Pricing', href: '/experiences/costa-rica/pricing' },
+        { name: 'Packing', href: '/experiences/costa-rica/packing' },
+        { name: 'Travel', href: '/experiences/costa-rica/travel' },
+      ]
+    },
+    {
+      name: 'Jasper, GA',
+      items: [
+        { name: 'Overview', href: '/experiences/jasper' },
+        { name: 'Itinerary', href: '/experiences/jasper/itinerary' },
+        { name: 'Pricing', href: '/experiences/jasper/pricing' },
+        { name: 'Packing', href: '/experiences/jasper/packing' },
+        { name: 'Travel', href: '/experiences/jasper/travel' },
+        { name: 'Church Media Toolkit', href: '/experiences/jasper/what-you-bring-back' },
+      ]
+    },
   ],
   social: [
     {
@@ -45,6 +61,8 @@ const footerNavigation = {
 };
 
 export default function Footer() {
+  const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
+
   return (
     <footer className="bg-sand-100 paper-texture border-t border-sand-200">
       <Container size="xl" className="py-20">
@@ -85,20 +103,42 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Retreats */}
+            {/* Experiences */}
             <div>
               <h3 className="font-heading text-lg font-bold text-ink-900 mb-6">
-                Retreats
+                Experiences
               </h3>
               <ul className="space-y-4">
-                {footerNavigation.retreats.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg"
+                {footerNavigation.experiences.map((experience) => (
+                  <li key={experience.name} className="flex flex-col items-center">
+                    <button
+                      onClick={() => setExpandedExperience(expandedExperience === experience.name ? null : experience.name)}
+                      className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg font-semibold flex items-center gap-2"
                     >
-                      {item.name}
-                    </Link>
+                      {experience.name}
+                      <svg
+                        className={`w-4 h-4 transition-transform ${expandedExperience === experience.name ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {expandedExperience === experience.name && (
+                      <ul className="mt-3 space-y-2">
+                        {experience.items.map((item) => (
+                          <li key={item.name} className="text-center">
+                            <Link
+                              href={item.href}
+                              className="font-body text-sm text-ink-600 hover:text-forest-700 transition-colors duration-200"
+                            >
+                              {item.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -157,11 +197,11 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Retreat Details */}
+          {/* Experience Details */}
           <div className="mb-12 py-8 border-t border-b border-sand-300/50">
             <div className="font-body text-ink-600 text-lg">
-              <p className="mb-2">8 Global Retreat Destinations</p>
-              <p>Costa Rica • Greece • Africa • Japan • Panama • London • Germany • Thailand</p>
+              <p className="mb-2">2 Experience Destinations</p>
+              <p>Costa Rica • Jasper, GA</p>
             </div>
           </div>
 

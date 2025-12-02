@@ -1,5 +1,7 @@
 // Jasper, GA Retreat Pricing Configuration
-// Retreat dates: January 28-30, 2026 (with travel days January 27 and 31)
+// Session 1: January 28-30, 2026 (travel days January 27 and 31)
+// Session 2: May 6-8, 2026 (travel days May 5 and 9)
+// Note: Pricing shown currently applies to Session 1
 
 export const jasperPricingTiers = [
   {

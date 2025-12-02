@@ -34,7 +34,7 @@ export default function Home() {
             {/* Supporting Text */}
             <div className="space-y-4 mb-10">
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
-                Where creativity meets calling. Filmmakers, photographers, and storytellers gathering to pursue God, refine their craft, and create work that carries eternal weight.
+                Where creativity meets calling
               </p>
             </div>
 
@@ -44,7 +44,7 @@ export default function Home() {
 
             {/* Call to Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
-              <Button as="link" href="/experiences/costa-rica" size="lg" variant="primary">
+              <Button as="link" href="/experiences" size="lg" variant="primary">
                 Explore Experiences
               </Button>
               <Button as="link" href="#who-leads" size="lg" variant="ghost">
@@ -182,10 +182,19 @@ export default function Home() {
         <Container size="xl">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-              The Experiences
+              The Experience
             </h2>
+            <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
+              Each retreat offers a unique opportunity to reconnect with your creative spirit while immersed in purposeful environments—from vibrant international landscapes to quiet mountain settings—where you can step away from distraction and focus on what matters most.
+            </p>
+            <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
+              Over multiple transformative days, you'll learn fundamentals of filmmaking from industry professionals, collaborate with fellow creatives, and produce work that reflects your authentic voice and faith.
+            </p>
+            <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
+              Mornings begin with devotion and prayer; evenings may include testimony circles, worship nights, or reflection. Field work spans practical projects like travel sequences, portraits, interviews, testimonies, and worship coverage across real locations.
+            </p>
             <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
-              Each Born to Create Project retreat is built around a real location, a real story, and a clear creative challenge. No two trips are exactly the same, but they all share the same heartbeat: presence with God, excellence in craft, and community that continues long after you fly home.
+              You'll leave not just with sharpened skills, but with a renewed sense of calling and a community that will support your creative and spiritual journey long after the retreat ends.
             </p>
           </div>
 
@@ -227,7 +236,7 @@ export default function Home() {
                   variant="secondary"
                   className="group-hover:bg-sage-100 transition-colors duration-200"
                 >
-                  Learn More
+                  Explore Jasper
                 </Button>
               </div>
             </div>
@@ -238,7 +247,7 @@ export default function Home() {
           </p>
 
           <div className="text-center">
-            <Button as="link" href="/experiences/costa-rica" size="lg" variant="primary">
+            <Button as="link" href="/experiences" size="lg" variant="primary">
               View All Experiences
             </Button>
           </div>
@@ -296,8 +305,8 @@ export default function Home() {
               If you have questions about gear, skill level, travel, or whether a specific retreat is the right fit, reach out. We are happy to talk it through with you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button as="link" href="/experiences/costa-rica" size="lg" variant="primary">
-                Explore Costa Rica Experience
+              <Button as="link" href="/experiences" size="lg" variant="primary">
+                Explore Experiences
               </Button>
               <Button as="link" href="/contact" size="lg" variant="secondary">
                 Contact Us
