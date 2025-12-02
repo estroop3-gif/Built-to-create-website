@@ -5,11 +5,17 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import Section from '../Section';
 
+interface ActivityItem {
+  id: string;
+  created_at: string;
+  [key: string]: unknown;
+}
+
 interface DashboardStats {
   totalUsers: number;
   totalEnrollments: number;
   totalRetreatAccess: number;
-  recentActivity: any[];
+  recentActivity: ActivityItem[];
 }
 
 export default function AdminDashboard() {
@@ -176,7 +182,7 @@ export default function AdminDashboard() {
             </h2>
             <div className="space-y-3">
               {stats.recentActivity.length > 0 ? (
-                stats.recentActivity.map((activity: any) => (
+                stats.recentActivity.map((activity: ActivityItem) => (
                   <div key={activity.id} className="flex items-start space-x-3 p-3 bg-sage-50 rounded-lg">
                     <div className="flex-1">
                       <p className="font-body text-sm text-ink-900">

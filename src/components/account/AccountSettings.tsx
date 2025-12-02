@@ -34,8 +34,8 @@ export default function AccountSettings({ user }: AccountSettingsProps) {
       if (error) throw error;
 
       setMessage('Profile updated successfully!');
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsUpdating(false);
     }

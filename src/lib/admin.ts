@@ -40,7 +40,7 @@ export async function checkIsAdmin() {
   return profile?.is_admin || false;
 }
 
-export async function logAdminAction(action: string, target?: string, payload?: any) {
+export async function logAdminAction(action: string, target?: string, payload?: Record<string, unknown>) {
   const supabase = createClient();
 
   const { data: { user } } = await supabase.auth.getUser();

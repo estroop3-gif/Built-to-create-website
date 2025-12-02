@@ -427,7 +427,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
               </h3>
 
               <div className="space-y-3">
-                {userAccess.map((access: any) => (
+                {userAccess.map((access: { id: string; created_at: string; profiles?: { full_name: string; email: string }; [key: string]: unknown }) => (
                   <div key={access.id} className="flex items-center justify-between p-4 bg-sage-50 rounded-lg">
                     <div>
                       <p className="font-body font-medium text-ink-900">

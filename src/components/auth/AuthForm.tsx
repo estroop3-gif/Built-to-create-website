@@ -56,8 +56,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
           router.refresh();
         }
       }
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -79,8 +79,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
       if (error) throw error;
 
       setMessage('Check your email for a magic login link!');
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
