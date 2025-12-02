@@ -34,23 +34,15 @@ export default function JasperExperience() {
             {/* Main Heading */}
             <h1 className="font-heading font-bold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream-50 mb-8 leading-tight tracking-wide mt-8">
               <span className="block">JASPER, GEORGIA</span>
-              <span className="block">FILMMAKING RETREAT</span>
+              <span className="block">MEDIA LEADERS RETREAT</span>
             </h1>
 
             {/* Supporting Text */}
             <div className="space-y-4 mb-10">
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
-                A mountain retreat for Christian creatives who need focus, stillness, and a clear path forward in their craft.
+                A mountain retreat for church media leaders who need focus, stillness, and a clear path forward in their calling.
               </p>
             </div>
-
-            <p className="font-body text-base sm:text-lg text-cream-300/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Jasper, Georgia is a quiet mountain town at the gateway to the North Georgia mountains. The Jasper retreat is a focused, small group experience for filmmakers, photographers, and storytellers who want to step away from distraction, hear God clearly, and do real work with their cameras.
-            </p>
-
-            <p className="font-body text-base sm:text-lg text-cream-300/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Over this retreat you will plan, shoot, and edit a series of real ministry and community-driven pieces: testimonies, interviews, church coverage, and a short film that captures the heart of Jasper and what God is doing there. You will leave with usable footage, practical tools for your next season, and a deeper sense of calling as a creative.
-            </p>
 
             {/* Call to Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -62,13 +54,9 @@ export default function JasperExperience() {
               </Button>
             </div>
 
-            {/* Equipment Badge */}
-            <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-cream-200/20 text-cream-100 mb-20">
-              <div className="w-3 h-3 bg-forest-400 rounded-full mr-3"></div>
-              <span className="font-body text-sm font-medium">
-                Professional equipment kit included
-              </span>
-            </div>
+            <p className="font-body text-base sm:text-lg text-cream-300/90 mb-20 max-w-3xl mx-auto leading-relaxed">
+              Set in the quiet mountain town of Jasper, Georgia, this small group retreat is designed for media leaders and creatives serving in the local church who want to step away from distraction, hear God clearly, and sharpen their craft. Across three days you will capture real testimonies, interviews, worship and teaching coverage, and a short film, while learning simple, repeatable workflows you can take back home. You will leave with usable footage, practical systems for Sundays and special events, and a renewed vision for how your media team can serve your pastor, your people, and what God is doing in your church.
+            </p>
           </div>
         </Container>
       </section>
@@ -100,6 +88,12 @@ export default function JasperExperience() {
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Travel
+            </Link>
+            <Link
+              href="/experiences/jasper/what-you-bring-back"
+              className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
+            >
+              Church Media Toolkit
             </Link>
           </nav>
         </div>
