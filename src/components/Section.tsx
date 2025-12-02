@@ -6,6 +6,7 @@ interface SectionProps {
   containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   spacing?: 'sm' | 'md' | 'lg' | 'xl';
   background?: 'white' | 'cream' | 'sand' | 'sage' | 'forest';
+  id?: string;
 }
 
 const spacingClasses = {
@@ -23,15 +24,16 @@ const backgroundClasses = {
   forest: 'bg-forest-50 nature-texture',
 };
 
-export default function Section({ 
-  children, 
+export default function Section({
+  children,
   className = '',
   containerSize = 'lg',
   spacing = 'lg',
-  background = 'white'
+  background = 'white',
+  id
 }: SectionProps) {
   return (
-    <section className={`w-full ${spacingClasses[spacing]} ${backgroundClasses[background]} ${className}`}>
+    <section id={id} className={`w-full ${spacingClasses[spacing]} ${backgroundClasses[background]} ${className}`}>
       <Container size={containerSize}>
         <div className="flex flex-col items-center text-center">
           {children}

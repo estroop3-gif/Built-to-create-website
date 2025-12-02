@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getAllRetreats } from '@/lib/retreats';
+import { getAllRetreats, formatDateRange } from '@/lib/retreats';
 import Section from '../Section';
 
 export default function AdminRetreatsPage() {
@@ -43,7 +43,7 @@ export default function AdminRetreatsPage() {
                   {displayTitle}
                 </h3>
                 <p className="font-body text-ink-600 mb-4">
-                  {retreat.city} • {retreat.dates}
+                  {retreat.city} • {formatDateRange(retreat.startDate, retreat.endDate)}
                 </p>
                 <p className="font-body text-sm text-forest-600 font-medium mb-6">
                   {retreat.theme}

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { User } from '@supabase/supabase-js';
-import { RetreatData } from '@/lib/retreats';
+import { RetreatData, formatDateRange } from '@/lib/retreats';
 import Section from '../Section';
 
 interface RetreatAccountPageProps {
@@ -79,7 +79,7 @@ export default function RetreatAccountPage({ retreat, user }: RetreatAccountPage
             {retreat.title}
           </h2>
           <p className="font-body text-xl text-ink-600 mb-6">
-            {retreat.city} • {retreat.dates}
+            {retreat.city} • {formatDateRange(retreat.startDate, retreat.endDate)}
           </p>
           <div className="bg-sage-50 rounded-lg p-6 mb-8">
             <h3 className="font-heading text-xl font-bold text-ink-900 mb-4">
