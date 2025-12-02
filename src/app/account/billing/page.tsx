@@ -56,7 +56,7 @@ export default async function BillingPage() {
 
             {purchases && purchases.length > 0 ? (
               <div className="space-y-4">
-                {purchases.map((purchase: { id: string; created_at: string; products?: { name: string } }) => (
+                {purchases.map((purchase: { id: string; created_at: string; amount_cents: number; status: string; products?: { name: string } }) => (
                   <div key={purchase.id} className="bg-sage-50 rounded-lg p-6">
                     <div className="flex items-center justify-between">
                       <div>
