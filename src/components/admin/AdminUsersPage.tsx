@@ -39,8 +39,12 @@ export default function AdminUsersPage() {
         .order('created_at', { ascending: false });
 
       if (data) {
-        const usersWithCounts = data.map((user: { enrollments?: unknown[]; retreat_access?: unknown[]; [key: string]: unknown }) => ({
-          ...user,
+        const usersWithCounts = data.map((user: UserProfile & { enrollments?: unknown[]; retreat_access?: unknown[] }) => ({
+          id: user.id,
+          email: user.email,
+          full_name: user.full_name,
+          is_admin: user.is_admin,
+          created_at: user.created_at,
           enrollment_count: user.enrollments?.length || 0,
           retreat_count: user.retreat_access?.length || 0
         }));
