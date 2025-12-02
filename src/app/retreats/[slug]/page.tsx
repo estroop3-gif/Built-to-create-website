@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getRetreat, getAllRetreats, formatDateRange } from '@/lib/retreats';
+import { getRetreat, getAllRetreats } from '@/lib/retreats';
 import RetreatHero from '@/components/retreats/RetreatHero';
 import RetreatOverview from '@/components/retreats/RetreatOverview';
 import RetreatLearning from '@/components/retreats/RetreatLearning';

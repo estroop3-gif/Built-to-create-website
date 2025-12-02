@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllRetreats, formatDateRange } from '@/lib/retreats';
 import Section from '../Section';

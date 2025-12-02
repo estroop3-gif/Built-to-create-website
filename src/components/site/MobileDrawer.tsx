@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAV_ITEMS, NavItem } from '@/lib/navigation';
+import { NAV_ITEMS } from '@/lib/navigation';
 import HeaderCTA from './HeaderCTA';
 import Button from '../Button';
 

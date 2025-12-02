@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { getJasperPricingTiers, getJasperActiveWindow, getJasperCurrentTotal, calculateJasperDueToday, isJasperAfterFullPaymentDeadline, formatJasperPaymentDate, JASPER_RETREAT_START_DATE, JASPER_RETREAT_END_DATE, JASPER_ARRIVAL_TRAVEL_DATE, JASPER_DEPARTURE_TRAVEL_DATE, formatJasperDate } from '@/lib/jasperPricing';
+import { getJasperPricingTiers, getJasperActiveWindow, getJasperCurrentTotal, calculateJasperDueToday, isJasperAfterFullPaymentDeadline, formatJasperPaymentDate } from '@/lib/jasperPricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
 export default function JasperPricingPage() {

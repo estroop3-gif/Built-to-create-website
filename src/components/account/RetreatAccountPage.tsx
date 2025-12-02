@@ -33,7 +33,7 @@ const sectionTitles: Record<string, string> = {
 
 const travelSubsections = ['flights', 'lodging', 'safety', 'visa'];
 
-export default function RetreatAccountPage({ retreat, user }: RetreatAccountPageProps) {
+export default function RetreatAccountPage({ retreat }: RetreatAccountPageProps) {
   const [activeSection, setActiveSection] = useState('overview');
   const [content, setContent] = useState<Record<string, RetreatContent[]>>({});
   const [loading, setLoading] = useState(true);

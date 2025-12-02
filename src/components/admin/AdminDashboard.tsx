@@ -8,7 +8,11 @@ import Section from '../Section';
 interface ActivityItem {
   id: string;
   created_at: string;
-  [key: string]: unknown;
+  action: string;
+  target?: string;
+  profiles?: {
+    full_name: string;
+  };
 }
 
 interface DashboardStats {
