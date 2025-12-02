@@ -174,7 +174,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
     }
   }
 
-  async function revokeAccess(accessId: string, userEmail: string) {
+  async function revokeAccess(accessId: string, userEmail?: string) {
     try {
       const { error } = await supabase
         .from('retreat_access')
@@ -188,7 +188,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
         .from('audit_log')
         .insert({
           action: 'REVOKE_ACCESS',
-          target: `${retreat.slug}:${userEmail}`
+          target: `${retreat.slug}:${userEmail || 'unknown'}`
         });
 
       fetchData();
