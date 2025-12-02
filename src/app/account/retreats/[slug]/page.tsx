@@ -11,7 +11,7 @@ interface RetreatAccountPageProps {
 
 export default async function RetreatAccount({ params }: RetreatAccountPageProps) {
   const { slug } = await params;
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user }, error } = await supabase.auth.getUser();
 

@@ -45,7 +45,7 @@ export default function AccountDashboard({ user }: AccountDashboardProps) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   useEffect(() => {
     async function fetchUserData() {

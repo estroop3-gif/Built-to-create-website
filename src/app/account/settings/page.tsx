@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import AccountSettings from '@/components/account/AccountSettings';
 
 export default async function SettingsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user }, error } = await supabase.auth.getUser();
 

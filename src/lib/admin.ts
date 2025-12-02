@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 export async function requireAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user }, error } = await supabase.auth.getUser();
 
@@ -25,7 +25,7 @@ export async function requireAdmin() {
 }
 
 export async function checkIsAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -41,7 +41,7 @@ export async function checkIsAdmin() {
 }
 
 export async function logAdminAction(action: string, target?: string, payload?: Record<string, unknown>) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
 
