@@ -1,7 +1,8 @@
 import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { render } from '@react-email/render';
-import { resend, emailConfig } from '@/lib/emailClient';
+import { sendPromotionalEmail } from '@/lib/resend';
+import { emailConfig } from '@/lib/emailClient';
 
 // Import all marketing email templates
 import Marketing01Welcome from '@/emails/Marketing01Welcome';
@@ -238,22 +239,12 @@ class MarketingEmailService {
         };
       }
       
-      // Send via Resend
-      const fromEmail = process.env.FROM_EMAIL || emailConfig.from;
-      const emailData = await resend.emails.send({
-        from: fromEmail,
+      // Send via enhanced sendMail with proper deliverability headers
+      const emailData = await sendPromotionalEmail({
         to: email,
         subject: template.subject,
         html: renderedContent.html,
         text: renderedContent.text,
-        headers: {
-          'X-Preview-Text': template.preview_text,
-        },
-        tags: [
-          { name: 'campaign', value: 'costa-rica-retreat' },
-          { name: 'template', value: templateKey },
-          { name: 'sequence', value: template.order_sequence.toString() }
-        ]
       });
       
       if (emailData.error) {

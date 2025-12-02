@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import { sendTransactionalEmail } from '@/lib/resend'
 import fs from 'fs'
 
 export const runtime = 'nodejs'
@@ -18,8 +18,6 @@ export async function POST(request: Request) {
     const testEmail = searchParams.get('email') || 'test@example.com'
     const daysToTest = searchParams.get('days') || 'all'
 
-    const resend = new Resend(process.env.RESEND_API_KEY!)
-    const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'
     const EMAIL_BASE_URL = 'https://www.thebtcp.com'
 
     // Sample registrant data for testing
@@ -53,8 +51,7 @@ export async function POST(request: Request) {
       try {
         const emailData = generatePretripEmail(testRegistrant, daysAhead, EMAIL_BASE_URL)
         
-        const { error } = await resend.emails.send({
-          from: EMAIL_FROM,
+        const result = await sendTransactionalEmail({
           to: testRegistrant.email,
           subject: `[TEST] ${emailData.subject}`,
           html: emailData.html,
@@ -62,20 +59,21 @@ export async function POST(request: Request) {
           replyTo: 'parker@thebtcp.com'
         })
 
-        if (error) {
-          console.error(`❌ Failed to send test email (${daysAhead} days):`, error)
-          results.push({ 
-            daysAhead, 
-            status: 'failed', 
-            error: error.message 
+        if (result.error) {
+          console.error(`❌ Failed to send test email (${daysAhead} days):`, result.error)
+          results.push({
+            daysAhead,
+            status: 'failed',
+            error: result.error.message
           })
         } else {
           console.log(`✅ Test email sent for ${daysAhead} days ahead`)
           emailsSent++
-          results.push({ 
-            daysAhead, 
+          results.push({
+            daysAhead,
             status: 'sent',
-            subject: emailData.subject
+            subject: emailData.subject,
+            messageId: result.data?.id
           })
         }
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAV_ITEMS } from '@/lib/navigation';
+import { NAV_ITEMS, NavItem } from '@/lib/navigation';
 import HeaderCTA from './HeaderCTA';
 import Button from '../Button';
 
@@ -19,6 +19,7 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstFocusableRef = useRef<HTMLButtonElement>(null);
   const lastFocusableRef = useRef<HTMLAnchorElement>(null);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Handle focus trap
   useEffect(() => {
@@ -106,6 +107,14 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
     }
   };
 
+  const toggleExpanded = (label: string) => {
+    setExpandedItems(prev =>
+      prev.includes(label)
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    );
+  };
+
   const drawerClasses = `
     fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm
     transition-all duration-300 ease-in-out
@@ -165,15 +174,75 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
           {/* Navigation Links */}
           <nav className="space-y-1">
             {NAV_ITEMS.map((item, index) => {
-              const isActive = pathname === item.href;
               const isLast = index === NAV_ITEMS.length - 1;
 
+              // If item has children (dropdown), render as expandable button + submenu
+              if (item.children) {
+                const isExpanded = expandedItems.includes(item.label);
+                const hasActiveChild = item.children.some(child => pathname === child.href);
+
+                return (
+                  <div key={item.label}>
+                    <button
+                      onClick={() => toggleExpanded(item.label)}
+                      className={`
+                        w-full flex items-center justify-between py-3 px-3 text-lg font-medium rounded-md transition-colors duration-200
+                        focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2
+                        ${hasActiveChild
+                          ? 'text-forest-700 bg-forest-50 font-semibold'
+                          : 'text-ink-700 hover:text-forest-600 hover:bg-sage-50'
+                        }
+                      `}
+                      aria-expanded={isExpanded}
+                    >
+                      <span>{item.label}</span>
+                      <svg
+                        className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {isExpanded && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        {item.children.map((child) => {
+                          const isActive = pathname === child.href;
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href!}
+                              onClick={() => handleLinkClick(child.href!)}
+                              className={`
+                                block py-2 px-3 text-base font-medium rounded-md transition-colors duration-200
+                                focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2
+                                ${isActive
+                                  ? 'text-forest-700 bg-forest-50 font-semibold'
+                                  : 'text-ink-600 hover:text-forest-600 hover:bg-sage-50'
+                                }
+                              `}
+                              aria-current={isActive ? 'page' : undefined}
+                            >
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              // Regular nav item (no dropdown)
+              const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   ref={isLast ? lastFocusableRef : undefined}
-                  href={item.href}
-                  onClick={() => handleLinkClick(item.href)}
+                  href={item.href!}
+                  onClick={() => handleLinkClick(item.href!)}
                   className={`
                     block py-3 px-3 text-lg font-medium rounded-md transition-colors duration-200
                     focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2

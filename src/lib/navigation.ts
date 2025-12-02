@@ -1,11 +1,19 @@
-export const NAV_ITEMS = [
+export interface NavItem {
+  label: string;
+  href?: string;
+  children?: NavItem[];
+}
+
+export const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "The Experience", href: "/experience" },
-  { label: "Itinerary", href: "/itinerary" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Packing", href: "/packing" },
-  { label: "Travel", href: "/travel" },
+  {
+    label: "Experiences",
+    children: [
+      { label: "Costa Rica", href: "/experiences/costa-rica" },
+      { label: "Jasper, GA", href: "/experiences/jasper" }
+    ]
+  },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" }
 ];

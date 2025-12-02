@@ -2,7 +2,7 @@
 // Complete route to send a registration email via Resend to parker@thebtcp.com
 
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { sendTransactionalEmail } from '@/lib/resend';
 import { Registration } from '@/lib/types/database';
 
 // Required env:
@@ -14,18 +14,6 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    // Initialize Resend inside the handler to avoid build-time environment variable issues
-    const resend = new Resend(process.env.RESEND_API_KEY || '');
-    const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev'; // safe fallback
-    // Ensure RESEND_API_KEY is present
-    if (!process.env.RESEND_API_KEY) {
-      console.error('Missing RESEND_API_KEY');
-      return NextResponse.json(
-        { success: false, error: 'Server misconfigured: RESEND_API_KEY is missing' },
-        { status: 500 }
-      );
-    }
-
     const body = await request.json();
     const { registration, paymentAmount } = body as {
       registration: Registration;
@@ -44,26 +32,24 @@ export async function POST(request: NextRequest) {
     const emailHtml = generateRegistrationEmailHtml(registration, paymentAmount);
     const emailText = generateRegistrationEmailText(registration, paymentAmount);
 
-    // Send to Parker
-    const { data, error } = await resend.emails.send({
-      from: EMAIL_FROM, // must be a verified sender/domain in Resend
+    // Send to Parker using transactional email helper
+    const result = await sendTransactionalEmail({
       to: 'parker@thebtcp.com',
       subject: emailSubject,
       html: emailHtml,
       text: emailText,
-      // helpful to be able to reply to the registrant
       replyTo: registration.email || undefined,
     });
 
-    if (error) {
-      console.error('Resend error:', error);
+    if (result.error) {
+      console.error('Registration email error:', result.error);
       return NextResponse.json(
-        { success: false, error: 'Failed to send email through Resend' },
+        { success: false, error: 'Failed to send email' },
         { status: 502 }
       );
     }
 
-    return NextResponse.json({ success: true, messageId: data?.id || null });
+    return NextResponse.json({ success: true, messageId: result.data?.id || null });
   } catch (err) {
     console.error('Email sending error:', err);
     return NextResponse.json(

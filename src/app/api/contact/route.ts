@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { contactSchemaServer } from '@/lib/validation/contact';
 import { insertContactMessage } from '@/lib/supabase';
-import { resend, CONTACT_INBOX_EMAIL, CONTACT_FROM_EMAIL } from '@/lib/resend';
+import { sendTransactionalEmail, CONTACT_INBOX_EMAIL, CONTACT_FROM_EMAIL } from '@/lib/resend';
 import { checkRateLimit } from '@/lib/rateLimit';
+import { render } from '@react-email/render';
 import ContactNotification from '@/emails/ContactNotification';
 import ContactAcknowledgement from '@/emails/ContactAcknowledgement';
 
@@ -109,20 +110,21 @@ export async function POST(request: NextRequest) {
 
     // Send notification email to admin
     try {
-      await resend.emails.send({
-        from: `Born to Create Project <${CONTACT_FROM_EMAIL}>`,
+      const notificationHtml = await render(ContactNotification({
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        subject: validatedData.subject,
+        message: validatedData.message,
+        createdAt: now,
+        clientIp: validatedData.client_ip,
+        userAgent: validatedData.user_agent,
+      }));
+
+      await sendTransactionalEmail({
         to: CONTACT_INBOX_EMAIL,
         subject: `New Contact Form Submission — ${validatedData.subject}`,
-        react: ContactNotification({
-          name: validatedData.name,
-          email: validatedData.email,
-          phone: validatedData.phone,
-          subject: validatedData.subject,
-          message: validatedData.message,
-          createdAt: now,
-          clientIp: validatedData.client_ip,
-          userAgent: validatedData.user_agent,
-        }),
+        html: notificationHtml,
       });
     } catch (emailError) {
       console.error('Failed to send notification email:', emailError);
@@ -131,17 +133,18 @@ export async function POST(request: NextRequest) {
 
     // Send acknowledgement email to user
     try {
-      await resend.emails.send({
-        from: `Born to Create Project <${CONTACT_FROM_EMAIL}>`,
+      const acknowledgementHtml = await render(ContactAcknowledgement({
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        subject: validatedData.subject,
+        message: validatedData.message,
+      }));
+
+      await sendTransactionalEmail({
         to: validatedData.email,
         subject: 'We received your message',
-        react: ContactAcknowledgement({
-          name: validatedData.name,
-          email: validatedData.email,
-          phone: validatedData.phone,
-          subject: validatedData.subject,
-          message: validatedData.message,
-        }),
+        html: acknowledgementHtml,
       });
     } catch (emailError) {
       console.error('Failed to send acknowledgement email:', emailError);

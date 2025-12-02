@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { Resend } from 'resend';
+import { sendTransactionalEmail } from '@/lib/resend';
 import fs from 'fs';
 import { upsertRegistration, type RegistrationData } from '@/lib/supabaseAdmin';
 
@@ -14,9 +14,8 @@ if (process.env.NODE_ENV !== 'production' && isLiveKey(process.env.STRIPE_SECRET
 
 export async function POST(req: Request) {
   try {
-    // Initialize Stripe and Resend inside the handler to avoid build-time environment variable issues
+    // Initialize Stripe inside the handler to avoid build-time environment variable issues
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' });
-    const resend = new Resend(process.env.RESEND_API_KEY!);
     
     const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
     const SITE_URL = (process.env.SITE_URL || 'http://localhost:3000').replace(/\/+$/, ''); // no trailing slash
@@ -187,8 +186,7 @@ export async function POST(req: Request) {
         fs.writeFileSync('/tmp/client_email_rendered.txt', textCustomer);
         fs.writeFileSync('/tmp/client_email_meta.txt', `Subject: ${subjectCustomer}\nTo: ${clientEmail}\nFrom: ${EMAIL_FROM}\nReplyTo: parker@thebtcp.com`);
 
-        const { error } = await resend.emails.send({
-          from: EMAIL_FROM,
+        const result = await sendTransactionalEmail({
           to: clientEmail,
           subject: subjectCustomer,
           html: htmlCustomer,
@@ -196,8 +194,8 @@ export async function POST(req: Request) {
           replyTo: 'parker@thebtcp.com',
         });
 
-        if (error) {
-          console.error('Resend customer email error:', error);
+        if (result.error) {
+          console.error('Customer email error:', result.error);
         }
       }
 
@@ -212,8 +210,7 @@ export async function POST(req: Request) {
         fs.writeFileSync('/tmp/admin_email_rendered.txt', textAdmin);
         fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: parker@thebtcp.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${profile.email || 'undefined'}`);
 
-        const { error } = await resend.emails.send({
-          from: EMAIL_FROM,
+        const adminResult = await sendTransactionalEmail({
           to: 'parker@thebtcp.com',
           subject: subjectAdmin,
           html: htmlAdmin,
@@ -221,8 +218,8 @@ export async function POST(req: Request) {
           replyTo: profile.email || undefined,
         });
 
-        if (error) {
-          console.error('Resend admin email error:', error);
+        if (adminResult.error) {
+          console.error('Admin email error:', adminResult.error);
         }
       }
     }
