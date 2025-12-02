@@ -71,7 +71,7 @@ export default function Footer() {
             >
               The Born to Create Project
             </Link>
-            <p className="font-body text-sm text-ink-500 mt-2">A project by Second Watch Network</p>
+            <p className="font-body text-sm text-ink-500 mt-2">A project by Pillar Productions</p>
             <p className="font-body text-lg text-ink-600 mt-4 max-w-2xl mx-auto leading-relaxed">
               Where creativity meets calling. Join us for transformative filmmaking
               and storytelling retreats around the world.

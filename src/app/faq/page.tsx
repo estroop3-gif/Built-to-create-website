@@ -59,8 +59,8 @@ export default function FAQPage() {
               >
                 Email Us
               </a>
-              <a 
-                href="tel:+15551234567" 
+              <a
+                href="tel:+19413764605"
                 className="bg-charcoal text-cream px-6 py-3 rounded-full hover:bg-charcoal/90 transition-colors font-semibold"
               >
                 Call Us

@@ -43,10 +43,15 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: '/logo.svg',
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        url: '/favicon.svg',
         type: 'image/svg+xml',
       },
     ],
+    apple: '/favicon.svg',
   },
 };
 
