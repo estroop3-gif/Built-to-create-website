@@ -18,8 +18,28 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "The Born to Create Project",
-  description: "Costa Rica 9-Day Filmmaking Retreat",
+  title: "Born to Create Project — Christian Filmmaking Retreats & Online Course",
+  description: "A faith-forward filmmaking academy offering global retreats and online courses. Transform your storytelling through 9-day intensive retreats across 8 destinations including Costa Rica, Greece, Africa, Japan, Panama, United Kingdom, Germany, and Thailand. First retreat includes a $2,800 filmmaking kit. Online course: 1-Year Program $35,000 or $2,995/month, 2-Year Mastery Program Year 1 $35,000 or $2,995/month, Year 2 $32,000 or $2,795/month. Includes one-on-one mentorship sessions. Retreat tuition $5,950, returning students save $500 per retreat.",
+  keywords: ["filmmaking", "Christian filmmaking", "retreats", "online course", "storytelling", "faith-based", "video production", "cinematography", "Costa Rica", "Greece", "Africa", "Japan", "Panama", "United Kingdom", "Germany", "Thailand"],
+  openGraph: {
+    title: "Born to Create Project — Christian Filmmaking Retreats & Online Course",
+    description: "Transform your storytelling through faith-forward filmmaking education. Global retreats $5,950, online courses $35,000 or monthly plans available.",
+    type: "website",
+    images: [
+      {
+        url: "/images/og-home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Born to Create Project - Christian Filmmaking Academy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Born to Create Project — Christian Filmmaking Retreats & Online Course",
+    description: "Transform your storytelling through faith-forward filmmaking education. Global retreats $5,950, online courses $35,000 or monthly plans available.",
+    images: ["/images/og-home.jpg"],
+  },
   icons: {
     icon: [
       {

@@ -1,0 +1,65 @@
+import Container from '../Container';
+import Button from '../Button';
+import Image from 'next/image';
+
+export default function CourseHero() {
+  return (
+    <section className="relative min-h-[95vh] flex items-center justify-center bg-forest-900 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-costa-rica.jpg"
+          alt="Filmmaking equipment and creative workspace"
+          fill
+          className="object-cover"
+          priority
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSorjrdOzW2g=="
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 via-forest-900/60 to-forest-800/70"></div>
+      </div>
+
+      {/* Content */}
+      <Container className="relative z-10" size="lg">
+        <div className="text-center max-w-4xl mx-auto">
+          {/* Main Heading */}
+          <h1 className="font-heading font-bold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream-50 mb-8 leading-tight tracking-wide mt-8">
+            <span className="block">BORN TO CREATE PROJECT</span>
+            <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">ONLINE COURSE</span>
+          </h1>
+
+          {/* Supporting Text */}
+          <div className="space-y-4 mb-10">
+            <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
+              Coming Soon
+            </p>
+          </div>
+
+          <p className="font-body text-base sm:text-lg text-cream-300/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+            A year-long Christian filmmaking curriculum pairing craft with calling.
+            Master the fundamentals before your retreat adventure.
+          </p>
+
+          {/* Call to Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <Button as="link" href="#modules" size="lg" variant="ghost">
+              Explore Modules
+            </Button>
+            <Button as="link" href="#waitlist" size="lg" variant="primary">
+              Notify Me
+            </Button>
+          </div>
+
+          {/* Course Badge */}
+          <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-cream-200/20 text-cream-100 mb-20">
+            <div className="w-3 h-3 bg-forest-400 rounded-full mr-3"></div>
+            <span className="font-body text-sm font-medium">
+              Required for future retreat access
+            </span>
+          </div>
+        </div>
+      </Container>
+
+    </section>
+  );
+}

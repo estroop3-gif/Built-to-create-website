@@ -1,15 +1,18 @@
 # Born to Create Project
 
-Costa Rica 9-Day Filmmaking Retreat website built with Next.js 14 App Router, Supabase, and Resend.
+Global filmmaking retreat platform with 8 destinations and online course, built with Next.js 15 App Router, Supabase, and Resend.
 
 ## Features
 
+- **Multi-Destination Retreats**: 8 global filmmaking retreat destinations with dynamic routing
+- **Online Course Platform**: Coming soon page with waitlist functionality
 - **Email Marketing System**: Automated 9-stage email sequence with React Email templates
 - **Registration System**: Stripe integration with comprehensive form fields
 - **Internal Notifications**: Automatic notifications to parker@thebtcp.com for new signups
 - **Database**: Supabase with Row Level Security for leads, registrations, and email events
 - **Authentication**: Secure tokenized access for gear checklist
 - **Payment Processing**: Stripe integration with webhook handling
+- **Responsive Navigation**: Hamburger menu with dropdown support for retreat categories
 
 ## Environment Variables
 
@@ -38,6 +41,55 @@ CRON_SECRET=your_cron_secret
 # Webhook endpoint secret
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
 ```
+
+## Retreat Routes
+
+The platform now supports 8 global retreat destinations with dynamic routing:
+
+### Available Routes
+- `/retreats/costa-rica` - Costa Rica (Feb 20–28, 2026) - Fundamentals of Documentary
+- `/retreats/greece` - Greece (May 22–30, 2026) - Visual Storytelling & Mythic Structure
+- `/retreats/africa` - Africa (Aug 21–29, 2026) - Missional Filmmaking & Community
+- `/retreats/japan` - Japan (Nov 20–28, 2026) - Intro to Narrative Filmmaking (Role Rotations)
+- `/retreats/panama` - Panama (Feb 26–Mar 6, 2027) - Advanced Documentary & Investigative Storytelling
+- `/retreats/london` - London (May 21–29, 2027) - Narrative Writing & Directing
+- `/retreats/germany` - Germany (Aug 20–28, 2027) - Cinematic Collaboration & Production Design
+- `/retreats/thailand` - Thailand (Nov 26–Dec 4, 2027) - Narrative Masterpiece (Festival-ready Short)
+
+### Retreat Data Structure
+Each retreat is configured in `/src/lib/retreats.ts` with:
+```typescript
+interface RetreatData {
+  slug: string;
+  title: string;
+  country: string;
+  city?: string;
+  startDate: string; // ISO date string
+  endDate: string;   // ISO date string
+  theme: string;
+  heroImage: string;
+  ogImage: string;
+  registerUrl: string;
+  emailCtaText: string;
+  seoDescription: string;
+  overview: string;
+  learningOutcomes: string[];
+  itinerary: DayItem[];
+  faqs: FAQ[];
+  gearNote?: string;
+}
+```
+
+### Route Generation
+All retreat routes are automatically generated using Next.js dynamic routing at `/retreats/[slug]`. The route params are validated against the retreat data and return 404 for invalid slugs.
+
+## Online Course
+
+The platform includes an online course coming soon page at `/course` with:
+- Course overview and modules
+- Brand pillars section
+- Waitlist signup form with "online-course-waitlist" tagging
+- Integration with existing email marketing system
 
 ## Email System
 
@@ -145,8 +197,32 @@ Make sure to set these in your production environment:
 │   │   │   ├── create-checkout-session/  # Stripe payment
 │   │   │   ├── stripe-webhook/     # Payment processing
 │   │   │   └── cron/pretrip-emails/  # Automated email sequence
+│   │   ├── retreats/[slug]/        # Dynamic retreat routes
+│   │   │   └── page.tsx            # Retreat page template
+│   │   ├── course/                 # Online course coming soon
+│   │   │   └── page.tsx            # Course landing page
 │   │   └── ...
+│   ├── components/
+│   │   ├── retreats/               # Retreat-specific components
+│   │   │   ├── RetreatHero.tsx     # Hero section
+│   │   │   ├── RetreatOverview.tsx # Overview section
+│   │   │   ├── RetreatLearning.tsx # Learning outcomes
+│   │   │   ├── RetreatItinerary.tsx # Day-by-day itinerary
+│   │   │   ├── RetreatGear.tsx     # Equipment info
+│   │   │   ├── RetreatFAQ.tsx      # FAQ section
+│   │   │   └── RetreatCTA.tsx      # Call to action
+│   │   ├── course/                 # Course-specific components
+│   │   │   ├── CourseHero.tsx      # Course hero section
+│   │   │   ├── CourseOverview.tsx  # Course overview
+│   │   │   ├── CourseModules.tsx   # Module breakdown
+│   │   │   ├── CoursePillars.tsx   # Brand pillars
+│   │   │   └── CourseWaitlist.tsx  # Waitlist signup
+│   │   └── site/
+│   │       ├── NavBar.tsx          # Main navigation
+│   │       └── MobileDrawer.tsx    # Mobile menu with dropdowns
 │   └── lib/
+│       ├── retreats.ts             # Retreat data and utilities
+│       ├── navigation.ts           # Navigation configuration
 │       ├── emailClient.ts          # Resend integration with notifications
 │       ├── services/email.ts       # Email service with templates
 │       └── ...
@@ -154,9 +230,22 @@ Make sure to set these in your production environment:
 │   ├── InternalNewSignup.tsx      # Internal notification template
 │   ├── Email1Welcome.tsx          # Welcome email template
 │   └── ...
+├── public/images/                  # Hero and OG images for all retreats
+│   ├── hero-costa-rica.jpg
+│   ├── hero-greece.jpg
+│   ├── og-costa-rica.jpg
+│   └── ... (all retreat images)
 └── supabase/
     └── schema.sql                 # Database schema
 ```
+
+## Navigation System
+
+The navigation supports a hierarchical structure with dropdowns:
+- Regular navigation items link directly to pages
+- Parent items with `children` array create dropdown menus
+- Mobile navigation uses an accordion-style dropdown
+- All retreat pages are grouped under a "Retreats" dropdown
 
 ## License
 

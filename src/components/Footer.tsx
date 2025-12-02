@@ -7,6 +7,7 @@ const footerNavigation = {
     { name: 'Itinerary', href: '/itinerary' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Travel', href: '/travel' },
+    { name: 'Course', href: '/course' },
   ],
   company: [
     { name: 'The Experience', href: '/experience' },
@@ -14,6 +15,16 @@ const footerNavigation = {
     { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
     { name: 'Register', href: '/register' },
+  ],
+  retreats: [
+    { name: 'Costa Rica', href: '/retreats/costa-rica' },
+    { name: 'Greece', href: '/retreats/greece' },
+    { name: 'Africa', href: '/retreats/africa' },
+    { name: 'Japan', href: '/retreats/japan' },
+    { name: 'Panama', href: '/retreats/panama' },
+    { name: 'London', href: '/retreats/london' },
+    { name: 'Germany', href: '/retreats/germany' },
+    { name: 'Thailand', href: '/retreats/thailand' },
   ],
   social: [
     {
@@ -48,13 +59,13 @@ export default function Footer() {
             </Link>
             <p className="font-body text-sm text-ink-500 mt-2">A project by Second Watch Network</p>
             <p className="font-body text-lg text-ink-600 mt-4 max-w-2xl mx-auto leading-relaxed">
-              Where creativity meets calling. Join us for a transformative filmmaking 
-              and storytelling retreat in the heart of Costa Rica.
+              Where creativity meets calling. Join us for transformative filmmaking
+              and storytelling retreats around the world.
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 max-w-6xl mx-auto">
             {/* Main Navigation */}
             <div>
               <h3 className="font-heading text-lg font-bold text-ink-900 mb-6">
@@ -62,6 +73,25 @@ export default function Footer() {
               </h3>
               <ul className="space-y-4">
                 {footerNavigation.main.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Retreats */}
+            <div>
+              <h3 className="font-heading text-lg font-bold text-ink-900 mb-6">
+                Retreats
+              </h3>
+              <ul className="space-y-4">
+                {footerNavigation.retreats.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
@@ -130,8 +160,8 @@ export default function Footer() {
           {/* Retreat Details */}
           <div className="mb-12 py-8 border-t border-b border-sand-300/50">
             <div className="font-body text-ink-600 text-lg">
-              <p className="mb-2">February 20–28, 2026</p>
-              <p>San José • Jacó • Santiago de Puriscal, Costa Rica</p>
+              <p className="mb-2">8 Global Retreat Destinations</p>
+              <p>Costa Rica • Greece • Africa • Japan • Panama • London • Germany • Thailand</p>
             </div>
           </div>
 
