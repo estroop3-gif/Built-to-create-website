@@ -44,21 +44,25 @@ export default function RegisterPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
 
     // Reset sessions when retreat changes
     if (name === 'retreat') {
       setFormData({
         ...formData,
-        [name]: newValue,
+        retreat: value as RetreatType | '',
         costaRicaSession: '',
         jasperSession: '',
         bringOwnCamera: false // Reset camera option when switching retreats
       });
+    } else if (type === 'checkbox') {
+      setFormData({
+        ...formData,
+        [name]: (e.target as HTMLInputElement).checked
+      });
     } else {
       setFormData({
         ...formData,
-        [name]: newValue
+        [name]: value
       });
     }
   };
