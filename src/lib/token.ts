@@ -6,6 +6,9 @@ if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable is required');
 }
 
+// Type assertion - we know JWT_SECRET is defined after the check above
+const secret: string = JWT_SECRET;
+
 export interface UnsubscribeTokenPayload {
   email: string;
   purpose: 'unsubscribe';
@@ -23,7 +26,7 @@ export function generateUnsubscribeToken(email: string): string {
     purpose: 'unsubscribe',
   };
 
-  return jwt.sign(payload, JWT_SECRET, {
+  return jwt.sign(payload, secret, {
     expiresIn: '30d', // 30 days for email client compatibility
     issuer: 'thebtcp.com',
     audience: 'email-unsubscribe',
@@ -35,7 +38,7 @@ export function generateUnsubscribeToken(email: string): string {
  */
 export function verifyUnsubscribeToken(token: string): UnsubscribeTokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET, {
+    const decoded = jwt.verify(token, secret, {
       issuer: 'thebtcp.com',
       audience: 'email-unsubscribe',
     }) as UnsubscribeTokenPayload;
