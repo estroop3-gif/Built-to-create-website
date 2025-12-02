@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { marketingEmailService } from '@/lib/marketingEmailService';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(_request: NextRequest) {
   try {
     console.log('📊 Fetching marketing email statistics...');

@@ -56,6 +56,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
 
   useEffect(() => {
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [retreat.slug]);
 
   async function fetchData() {

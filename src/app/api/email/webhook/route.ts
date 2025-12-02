@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'edge';
 
 // Resend webhook verification
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function verifyResendWebhook(_payload: string, signature: string, _secret: string): boolean {
   // Resend uses HMAC-SHA256 for webhook verification
   // In production, implement proper webhook signature verification using crypto
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle GET for webhook verification (if required by provider)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(_request: NextRequest) {
   // Some providers require GET endpoint for verification
   return NextResponse.json({ status: 'Webhook endpoint active' });

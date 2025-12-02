@@ -42,7 +42,7 @@ export default function CourseWaitlist() {
         const errorData = await response.json();
         setError(errorData.error || 'Failed to join waitlist. Please try again.');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to join waitlist. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);

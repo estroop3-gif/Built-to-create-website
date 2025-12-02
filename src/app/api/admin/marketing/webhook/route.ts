@@ -83,6 +83,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Also handle GET for webhook verification if needed
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(_request: NextRequest) {
   return NextResponse.json({ message: 'Marketing email webhook endpoint' });
 }

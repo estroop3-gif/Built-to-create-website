@@ -7,10 +7,9 @@ interface Marketing01WelcomeProps {
   unsubscribeUrl?: string;
 }
 
-export default function Marketing01Welcome({ 
-  firstName = 'Friend', 
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`,
-  unsubscribeUrl 
+export default function Marketing01Welcome({
+  firstName = 'Friend',
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
 }: Marketing01WelcomeProps) {
   return (
     <MarketingBaseTemplate previewText="A mini workshop using AE/AF Lock, HDR, and the exposure slider">

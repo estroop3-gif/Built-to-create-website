@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { contactSchemaServer } from '@/lib/validation/contact';
 import { insertContactMessage } from '@/lib/supabase';
-import { sendTransactionalEmail, CONTACT_INBOX_EMAIL, CONTACT_FROM_EMAIL } from '@/lib/resend';
+import { sendTransactionalEmail, CONTACT_INBOX_EMAIL } from '@/lib/resend';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { render } from '@react-email/render';
 import ContactNotification from '@/emails/ContactNotification';

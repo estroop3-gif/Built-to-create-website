@@ -133,6 +133,7 @@ export default function SubscribeForm({
       } else {
         setMessage(data.error || 'Something went wrong. Please try again.');
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       setMessage('Network error. Please try again.');
     } finally {

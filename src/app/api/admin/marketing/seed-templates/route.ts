@@ -124,7 +124,8 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-export async function POST(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(_request: NextRequest) {
   const startTime = Date.now();
   
   try {

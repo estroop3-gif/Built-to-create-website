@@ -2,7 +2,6 @@ import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { render } from '@react-email/render';
 import { sendPromotionalEmail } from '@/lib/resend';
-import { emailConfig } from '@/lib/emailClient';
 
 // Import all marketing email templates
 import Marketing01Welcome from '@/emails/Marketing01Welcome';

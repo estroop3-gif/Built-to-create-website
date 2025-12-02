@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function POST(_request: NextRequest) {
   const startTime = Date.now();
   
@@ -10,8 +11,9 @@ export async function POST(_request: NextRequest) {
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     console.log('🔄 Running database setup...');
-    
+
     // Create email_templates table
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _createTemplatesQuery = `
       CREATE TABLE IF NOT EXISTS email_templates (
         id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -86,6 +88,7 @@ export async function POST(_request: NextRequest) {
     // Test database functions
     console.log('🔍 Testing database functions...');
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data: _functionTest, error: functionError } = await supabase.rpc('get_subscribers_ready_for_email', {
         p_reference_date: '2025-02-20T00:00:00Z',
         p_limit: 1

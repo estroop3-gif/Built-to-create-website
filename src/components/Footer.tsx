@@ -7,17 +7,13 @@ import Container from './Container';
 const footerNavigation = {
   main: [
     { name: 'Home', href: '/' },
-    { name: 'Itinerary', href: '/itinerary' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Travel', href: '/travel' },
-    { name: 'Course', href: '/course' },
+    { name: 'Register', href: '/register' },
+    { name: 'Course (coming soon)', href: '/course' },
   ],
   company: [
-    { name: 'The Experience', href: '/experience' },
-    { name: 'Packing List', href: '/packing' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Register', href: '/register' },
+    { name: 'About', href: '/about' },
   ],
   experiences: [
     {
