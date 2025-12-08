@@ -185,7 +185,7 @@ export default function Home() {
               The Experience
             </h2>
             <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
-              Each retreat offers a unique opportunity to reconnect with your creative spirit while immersed in purposeful environments—from vibrant international landscapes to quiet mountain settings—where you can step away from distraction and focus on what matters most.
+              Each retreat offers a unique opportunity to reconnect with your creative spirit while immersed in purposeful environments—from vibrant international landscapes to the quiet Texas Hill Country—where you can step away from distraction and focus on what matters most.
             </p>
             <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
               Over multiple transformative days, you'll learn fundamentals of filmmaking from industry professionals, collaborate with fellow creatives, and produce work that reflects your authentic voice and faith.
@@ -220,23 +220,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Jasper Card */}
+            {/* Media Leaders Retreat Card */}
             <div className="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-xl transition-all duration-300 group">
               <div className="p-8">
                 <h3 className="font-heading text-3xl font-bold text-ink-900 mb-4">
-                  Jasper, GA
+                  Media Leaders Retreat
                 </h3>
                 <p className="font-body text-base text-ink-600 mb-6 leading-relaxed">
-                  A mountain retreat designed for focused, intimate teaching, with space to breathe, create, and connect deeply with God and other filmmakers.
+                  A Texas Hill Country retreat designed for focused, intimate teaching, with space to breathe, create, and connect deeply with God and other filmmakers.
                 </p>
                 <Button
                   as="link"
-                  href="/experiences/jasper"
+                  href="/experiences/texas"
                   size="md"
                   variant="secondary"
                   className="group-hover:bg-sage-100 transition-colors duration-200"
                 >
-                  Explore Jasper
+                  Explore Media Leaders Retreat
                 </Button>
               </div>
             </div>

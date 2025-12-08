@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Church Media Toolkit - Jasper Retreat | The Born to Create Project',
-  description: 'Practical tools, systems, and workflows you can plug into your church media team from the Jasper, Georgia retreat.',
+  title: 'Church Media Toolkit - Media Leaders Retreat | The Born to Create Project',
+  description: 'Practical tools, systems, and workflows you can plug into your church media team from the Media Leaders Retreat.',
 };
 
 export default function WhatYouBringBackPage() {
@@ -13,7 +13,7 @@ export default function WhatYouBringBackPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+            backgroundImage: "url('/images/hero-jasper.webp')"
           }}
         ></div>
 
@@ -29,7 +29,7 @@ export default function WhatYouBringBackPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-forest/10 border-l-4 border-forest rounded-r-lg p-6 mb-12">
             <p className="text-charcoal/70">
-              The Jasper, Georgia retreat is not a one time mountaintop moment. It is designed to send you back to your church with tangible resources, repeatable systems, and clear next steps for your media team. Everything you practice on the mountain is built so it can work on a normal Sunday, with a normal church budget, and a real congregation in the room.
+              The Media Leaders Retreat is not a one time experience. It is designed to send you back to your church with tangible resources, repeatable systems, and clear next steps for your media team. Everything you practice at this retreat is built so it can work on a normal Sunday, with a normal church budget, and a real congregation in the room.
             </p>
           </div>
 
@@ -39,7 +39,7 @@ export default function WhatYouBringBackPage() {
               <h2 className="text-2xl font-bold text-forest mb-6">A course booklet built for church media</h2>
 
               <p className="text-charcoal/70 mb-6">
-                Every participant leaves Jasper with a printed course booklet and a digital copy you can share with your team. The booklet is not just inspirational notes. It is a working field manual for church media.
+                Every participant leaves the retreat with a printed course booklet and a digital copy you can share with your team. The booklet is not just inspirational notes. It is a working field manual for church media.
               </p>
 
               <ul className="space-y-3">
@@ -95,7 +95,7 @@ export default function WhatYouBringBackPage() {
               <h2 className="text-2xl font-bold text-forest mb-6">Plug and play systems for Sundays and beyond</h2>
 
               <p className="text-charcoal/70 mb-6">
-                Throughout the Jasper retreat you will build simple systems you can plug straight into your church. The goal is not to give you theory, but working rhythms and checklists you can hand to your pastor or volunteers.
+                Throughout the Media Leaders Retreat you will build simple systems you can plug straight into your church. The goal is not to give you theory, but working rhythms and checklists you can hand to your pastor or volunteers.
               </p>
 
               <ul className="space-y-3">
@@ -123,7 +123,7 @@ export default function WhatYouBringBackPage() {
               <h2 className="text-2xl font-bold text-forest mb-6">Material you can teach to your own team</h2>
 
               <p className="text-charcoal/70 mb-6">
-                All of the core teaching from the Jasper retreat is designed so you can take it home and teach it again. You will not just leave with inspiration. You will leave with language, outlines, and examples you can share with your media team, youth, or volunteers.
+                All of the core teaching from the Media Leaders Retreat is designed so you can take it home and teach it again. You will not just leave with inspiration. You will leave with language, outlines, and examples you can share with your media team, youth, or volunteers.
               </p>
 
               <ul className="space-y-3">
@@ -137,7 +137,7 @@ export default function WhatYouBringBackPage() {
                 </li>
                 <li className="flex items-start text-charcoal/70">
                   <span className="text-sage mr-2">•</span>
-                  <span>A step by step walkthrough of the live edit process used at Jasper to build a one minute piece from real footage</span>
+                  <span>A step by step walkthrough of the live edit process used at the retreat to build a one minute piece from real footage</span>
                 </li>
                 <li className="flex items-start text-charcoal/70">
                   <span className="text-sage mr-2">•</span>
@@ -179,7 +179,7 @@ export default function WhatYouBringBackPage() {
               <h2 className="text-2xl font-bold text-forest mb-6">How to put this to work in the first 30 days</h2>
 
               <p className="text-charcoal/70 mb-6">
-                The Jasper retreat is a launch pad, not a finish line. This page and the resources you receive are designed to guide your first month back home.
+                The Media Leaders Retreat is a launch pad, not a finish line. This page and the resources you receive are designed to guide your first month back home.
               </p>
 
               <ul className="space-y-3">
@@ -193,7 +193,7 @@ export default function WhatYouBringBackPage() {
                 </li>
                 <li className="flex items-start text-charcoal/70">
                   <span className="text-sage mr-2">•</span>
-                  <span>A one to three month sketch of the first stories you want to tell in and around your church using the tools you practiced in Jasper</span>
+                  <span>A one to three month sketch of the first stories you want to tell in and around your church using the tools you practiced at the retreat</span>
                 </li>
               </ul>
             </div>

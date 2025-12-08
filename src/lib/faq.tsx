@@ -139,75 +139,105 @@ export const costaRicaFaqData: FAQItem[] = [
 
 export const jasperFaqData: FAQItem[] = [
   {
-    question: "Who is the Jasper, GA retreat for?",
-    answer: "The Jasper retreat is designed for church media leaders and key volunteers who help tell the story of what God is doing in their local church. That includes staff or volunteer roles like media director, video lead, camera operators, editors, and storytellers who are involved in testimonies, sermon content, worship coverage, and social or film pieces.",
+    question: "What is Media Leaders Retreat?",
+    answer: "Media Leaders Retreat is a small, intensive working retreat for church media leaders, storytellers, and creatives. It blends time in Scripture, teaching on craft, hands on production, and guided editing so you leave with finished work in hand and a clear plan for your ministry.",
     category: "general",
     retreat: "jasper"
   },
   {
-    question: "Do I need to be on staff at a church to attend?",
-    answer: "No. You do not have to be full time staff to attend. Many churches rely heavily on volunteers, and Jasper is built with that reality in mind. The main requirement is that you are actively involved in, or preparing to step into, media and storytelling in a local church context, with your leadership's support.",
+    question: "Where is the retreat held?",
+    answer: "The retreat takes place on a private property in the Texas Hill Country near Wimberley, Texas. Each attendee has their own room on site. Exact location details are shared after your booking is confirmed.",
     category: "general",
     retreat: "jasper"
   },
   {
-    question: "Do I need to bring my own camera?",
-    answer: "No, you do not need to bring your own camera. Cameras are provided for instruction and shooting during the retreat. The main teaching kit will be Panasonic GH4 cameras, and there will also be two Sony FS100 kits, a Sony FS7 kit, and a Panasonic AF100 kit. You will be able to compare different setups, price ranges, low light performance, and the realities of older versus newer systems in a church context. If you already have a camera you love, you are welcome to bring it, but it is not required and there is no tuition discount for bringing your own gear.",
-    category: "equipment",
+    question: "Who is this for?",
+    answer: "This retreat is designed for people who carry responsibility for media in a local church. That includes staff media directors, volunteers who lead creative teams, content creators who serve multiple churches, and pastors who are directly involved in storytelling and production.",
+    category: "general",
     retreat: "jasper"
   },
   {
-    question: "Do I need to bring a laptop and hard drive?",
-    answer: "A laptop and hard drive are recommended but not required. All retreat footage will be posted online for participants after Jasper, so you will still have access even without a laptop. Bringing a laptop and an external drive simply allows you to offload and work with your own footage during the retreat, follow along more closely in edit sessions, and begin building your own project structure as you learn.",
-    category: "equipment",
+    question: "Do I have to be on staff at a church?",
+    answer: "No. Many attendees are staff, but you are welcome if you are a key volunteer, a freelancer who serves churches, or a creative who feels called to build media for the Church.",
+    category: "general",
     retreat: "jasper"
   },
   {
-    question: "What are the sleeping arrangements like?",
-    answer: "Jasper is a glamping style experience. We will be tent camping on the property, but each participant will have a full cot with a cot mattress and comfort items so you can rest well between full days of shooting and learning. Tents are shared, arranged to balance personal space and community, with simple lighting and quiet hours to keep the camp peaceful at night. The only required sleeping item you need to bring is your own sleeping bag. If you want extra comfort, you are welcome to bring a small pillow or blanket.",
+    question: "What skill level is this for?",
+    answer: "You should have at least a basic working knowledge of cameras and editing. You do not need to be an expert. The teaching is designed to stretch intermediate creatives and give newer media leaders a solid foundation they can build on when they get home.",
+    category: "general",
+    retreat: "jasper"
+  },
+  {
+    question: "Will I have my own room?",
+    answer: "Yes. Every attendee has their own bedroom on the property. Bathrooms and showers are shared, and there are common spaces for teaching, meals, editing, and hanging out.",
     category: "logistics",
     retreat: "jasper"
   },
   {
-    question: "What are the bathrooms and showers like?",
-    answer: "We want you to know up front that the Jasper retreat uses simple camp style facilities rather than standard house bathrooms. The restroom on site is a clean composting toilet, not a traditional flush toilet. The shower setup is also a camp style shower instead of a full indoor bathroom, but it does provide hot water and privacy. It will feel more like an upgraded campground than a hotel, so if your team is comfortable with glamping and being a little closer to nature, they will be right at home here.",
-    category: "logistics",
+    question: "What is included in the price?",
+    answer: "Your ticket covers your lodging on the property, meals during the retreat, teaching sessions, guided production days, and access to camera and lighting gear used in the training. Once you arrive at the retreat location, the only extra costs are any personal purchases you choose to make off site.",
+    category: "pricing",
     retreat: "jasper"
   },
   {
-    question: "What facilities are on site?",
-    answer: "The property is being built out specifically for this retreat, with dedicated spaces for teaching, meals, editing, and community. There will be a central area for sessions and demos, outdoor or covered dining space, a fire pit or gathering spot for evening conversations and prayer, and practical work areas with tables and power so you can set up laptops and drives during edit blocks. The goal is simple, clean, and comfortable, not flashy, so you can stay focused on God, your craft, and your team.",
-    category: "logistics",
-    retreat: "jasper"
-  },
-  {
-    question: "What are the dates for the Jasper retreat and travel days?",
-    answer: "The Jasper, Georgia retreat is offered twice. Session 1 runs January 28–30, 2026, with travel days on January 27 and January 31, 2026. Session 2 runs May 6–8, 2026, with travel days on May 5 and May 9, 2026. You can choose whichever run works best for your schedule when you register.",
+    question: "Is travel included?",
+    answer: "Travel to and from the retreat is not included. You are responsible for getting yourself to the Wimberley area. Once you are registered, you will receive guidance on airports, recommended arrival times, and what to expect when you get to the property.",
     category: "travel",
     retreat: "jasper"
   },
   {
-    question: "What is included in the Jasper tuition?",
-    answer: "Your tuition for Jasper covers on site lodging in the glamping setup, group meals on the property during the retreat, teaching and coaching from Parker and a local pastor, access to all provided camera gear during sessions, the course booklet, the DIT and naming convention guide, and access to the shared retreat footage after the event. Travel to and from Jasper, personal snacks, and any optional off site purchases are not included.",
+    question: "Can my church pay for this?",
+    answer: "Yes. Many churches treat this as a mix of professional development and ministry training. You can register directly and have your church reimburse you, or your church can pay the retreat fee on your behalf.",
     category: "pricing",
     retreat: "jasper"
   },
   {
-    question: "How does payment work for Jasper?",
-    answer: "To reserve your spot at Jasper, a $1,000 deposit is required. The remaining balance for your chosen pricing tier is due by January 1, 2026. Exact early bird, standard, and late registration windows and amounts are detailed on the Jasper Pricing page. The deposit secures your place; the final payment ensures everything is confirmed well before travel and the retreat start.",
-    category: "pricing",
+    question: "Do I need to bring my own camera or laptop?",
+    answer: "Camera gear is provided for instruction and shared production work. You are welcome to bring your own camera if you want to get more comfortable with your specific setup. A laptop is recommended if you want to edit on your own system and take projects home ready to launch, but it is not required.",
+    category: "equipment",
     retreat: "jasper"
   },
   {
-    question: "How spiritual is the Jasper retreat?",
-    answer: "Jasper is intentionally both spiritual and practical. Each day includes time in Scripture and prayer, and a trusted local pastor will be part of the retreat to provide teaching and pastoral guidance. At the same time, you will spend a significant portion of the schedule planning, shooting, and editing real pieces like testimonies, interview setups, multi camera worship coverage, and a short film. The goal is that your media leaders leave with healthier spiritual rhythms and very concrete tools they can plug directly into Sundays and church life.",
+    question: "What does a typical day look like?",
+    answer: "Most days include morning time in Scripture and prayer, a focused teaching block, and then hands on work in small crews. Afternoons are dedicated to shooting, interviews, or edit sessions, with feedback built in. Evenings are reserved for meals, conversations, and time to rest, not just more sessions.",
+    category: "logistics",
+    retreat: "jasper"
+  },
+  {
+    question: "How many people will be there?",
+    answer: "The retreat is intentionally kept small so you get real time with the instructor and meaningful reps on set. Expect a group size that allows for multiple small crews and honest conversations, not a crowded conference.",
+    category: "general",
+    retreat: "jasper"
+  },
+  {
+    question: "Is this a conference?",
+    answer: "No. This is a working retreat. You will be creating, not just taking notes. The goal is that you leave with finished work, a clear plan, and deeper clarity in your calling, not just a notebook of ideas you never implement.",
+    category: "general",
+    retreat: "jasper"
+  },
+  {
+    question: "What if I am introverted?",
+    answer: "This retreat is designed with space to breathe. There is structured time with the group and quiet time built in so you can be alone with God, process what you are learning, and reset without feeling like you have to be \"on\" every minute.",
     category: "spiritual",
     retreat: "jasper"
   },
   {
-    question: "Can I send more than one person from my church?",
-    answer: "Yes. In fact, Jasper works especially well when a pastor sends multiple media leaders or key volunteers together. They can learn side by side, divide roles during shoots, and return home with a shared vision and language. If you plan to send a group, reach out through the Contact page so we can help you think through the best way to structure travel, lodging assignments, and how to get the most out of the retreat for your team.",
-    category: "general",
+    question: "What about food and dietary restrictions?",
+    answer: "Meals are provided on site. Before the retreat you will have a chance to share any dietary needs. We cannot meet every preference, but we will make reasonable efforts to accommodate allergies and major restrictions.",
+    category: "logistics",
+    retreat: "jasper"
+  },
+  {
+    question: "Are there payment plans?",
+    answer: "If you need a payment plan, reach out after you apply and we can talk through options. The goal is to make this accessible while still honoring the cost of running a small, intensive retreat.",
+    category: "pricing",
+    retreat: "jasper"
+  },
+  {
+    question: "What is the refund policy?",
+    answer: "Spots are limited, so cancellations impact the ability to run the retreat well. Details on refunds and transfer options are provided in the registration terms. If something changes after you book, contact us as soon as possible so we can work with you.",
+    category: "pricing",
     retreat: "jasper"
   }
 ];

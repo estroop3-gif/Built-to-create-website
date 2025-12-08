@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Jasper, GA Experience — The Born to Create Project',
-  description: 'Mountain filmmaking retreat in Jasper, Georgia for Christian creatives',
+  title: 'Media Leaders Retreat — The Born to Create Project',
+  description: 'Texas Hill Country filmmaking retreat just outside the Austin, Texas area for Christian creatives',
 };
 
 export default function JasperExperience() {
@@ -18,7 +18,7 @@ export default function JasperExperience() {
         <div className="absolute inset-0">
           <Image
             src="/images/hero-jasper.jpg"
-            alt="Jasper Georgia mountain lake with fall foliage"
+            alt="Texas Hill Country river with cypress trees"
             fill
             className="object-cover"
             priority
@@ -33,14 +33,13 @@ export default function JasperExperience() {
           <div className="text-center max-w-4xl mx-auto">
             {/* Main Heading */}
             <h1 className="font-heading font-bold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream-50 mb-8 leading-tight tracking-wide mt-8">
-              <span className="block">JASPER, GEORGIA</span>
               <span className="block">MEDIA LEADERS RETREAT</span>
             </h1>
 
             {/* Supporting Text */}
             <div className="space-y-4 mb-10">
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
-                A mountain retreat for church media leaders who need focus, stillness, and a clear path forward in their calling.
+                A Texas Hill Country retreat for church media leaders who need focus, stillness, and a clear path forward in their calling.
               </p>
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
                 Two sessions: January 28–30, 2026 & May 6–8, 2026
@@ -49,16 +48,16 @@ export default function JasperExperience() {
 
             {/* Call to Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <Button as="link" href="/experiences/jasper/itinerary" size="lg" variant="ghost">
+              <Button as="link" href="/experiences/texas/itinerary" size="lg" variant="ghost">
                 View Itinerary
               </Button>
-              <Button as="link" href="/experiences/jasper/pricing" size="lg" variant="primary">
+              <Button as="link" href="/experiences/texas/pricing" size="lg" variant="primary">
                 See Pricing
               </Button>
             </div>
 
             <p className="font-body text-base sm:text-lg text-cream-300/90 mb-20 max-w-3xl mx-auto leading-relaxed">
-              Set in the quiet mountain town of Jasper, Georgia, this small group retreat is designed for media leaders and creatives serving in the local church who want to step away from distraction, hear God clearly, and sharpen their craft. Across three days you will capture real testimonies, interviews, worship and teaching coverage, and a short film, while learning simple, repeatable workflows you can take back home. You will leave with usable footage, practical systems for Sundays and special events, and a renewed vision for how your media team can serve your pastor, your people, and what God is doing in your church.
+              Just outside the Austin, Texas area, this small group retreat is designed for media leaders and creatives serving in the local church who want to step away from distraction, hear God clearly, and sharpen their craft. Across three days you will capture real testimonies, interviews, worship and teaching coverage, and a short film, while learning simple, repeatable workflows you can take back home. You will leave with usable footage, practical systems for Sundays and special events, and a renewed vision for how your media team can serve your pastor, your people, and what God is doing in your church.
             </p>
           </div>
         </Container>
@@ -69,31 +68,31 @@ export default function JasperExperience() {
         <div className="max-w-7xl mx-auto">
           <nav className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/experiences/jasper/itinerary"
+              href="/experiences/texas/itinerary"
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Itinerary
             </Link>
             <Link
-              href="/experiences/jasper/pricing"
+              href="/experiences/texas/pricing"
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Pricing
             </Link>
             <Link
-              href="/experiences/jasper/packing"
+              href="/experiences/texas/packing"
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Packing
             </Link>
             <Link
-              href="/experiences/jasper/travel"
+              href="/experiences/texas/travel"
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Travel
             </Link>
             <Link
-              href="/experiences/jasper/what-you-bring-back"
+              href="/experiences/texas/what-you-bring-back"
               className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
             >
               Church Media Toolkit
@@ -102,19 +101,16 @@ export default function JasperExperience() {
         </div>
       </Section>
 
-      {/* Why Jasper, Georgia Section */}
+      {/* Retreat Setting Section */}
       <Section spacing="xl" background="white">
         <Container size="lg">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
-              Why Jasper, Georgia
+              Retreat Setting
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Jasper sits just far enough outside the city that you can actually breathe. The pace is slower. The mountains are close. It is the kind of place where you can wake up to quiet, grab a coffee, and be at a scenic overlook or tucked cabin location in minutes.
-              </p>
-              <p className="font-body text-lg text-ink-600 leading-relaxed">
-                This retreat is built around that environment. Less noise. Less hurry. More presence with God and more intentional creative work. It is designed for a smaller group so you get real time with Parker and real reps behind the camera rather than getting lost in a crowd.
+                A private property in the Texas Hill Country near Wimberley, Texas. Each student gets their own private room, plus shared indoor teaching spaces, real bathrooms, and outdoor locations to shoot. The exact venue details are provided to confirmed participants after booking.
               </p>
             </div>
           </div>
@@ -130,7 +126,7 @@ export default function JasperExperience() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                During the Jasper retreat you will work on real ministry-driven pieces that translate directly back to your church and city.
+                During the Media Leaders Retreat you will work on real ministry-driven pieces that translate directly back to your church and city.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 Examples of what you will create and practice:
@@ -150,7 +146,7 @@ export default function JasperExperience() {
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>A short, one-minute "Jasper" or retreat piece, built live from the footage you capture together</span>
+                  <span>A short, one-minute retreat piece, built live from the footage you capture together</span>
                 </li>
               </ul>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
@@ -170,7 +166,7 @@ export default function JasperExperience() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                The Jasper retreat is led by filmmaker and camera operator Edward Parker Stroop, a faith based storyteller with nearly a decade of experience across TV, documentary, motorsports, and narrative work. Parker grew up in the local church and has spent much of his career capturing testimonial interviews and long form stories that highlight real people and what God is doing in their lives.
+                The Media Leaders Retreat is led by filmmaker and camera operator Edward Parker Stroop, a faith based storyteller with nearly a decade of experience across TV, documentary, motorsports, and narrative work. Parker grew up in the local church and has spent much of his career capturing testimonial interviews and long form stories that highlight real people and what God is doing in their lives.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 His credits include work with major TV networks and brands, docu follow series, reality and lifestyle shows, and fast paced motorsports projects, alongside faith driven projects. That mix means your media team will be learning from someone who understands both the technical demands of high level production and the heart behind telling honest, God centered stories.
@@ -244,21 +240,21 @@ export default function JasperExperience() {
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>A glamping style camp setup where we are tent camping, but full cots, cot mattresses, and comfort items are provided so you can actually rest between full days of shooting and learning</span>
+                  <span>A private retreat property where each attendee has their own room, with shared spaces designed for teaching, meals, editing, and lingering conversations</span>
                 </li>
               </ul>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                You only need to bring a sleeping bag.
+                You will stay on a private property in the Texas Hill Country near Wimberley. Rooms are simple, quiet, and comfortable so you can actually rest between full days of shooting and learning. Exact location details are shared after your booking is confirmed.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                We are building out the property specifically for this experience, with simple but intentional shared spaces for teaching, meals, editing, and hanging out around the fire. The facilities are designed to be comfortable without being distracting, so you can step away from your normal routine, breathe in the mountain air, and focus on God, your craft, and the people you are here to serve.
+                The facilities are intentional without being distracting, giving you space to step out of your normal routine, breathe, and focus on God, your craft, and the people you are called to serve.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 The pace is full but intentional. The goal is not to crush you with work. The goal is to stretch you in a setting where you feel safe to try, miss, adjust, and grow.
               </p>
               <div className="mt-8 text-center">
                 <Link
-                  href="/experiences/jasper/details"
+                  href="/experiences/texas/details"
                   className="inline-block bg-forest-600 text-cream-50 px-6 py-3 rounded-lg font-medium hover:bg-forest-700 transition-colors"
                 >
                   View Retreat Details
@@ -274,13 +270,13 @@ export default function JasperExperience() {
         <Container size="lg">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8">
-              Ready to Join the Jasper Retreat?
+              Ready to Join the Media Leaders Retreat?
             </h2>
             <p className="font-body text-xl text-ink-600 leading-relaxed mb-12 max-w-3xl mx-auto">
               Space is limited for this focused, small group experience. Explore the full itinerary and secure your spot today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button as="link" href="/experiences/jasper/itinerary" size="lg" variant="primary">
+              <Button as="link" href="/experiences/texas/itinerary" size="lg" variant="primary">
                 View Full Itinerary
               </Button>
               <Button as="link" href="/contact" size="lg" variant="secondary">

@@ -27,14 +27,14 @@ const footerNavigation = {
       ]
     },
     {
-      name: 'Jasper, GA',
+      name: 'Texas',
       items: [
-        { name: 'Overview', href: '/experiences/jasper' },
-        { name: 'Itinerary', href: '/experiences/jasper/itinerary' },
-        { name: 'Pricing', href: '/experiences/jasper/pricing' },
-        { name: 'Packing', href: '/experiences/jasper/packing' },
-        { name: 'Travel', href: '/experiences/jasper/travel' },
-        { name: 'Church Media Toolkit', href: '/experiences/jasper/what-you-bring-back' },
+        { name: 'Overview', href: '/experiences/texas' },
+        { name: 'Itinerary', href: '/experiences/texas/itinerary' },
+        { name: 'Pricing', href: '/experiences/texas/pricing' },
+        { name: 'Packing', href: '/experiences/texas/packing' },
+        { name: 'Travel', href: '/experiences/texas/travel' },
+        { name: 'Church Media Toolkit', href: '/experiences/texas/what-you-bring-back' },
       ]
     },
   ],
@@ -197,7 +197,7 @@ export default function Footer() {
           <div className="mb-12 py-8 border-t border-b border-sand-300/50">
             <div className="font-body text-ink-600 text-lg">
               <p className="mb-2">2 Experience Destinations</p>
-              <p>Costa Rica • Jasper, GA</p>
+              <p>Costa Rica • Texas</p>
             </div>
           </div>
 

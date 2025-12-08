@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Jasper Itinerary - The Born to Create Project | Mountain Filmmaking Retreat',
-  description: 'Faith-centered filmmaking retreat in Jasper, Georgia. Ministry-driven production and mountain-focused creative work.',
+  title: 'Media Leaders Retreat Itinerary - The Born to Create Project | Texas Hill Country Filmmaking Retreat',
+  description: 'Faith-centered filmmaking retreat just outside the Austin, Texas area. Ministry-driven production and creative work in the Texas Hill Country.',
 };
 
 export default function JasperItineraryPage() {
@@ -13,14 +13,14 @@ export default function JasperItineraryPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+            backgroundImage: "url('/images/hero-jasper.webp')"
           }}
         ></div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Jasper, Georgia Retreat Itinerary</h1>
+          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Media Leaders Retreat Itinerary</h1>
           <p className="text-xl text-charcoal/70">
-            A mountain retreat for focused, ministry-driven filmmaking
+            A Texas Hill Country retreat for focused, ministry-driven filmmaking
           </p>
         </div>
       </section>
@@ -215,7 +215,7 @@ export default function JasperItineraryPage() {
                   <h2 className="text-2xl font-bold text-forest">Thursday – Day 2</h2>
                   <span className="text-sm font-semibold text-sage">Day 3</span>
                 </div>
-                <p className="text-sm text-charcoal/60">Theme: From sanctuary to streets • Location: Property, church, downtown Jasper</p>
+                <p className="text-sm text-charcoal/60">Theme: From sanctuary to streets • Location: Property, church, local downtown area</p>
               </div>
 
               <div className="space-y-6">
@@ -248,13 +248,13 @@ export default function JasperItineraryPage() {
 
                 <div>
                   <p className="text-sm font-semibold text-forest mb-2">12:00 pm to 1:00 pm</p>
-                  <p className="text-sm text-charcoal/70">Lunch at a downtown Jasper restaurant</p>
+                  <p className="text-sm text-charcoal/70">Lunch at a local downtown restaurant</p>
                 </div>
 
                 <div>
                   <p className="text-sm font-semibold text-forest mb-2">1:00 pm to 2:00 pm</p>
                   <div className="space-y-1">
-                    <p className="text-sm text-charcoal/70">Quiet and solo b roll time in downtown Jasper</p>
+                    <p className="text-sm text-charcoal/70">Quiet and solo b roll time in the local downtown area</p>
                     <p className="text-xs text-charcoal/60 italic">Prompt: God, help me see this town and these people the way you do</p>
                   </div>
                 </div>
@@ -262,7 +262,7 @@ export default function JasperItineraryPage() {
                 <div>
                   <p className="text-sm font-semibold text-forest mb-2">2:00 pm to 4:00 pm</p>
                   <div className="space-y-2">
-                    <p className="text-sm text-charcoal/70">Group street shoot in downtown Jasper</p>
+                    <p className="text-sm text-charcoal/70">Group street shoot in the local downtown area</p>
                     <p className="text-xs text-charcoal/60">Visual sequence, on-the-fly interviews, texture coverage</p>
                   </div>
                 </div>
@@ -325,7 +325,7 @@ export default function JasperItineraryPage() {
                 <div>
                   <p className="text-sm font-semibold text-forest mb-2">2:30 pm to 3:45 pm</p>
                   <div className="space-y-2">
-                    <p className="text-sm font-bold text-charcoal">Live edit part two: Build a one minute Jasper piece in real time</p>
+                    <p className="text-sm font-bold text-charcoal">Live edit part two: Build a one minute retreat piece in real time</p>
                     <p className="text-sm text-charcoal/70">Define story, drop music, build spine, layer b roll</p>
                   </div>
                 </div>

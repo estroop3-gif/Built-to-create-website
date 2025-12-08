@@ -11,7 +11,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Experiences",
     children: [
       { label: "Costa Rica", href: "/experiences/costa-rica" },
-      { label: "Jasper, GA", href: "/experiences/jasper" }
+      { label: "Media Leaders Retreat", href: "/experiences/texas" }
     ]
   },
   { label: "FAQ", href: "/faq" },

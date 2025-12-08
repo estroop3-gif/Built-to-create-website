@@ -10,14 +10,14 @@ export default function JasperTravelPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+            backgroundImage: "url('/images/hero-jasper.webp')"
           }}
         ></div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Travel Logistics</h1>
           <p className="text-xl text-charcoal/70">
-            Getting to and around Jasper, Georgia
+            Getting to and around the Austin, Texas area
           </p>
         </div>
       </section>
@@ -32,17 +32,17 @@ export default function JasperTravelPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-charcoal">Getting to Jasper</h2>
+                <h2 className="text-2xl font-bold text-charcoal">Getting to the Retreat Location</h2>
               </div>
 
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-forest mb-3">Nearest Airport</h3>
                   <div className="bg-sand/30 rounded-lg p-4">
-                    <p className="font-semibold text-charcoal">Hartsfield-Jackson Atlanta International Airport (ATL)</p>
-                    <p className="text-sm text-charcoal/70 mt-1">Atlanta, Georgia</p>
+                    <p className="font-semibold text-charcoal">Austin-Bergstrom International Airport (AUS)</p>
+                    <p className="text-sm text-charcoal/70 mt-1">Austin, Texas</p>
                     <p className="text-sm text-charcoal/70 mt-2">
-                      Approximately 1.5 hours north of Atlanta. Most participants fly into ATL and drive or arrange ground transportation to Jasper.
+                      Most participants fly into AUS and drive or arrange ground transportation to the retreat location in the Austin area.
                     </p>
                   </div>
                 </div>
@@ -81,22 +81,22 @@ export default function JasperTravelPage() {
                   <h3 className="font-semibold text-forest mb-2">Driving</h3>
                   <div className="space-y-2 text-sm text-charcoal/70">
                     <p>If you're driving, the property address will be provided after registration.</p>
-                    <p>From Atlanta: Approximately 1.5 hours via GA-400 N</p>
+                    <p>The retreat location is just outside the Austin, Texas area</p>
                   </div>
                 </div>
 
                 <div className="bg-cream rounded-lg p-4">
                   <h3 className="font-semibold text-forest mb-2">Rideshare or Rental</h3>
                   <div className="space-y-2 text-sm text-charcoal/70">
-                    <p>Rental cars available at ATL</p>
-                    <p>Rideshare to Jasper is possible but may be expensive from Atlanta</p>
+                    <p>Rental cars available at AUS</p>
+                    <p>Rideshare to the retreat location is possible from Austin</p>
                     <p>Consider coordinating rides with other participants</p>
                   </div>
                 </div>
 
                 <div className="bg-forest/10 border-l-4 border-forest rounded-r-lg p-3">
                   <p className="text-xs text-charcoal/70">
-                    <strong>Note:</strong> We will coordinate a group chat for participants to arrange carpools from ATL if interested.
+                    <strong>Note:</strong> We will coordinate a group chat for participants to arrange carpools from AUS if interested.
                   </p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function JasperTravelPage() {
               <ul className="space-y-2 text-sm text-charcoal/70">
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Lodging at the mountain property
+                  Lodging at the retreat property
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
@@ -117,7 +117,7 @@ export default function JasperTravelPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Transportation to local shoot locations (church, downtown Jasper)
+                  Transportation to local shoot locations (church, local downtown area)
                 </li>
               </ul>
             </div>
@@ -127,7 +127,7 @@ export default function JasperTravelPage() {
               <ul className="space-y-2 text-sm text-charcoal/70">
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Flights or transportation to/from Jasper
+                  Flights or transportation to/from the retreat location
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>

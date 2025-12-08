@@ -6,7 +6,7 @@
 export const jasperPricingTiers = [
   {
     tier: "Early Bird",
-    price: 3250,
+    price: 3850,
     startDate: new Date('2025-09-01'),
     endDate: new Date('2025-11-01'),
     description: "Best value"
@@ -51,7 +51,7 @@ export const JASPER_DEPARTURE_TRAVEL_DATE = '2026-01-31T00:00:00';
 export const JASPER_FULL_PAYMENT_DEADLINE = '2026-01-01T23:59:59';
 
 // Jasper pricing amounts
-export const JASPER_EARLY_BIRD_TOTAL = 3250;
+export const JASPER_EARLY_BIRD_TOTAL = 3850;
 export const JASPER_STANDARD_TOTAL = 4000;
 export const JASPER_LATE_TOTAL = 4250;
 
@@ -181,6 +181,6 @@ export const jasperPaymentOptions = [
 
 // Legacy export for compatibility
 export const jasperPricing = {
-  standardTuition: 3250,
+  standardTuition: 3850,
   cameraDiscount: 300,
 };

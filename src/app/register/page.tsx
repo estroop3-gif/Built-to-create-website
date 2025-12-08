@@ -704,8 +704,8 @@ export default function RegisterPage() {
       {/* Refund Policy Modal */}
       {showRefundModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between mb-4 flex-shrink-0">
               <h3 className="text-lg font-bold text-charcoal">Refund Policy</h3>
               <button
                 onClick={() => setShowRefundModal(false)}
@@ -716,10 +716,12 @@ export default function RegisterPage() {
                 </svg>
               </button>
             </div>
-            <RefundPolicyContent />
+            <div className="overflow-y-auto flex-grow">
+              <RefundPolicyContent />
+            </div>
             <button
               onClick={() => setShowRefundModal(false)}
-              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
+              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors flex-shrink-0"
             >
               Close
             </button>

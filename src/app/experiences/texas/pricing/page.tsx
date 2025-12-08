@@ -13,14 +13,14 @@ export default function JasperPricingPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+            backgroundImage: "url('/images/hero-jasper.webp')"
           }}
         ></div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Jasper Retreat Pricing</h1>
+          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">Media Leaders Retreat Pricing</h1>
           <p className="text-xl text-charcoal/70 mb-4">
-            Clear tiered pricing for the Jasper, Georgia filmmaking retreat so you can plan your investment with confidence.
+            Clear tiered pricing for the Media Leaders Retreat just outside the Austin, Texas area so you can plan your investment with confidence.
           </p>
           <div className="text-lg text-charcoal/80 space-y-1">
             <p><strong>Session 1:</strong> January 28-30, 2026 • Travel: Jan 27 & 31</p>
@@ -35,7 +35,7 @@ export default function JasperPricingPage() {
           {/* Christian retreat intro */}
           <div className="text-center mb-12">
             <p className="text-lg text-charcoal/80 max-w-3xl mx-auto">
-              Join our Christian retreat in Jasper, Georgia where presence takes priority over performance, and Spirit-led creativity guides every frame. Small group, focused ministry-driven work.
+              Join our Christian retreat just outside the Austin, Texas area where presence takes priority over performance, and Spirit-led creativity guides every frame. Small group, focused ministry-driven work.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export default function JasperPricingPage() {
                   <ul className="space-y-2 text-charcoal/70">
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
-                      Focused 4-day mountain retreat
+                      Focused 4-day retreat
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
@@ -75,15 +75,15 @@ export default function JasperPricingPage() {
                   <ul className="space-y-2 text-charcoal/70">
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
-                      Mountain property lodging (bunks or tents)
+                      Private bedroom on retreat property near Wimberley
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
-                      Quiet mountain setting for focused work
+                      Quiet Texas Hill Country setting for focused work
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
-                      Close to downtown Jasper and church locations
+                      Close to local downtown area and church locations
                     </li>
                   </ul>
                 </div>
@@ -101,7 +101,7 @@ export default function JasperPricingPage() {
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
-                      Mountain hike with guided reflection
+                      Outdoor time with guided reflection
                     </li>
                     <li className="flex items-start">
                       <span className="text-sage mr-2">•</span>
@@ -149,7 +149,7 @@ export default function JasperPricingPage() {
                 <ul className="space-y-2 text-charcoal/70">
                   <li className="flex items-start">
                     <span className="text-earth mr-2">•</span>
-                    Travel to/from Jasper, Georgia
+                    Travel to/from the Austin, Texas area
                   </li>
                   <li className="flex items-start">
                     <span className="text-earth mr-2">•</span>
@@ -180,7 +180,7 @@ export default function JasperPricingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Filmmaking?</h2>
           <p className="text-xl mb-8 text-cream/90">
-            Limited spots for personalized attention in this focused mountain retreat.
+            Limited spots for personalized attention in this focused retreat.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -261,8 +261,8 @@ function PricingTiersSection() {
       {/* Refund Policy Modal */}
       {showRefundModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between mb-4 flex-shrink-0">
               <h3 className="text-lg font-bold text-charcoal">Refund Policy</h3>
               <button
                 onClick={() => setShowRefundModal(false)}
@@ -273,10 +273,12 @@ function PricingTiersSection() {
                 </svg>
               </button>
             </div>
-            <RefundPolicyContent />
+            <div className="overflow-y-auto flex-grow">
+              <RefundPolicyContent />
+            </div>
             <button
               onClick={() => setShowRefundModal(false)}
-              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors"
+              className="w-full mt-6 bg-forest text-white px-4 py-2 rounded-lg font-semibold hover:bg-forest-600 transition-colors flex-shrink-0"
             >
               Close
             </button>

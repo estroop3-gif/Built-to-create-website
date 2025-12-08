@@ -4,7 +4,7 @@ import { costaRicaFaqData, jasperFaqData } from '@/lib/faq';
 
 export const metadata: Metadata = {
   title: 'FAQ - Retreat Information | The Born to Create Project',
-  description: 'Frequently asked questions about the Costa Rica and Jasper, GA filmmaking retreats. Equipment, travel, pricing, and logistics information.',
+  description: 'Frequently asked questions about the Costa Rica and Media Leaders Retreat filmmaking retreats. Equipment, travel, pricing, and logistics information.',
 };
 
 export default function FAQPage() {
@@ -35,10 +35,10 @@ export default function FAQPage() {
             </div>
           </div>
 
-          {/* Jasper, GA FAQ Section */}
+          {/* Media Leaders Retreat FAQ Section */}
           <div className="mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-charcoal mb-8 text-center">
-              Jasper, GA Retreat FAQ
+              Media Leaders Retreat FAQ
             </h2>
             <div className="bg-cream rounded-2xl p-8 shadow-lg">
               {jasperFaqData.map((faq, index) => (

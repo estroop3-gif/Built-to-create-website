@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Experiences - Born to Create Project | Filmmaking Retreats',
-  description: 'Explore our faith-centered filmmaking retreats in Costa Rica and Jasper, GA. Hands-on production, spiritual growth, and creative community.',
+  description: 'Explore our faith-centered filmmaking retreats in Costa Rica and the Austin, Texas area. Hands-on production, spiritual growth, and creative community.',
 };
 
 export default function ExperiencesPage() {
@@ -101,7 +101,7 @@ export default function ExperiencesPage() {
         </Container>
       </Section>
 
-      {/* Jasper, GA Experience */}
+      {/* Texas Experience */}
       <Section spacing="xl" background="sage">
         <Container size="lg">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -109,7 +109,7 @@ export default function ExperiencesPage() {
               <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg"
-                  alt="Jasper Georgia mountain retreat"
+                  alt="Texas Hill Country retreat"
                   fill
                   className="object-cover"
                 />
@@ -117,10 +117,10 @@ export default function ExperiencesPage() {
             </div>
             <div className="order-2">
               <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-                Jasper, Georgia
+                Media Leaders Retreat
               </h2>
               <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
-                A mountain retreat for church media leaders who need focus, stillness, and a clear path forward in their calling. Set in the quiet town of Jasper, Georgia, this small group experience is designed for media leaders and creatives serving in the local church.
+                A Texas Hill Country retreat for church media leaders who need focus, stillness, and a clear path forward in their calling. Just outside the Austin, Texas area, this small group experience is designed for media leaders and creatives serving in the local church.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
                 Across three days you will capture real testimonies, interviews, worship and teaching coverage, and a short film, while learning simple, repeatable workflows you can take back home. You will leave with usable footage, practical systems for Sundays and special events, and a renewed vision for how your media team can serve your church.
@@ -136,8 +136,8 @@ export default function ExperiencesPage() {
                 <div className="flex items-start">
                   <span className="text-forest-600 mr-3 mt-1">•</span>
                   <div>
-                    <p className="font-semibold text-ink-900">Glamping setup</p>
-                    <p className="text-sm text-ink-600">Simple mountain lodging, all meals included</p>
+                    <p className="font-semibold text-ink-900">Retreat accommodations</p>
+                    <p className="text-sm text-ink-600">Private rooms on retreat property, all meals included</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -149,10 +149,10 @@ export default function ExperiencesPage() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button as="link" href="/experiences/jasper" size="lg" variant="primary">
-                  Explore Jasper
+                <Button as="link" href="/experiences/texas" size="lg" variant="primary">
+                  Explore Media Leaders Retreat
                 </Button>
-                <Button as="link" href="/experiences/jasper/itinerary" size="lg" variant="ghost">
+                <Button as="link" href="/experiences/texas/itinerary" size="lg" variant="ghost">
                   View Itinerary
                 </Button>
               </div>

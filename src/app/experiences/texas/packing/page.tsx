@@ -8,14 +8,14 @@ export default function JasperPackingPage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg')"
+            backgroundImage: "url('/images/hero-jasper.webp')"
           }}
         ></div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">What To Pack For Jasper, Georgia</h1>
+          <h1 className="text-5xl sm:text-6xl font-bold text-charcoal mb-6">What To Pack For the Retreat</h1>
           <p className="text-xl text-charcoal/70">
-            Jasper is a mountain town, so weather can shift from cool mornings and evenings to comfortable afternoons. You do not need to bring a full camera kit for this retreat. The goal is for you to focus on learning, shooting, and being present with God, not stressing about gear.
+            The retreat location is in the Texas Hill Country, where weather can shift from warm afternoons to cooler mornings and evenings. You do not need to bring a full camera kit for this retreat. The goal is for you to focus on learning, shooting, and being present with God, not stressing about gear.
           </p>
         </div>
       </section>
@@ -28,7 +28,7 @@ export default function JasperPackingPage() {
               <strong>Camera Gear:</strong> Cameras are provided for instruction and shooting. You do not need to bring your own camera kit unless you want to.
             </p>
             <p className="text-charcoal/70">
-              <strong>Sleeping Gear:</strong> A sleeping bag is required. You will be in bunks or tents depending on the final setup.
+              <strong>Accommodations:</strong> You will have your own private bedroom with bedding provided. Just bring yourself and your personal items.
             </p>
           </div>
 
@@ -69,12 +69,12 @@ export default function JasperPackingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                   </svg>
                 </div>
-                Clothing for mountain weather
+                Clothing for Texas Hill Country weather
               </summary>
               <ul className="space-y-2 text-sm text-charcoal/70">
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  Comfortable, modest clothing appropriate for mountain weather
+                  Comfortable, modest clothing appropriate for Texas Hill Country weather
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
@@ -103,20 +103,20 @@ export default function JasperPackingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                Sleeping gear
+                Personal items
               </summary>
               <ul className="space-y-2 text-sm text-charcoal/70">
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  A sleeping bag is required
+                  Bedding is provided in your private room
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  You will be in bunks or tents depending on the final setup, so bring a sleeping bag you are comfortable in for cool mountain nights
+                  A Bible and notebook for devotional time and teaching sessions
                 </li>
                 <li className="flex items-start">
                   <span className="text-sage mr-2">•</span>
-                  If you normally use a small travel pillow or extra blanket, you can bring it, but a sleeping bag is the only required sleep item
+                  If you normally use a travel pillow or have specific comfort items, feel free to bring them
                 </li>
               </ul>
             </details>
