@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { getJasperPricingTiers, getJasperActiveWindow, getJasperCurrentTotal, calculateJasperDueToday, isJasperAfterFullPaymentDeadline, formatJasperPaymentDate } from '@/lib/jasperPricing';
+import { getTexasPricingTiers, getTexasActiveWindow, getTexasCurrentTotal, calculateTexasDueToday, isTexasAfterFullPaymentDeadline, formatTexasPaymentDate } from '@/lib/texasPricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-export default function JasperPricingPage() {
+export default function TexasPricingPage() {
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
@@ -203,8 +203,8 @@ export default function JasperPricingPage() {
 }
 
 function PricingTiersSection() {
-  const activeWindow = getJasperActiveWindow();
-  const tiers = getJasperPricingTiers();
+  const activeWindow = getTexasActiveWindow();
+  const tiers = getTexasPricingTiers();
   const [showRefundModal, setShowRefundModal] = useState(false);
 
   return (
@@ -226,7 +226,7 @@ function PricingTiersSection() {
               <div className={`text-center mb-4 ${isActive ? 'mt-8' : ''}`}>
                 <h3 className={`text-xl font-bold mb-1 ${isActive ? 'text-cream-100' : 'text-charcoal'}`}>{tier.label}</h3>
                 <p className={`text-xs ${isActive ? 'text-cream-100/60' : 'text-charcoal/60'}`}>
-                  {formatJasperPaymentDate(tier.startDate)} - {formatJasperPaymentDate(tier.endDate)}
+                  {formatTexasPaymentDate(tier.startDate)} - {formatTexasPaymentDate(tier.endDate)}
                 </p>
               </div>
 
@@ -290,10 +290,10 @@ function PricingTiersSection() {
 }
 
 function DueTodayPanel() {
-  const grandTotal = getJasperCurrentTotal();
-  const afterDeadline = isJasperAfterFullPaymentDeadline();
-  const depositDue = calculateJasperDueToday('deposit', grandTotal);
-  const fullDue = calculateJasperDueToday('full', grandTotal);
+  const grandTotal = getTexasCurrentTotal();
+  const afterDeadline = isTexasAfterFullPaymentDeadline();
+  const depositDue = calculateTexasDueToday('deposit', grandTotal);
+  const fullDue = calculateTexasDueToday('full', grandTotal);
 
   return (
     <div className="bg-sand/30 rounded-2xl p-8 mb-16">

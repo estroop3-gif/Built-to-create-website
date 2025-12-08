@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Texas Hill Country filmmaking retreat just outside the Austin, Texas area for Christian creatives',
 };
 
-export default function JasperExperience() {
+export default function TexasExperience() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -63,7 +63,7 @@ export default function JasperExperience() {
         </Container>
       </section>
 
-      {/* Secondary Navigation for Jasper sub-pages */}
+      {/* Secondary Navigation for Texas sub-pages */}
       <Section spacing="sm" background="cream">
         <div className="max-w-7xl mx-auto">
           <nav className="flex flex-wrap justify-center gap-4">

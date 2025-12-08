@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'Faith-centered filmmaking retreat just outside the Austin, Texas area. Ministry-driven production and creative work in the Texas Hill Country.',
 };
 
-export default function JasperItineraryPage() {
+export default function TexasItineraryPage() {
   return (
     <>
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">

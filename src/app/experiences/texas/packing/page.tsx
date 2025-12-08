@@ -1,6 +1,6 @@
 'use client';
 
-export default function JasperPackingPage() {
+export default function TexasPackingPage() {
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">

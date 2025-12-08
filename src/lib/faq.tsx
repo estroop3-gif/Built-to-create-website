@@ -5,7 +5,7 @@ export interface FAQItem {
   question: string;
   answer: string | ReactElement;
   category: 'general' | 'travel' | 'equipment' | 'pricing' | 'logistics' | 'spiritual';
-  retreat?: 'costa-rica' | 'jasper';
+  retreat?: 'costa-rica' | 'texas';
 }
 
 export const costaRicaFaqData: FAQItem[] = [
@@ -137,112 +137,112 @@ export const costaRicaFaqData: FAQItem[] = [
   }
 ];
 
-export const jasperFaqData: FAQItem[] = [
+export const texasFaqData: FAQItem[] = [
   {
     question: "What is Media Leaders Retreat?",
     answer: "Media Leaders Retreat is a small, intensive working retreat for church media leaders, storytellers, and creatives. It blends time in Scripture, teaching on craft, hands on production, and guided editing so you leave with finished work in hand and a clear plan for your ministry.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Where is the retreat held?",
     answer: "The retreat takes place on a private property in the Texas Hill Country near Wimberley, Texas. Each attendee has their own room on site. Exact location details are shared after your booking is confirmed.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Who is this for?",
     answer: "This retreat is designed for people who carry responsibility for media in a local church. That includes staff media directors, volunteers who lead creative teams, content creators who serve multiple churches, and pastors who are directly involved in storytelling and production.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Do I have to be on staff at a church?",
     answer: "No. Many attendees are staff, but you are welcome if you are a key volunteer, a freelancer who serves churches, or a creative who feels called to build media for the Church.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What skill level is this for?",
     answer: "You should have at least a basic working knowledge of cameras and editing. You do not need to be an expert. The teaching is designed to stretch intermediate creatives and give newer media leaders a solid foundation they can build on when they get home.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Will I have my own room?",
     answer: "Yes. Every attendee has their own bedroom on the property. Bathrooms and showers are shared, and there are common spaces for teaching, meals, editing, and hanging out.",
     category: "logistics",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What is included in the price?",
     answer: "Your ticket covers your lodging on the property, meals during the retreat, teaching sessions, guided production days, and access to camera and lighting gear used in the training. Once you arrive at the retreat location, the only extra costs are any personal purchases you choose to make off site.",
     category: "pricing",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Is travel included?",
     answer: "Travel to and from the retreat is not included. You are responsible for getting yourself to the Wimberley area. Once you are registered, you will receive guidance on airports, recommended arrival times, and what to expect when you get to the property.",
     category: "travel",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Can my church pay for this?",
     answer: "Yes. Many churches treat this as a mix of professional development and ministry training. You can register directly and have your church reimburse you, or your church can pay the retreat fee on your behalf.",
     category: "pricing",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Do I need to bring my own camera or laptop?",
     answer: "Camera gear is provided for instruction and shared production work. You are welcome to bring your own camera if you want to get more comfortable with your specific setup. A laptop is recommended if you want to edit on your own system and take projects home ready to launch, but it is not required.",
     category: "equipment",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What does a typical day look like?",
     answer: "Most days include morning time in Scripture and prayer, a focused teaching block, and then hands on work in small crews. Afternoons are dedicated to shooting, interviews, or edit sessions, with feedback built in. Evenings are reserved for meals, conversations, and time to rest, not just more sessions.",
     category: "logistics",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "How many people will be there?",
     answer: "The retreat is intentionally kept small so you get real time with the instructor and meaningful reps on set. Expect a group size that allows for multiple small crews and honest conversations, not a crowded conference.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Is this a conference?",
     answer: "No. This is a working retreat. You will be creating, not just taking notes. The goal is that you leave with finished work, a clear plan, and deeper clarity in your calling, not just a notebook of ideas you never implement.",
     category: "general",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What if I am introverted?",
     answer: "This retreat is designed with space to breathe. There is structured time with the group and quiet time built in so you can be alone with God, process what you are learning, and reset without feeling like you have to be \"on\" every minute.",
     category: "spiritual",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What about food and dietary restrictions?",
     answer: "Meals are provided on site. Before the retreat you will have a chance to share any dietary needs. We cannot meet every preference, but we will make reasonable efforts to accommodate allergies and major restrictions.",
     category: "logistics",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "Are there payment plans?",
     answer: "If you need a payment plan, reach out after you apply and we can talk through options. The goal is to make this accessible while still honoring the cost of running a small, intensive retreat.",
     category: "pricing",
-    retreat: "jasper"
+    retreat: "texas"
   },
   {
     question: "What is the refund policy?",
     answer: "Spots are limited, so cancellations impact the ability to run the retreat well. Details on refunds and transfer options are provided in the registration terms. If something changes after you book, contact us as soon as possible so we can work with you.",
     category: "pricing",
-    retreat: "jasper"
+    retreat: "texas"
   }
 ];
 
-export const faqData: FAQItem[] = [...costaRicaFaqData, ...jasperFaqData];
+export const faqData: FAQItem[] = [...costaRicaFaqData, ...texasFaqData];
 
 export const faqByCategory = {
   general: faqData.filter(item => item.category === 'general'),

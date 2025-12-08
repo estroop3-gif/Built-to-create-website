@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-export default function JasperTravelPage() {
+export default function TexasTravelPage() {
   return (
     <>
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">

@@ -3,18 +3,18 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { pricing, DEPOSIT, getCurrentTotal, isAfterFullPaymentDeadline, calculateRemainingBalance, formatPaymentDate, FULL_PAYMENT_DEADLINE, LATE_TOTAL, getActiveWindow } from '@/lib/pricing';
-import { JASPER_DEPOSIT, getJasperCurrentTotal, isJasperAfterFullPaymentDeadline, calculateJasperRemainingBalance, formatJasperPaymentDate, JASPER_FULL_PAYMENT_DEADLINE, JASPER_LATE_TOTAL, getJasperActiveWindow } from '@/lib/jasperPricing';
+import { TEXAS_DEPOSIT, getTexasCurrentTotal, isTexasAfterFullPaymentDeadline, calculateTexasRemainingBalance, formatTexasPaymentDate, TEXAS_FULL_PAYMENT_DEADLINE, TEXAS_LATE_TOTAL, getTexasActiveWindow } from '@/lib/texasPricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-type RetreatType = 'costa-rica' | 'jasper';
+type RetreatType = 'costa-rica' | 'texas';
 type CostaRicaSession = 'session-1' | 'session-2' | '';
-type JasperSession = 'session-1' | 'session-2' | '';
+type TexasSession = 'session-1' | 'session-2' | '';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
     retreat: '' as RetreatType | '',
     costaRicaSession: '' as CostaRicaSession,
-    jasperSession: '' as JasperSession,
+    texasSession: '' as TexasSession,
     firstName: '',
     lastName: '',
     email: '',
@@ -37,7 +37,7 @@ export default function RegisterPage() {
     if (formData.retreat === 'costa-rica' && isAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
       setFormData({ ...formData, paymentOption: 'full' });
     }
-    if (formData.retreat === 'jasper' && isJasperAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
+    if (formData.retreat === 'texas' && isTexasAfterFullPaymentDeadline() && formData.paymentOption === 'deposit') {
       setFormData({ ...formData, paymentOption: 'full' });
     }
   }, [formData]);
@@ -51,7 +51,7 @@ export default function RegisterPage() {
         ...formData,
         retreat: value as RetreatType | '',
         costaRicaSession: '',
-        jasperSession: '',
+        texasSession: '',
         bringOwnCamera: false // Reset camera option when switching retreats
       });
     } else if (type === 'checkbox') {
@@ -68,16 +68,16 @@ export default function RegisterPage() {
   };
 
   const getBaseTuition = () => {
-    if (formData.retreat === 'jasper') {
-      return JASPER_LATE_TOTAL;
+    if (formData.retreat === 'texas') {
+      return TEXAS_LATE_TOTAL;
     }
     return LATE_TOTAL;
   };
 
   const getDiscount = () => {
-    if (formData.retreat === 'jasper') {
-      const baseTuition = JASPER_LATE_TOTAL;
-      const currentPrice = getJasperCurrentTotal();
+    if (formData.retreat === 'texas') {
+      const baseTuition = TEXAS_LATE_TOTAL;
+      const currentPrice = getTexasCurrentTotal();
       return baseTuition - currentPrice;
     }
     const baseTuition = LATE_TOTAL;
@@ -86,8 +86,8 @@ export default function RegisterPage() {
   };
 
   const getDiscountLabel = () => {
-    if (formData.retreat === 'jasper') {
-      const activeWindow = getJasperActiveWindow();
+    if (formData.retreat === 'texas') {
+      const activeWindow = getTexasActiveWindow();
       switch (activeWindow) {
         case 'EARLY_BIRD':
           return 'Early Bird Discount';
@@ -109,7 +109,7 @@ export default function RegisterPage() {
   };
 
   const calculateSubtotal = () => {
-    let total = formData.retreat === 'jasper' ? getJasperCurrentTotal() : getCurrentTotal();
+    let total = formData.retreat === 'texas' ? getTexasCurrentTotal() : getCurrentTotal();
     // Only apply camera discount for Costa Rica
     if (formData.retreat === 'costa-rica' && formData.bringOwnCamera) {
       total -= pricing.cameraDiscount;
@@ -122,12 +122,12 @@ export default function RegisterPage() {
   };
 
   const calculateDeposit = () => {
-    return formData.retreat === 'jasper' ? JASPER_DEPOSIT : DEPOSIT;
+    return formData.retreat === 'texas' ? TEXAS_DEPOSIT : DEPOSIT;
   };
 
   const calculateDueToday = () => {
-    const isAfterDeadline = formData.retreat === 'jasper'
-      ? isJasperAfterFullPaymentDeadline()
+    const isAfterDeadline = formData.retreat === 'texas'
+      ? isTexasAfterFullPaymentDeadline()
       : isAfterFullPaymentDeadline();
 
     if (formData.paymentOption === 'full' || isAfterDeadline) {
@@ -137,16 +137,16 @@ export default function RegisterPage() {
   };
 
   const getRemainingBalance = () => {
-    const isAfterDeadline = formData.retreat === 'jasper'
-      ? isJasperAfterFullPaymentDeadline()
+    const isAfterDeadline = formData.retreat === 'texas'
+      ? isTexasAfterFullPaymentDeadline()
       : isAfterFullPaymentDeadline();
 
     if (formData.paymentOption === 'full' || isAfterDeadline) {
       return 0;
     }
 
-    if (formData.retreat === 'jasper') {
-      return calculateJasperRemainingBalance(calculateTotal());
+    if (formData.retreat === 'texas') {
+      return calculateTexasRemainingBalance(calculateTotal());
     }
     return calculateRemainingBalance(calculateTotal());
   };
@@ -164,8 +164,8 @@ export default function RegisterPage() {
       return;
     }
 
-    if (formData.retreat === 'jasper' && !formData.jasperSession) {
-      alert('Please select a Jasper session');
+    if (formData.retreat === 'texas' && !formData.texasSession) {
+      alert('Please select a Texas session');
       return;
     }
 
@@ -175,8 +175,8 @@ export default function RegisterPage() {
     }
 
     // Force full payment if after deadline
-    const isAfterDeadline = formData.retreat === 'jasper'
-      ? isJasperAfterFullPaymentDeadline()
+    const isAfterDeadline = formData.retreat === 'texas'
+      ? isTexasAfterFullPaymentDeadline()
       : isAfterFullPaymentDeadline();
 
     if (isAfterDeadline && formData.paymentOption === 'deposit') {
@@ -188,8 +188,8 @@ export default function RegisterPage() {
 
     try {
       // Determine the correct plan label based on current pricing tier and payment option
-      const activeWindow = formData.retreat === 'jasper'
-        ? getJasperActiveWindow()
+      const activeWindow = formData.retreat === 'texas'
+        ? getTexasActiveWindow()
         : getActiveWindow();
 
       let planLabel = '';
@@ -225,10 +225,10 @@ export default function RegisterPage() {
         } else {
           retreatDates = 'Session 2: April 17-25, 2026';
         }
-      } else if (formData.retreat === 'jasper') {
-        retreatName = 'Born to Create Project - Jasper, GA';
-        retreatLocation = 'Jasper, Georgia';
-        if (formData.jasperSession === 'session-1') {
+      } else if (formData.retreat === 'texas') {
+        retreatName = 'Media Leaders Retreat - Texas';
+        retreatLocation = 'Texas Hill Country';
+        if (formData.texasSession === 'session-1') {
           retreatDates = 'Session 1: January 28-30, 2026 (Travel: Jan 27 & 31)';
         } else {
           retreatDates = 'Session 2: May 6-8, 2026 (Travel: May 5 & 9)';
@@ -268,7 +268,7 @@ export default function RegisterPage() {
           retreat_location: retreatLocation,
           retreat_type: formData.retreat,
           costa_rica_session: formData.retreat === 'costa-rica' ? formData.costaRicaSession : undefined,
-          jasper_session: formData.retreat === 'jasper' ? formData.jasperSession : undefined
+          texas_session: formData.retreat === 'texas' ? formData.texasSession : undefined
         }),
       });
 
@@ -290,14 +290,14 @@ export default function RegisterPage() {
   };
 
   const getPaymentDeadline = () => {
-    return formData.retreat === 'jasper'
-      ? formatJasperPaymentDate(JASPER_FULL_PAYMENT_DEADLINE)
+    return formData.retreat === 'texas'
+      ? formatTexasPaymentDate(TEXAS_FULL_PAYMENT_DEADLINE)
       : formatPaymentDate(FULL_PAYMENT_DEADLINE);
   };
 
   const isAfterDeadlineForSelectedRetreat = () => {
-    return formData.retreat === 'jasper'
-      ? isJasperAfterFullPaymentDeadline()
+    return formData.retreat === 'texas'
+      ? isTexasAfterFullPaymentDeadline()
       : isAfterFullPaymentDeadline();
   };
 
@@ -338,7 +338,7 @@ export default function RegisterPage() {
                       >
                         <option value="">Choose a retreat...</option>
                         <option value="costa-rica">Costa Rica – Filmmaking Retreat</option>
-                        <option value="jasper">Jasper, GA – Church Media Retreat</option>
+                        <option value="texas">Texas – Media Leaders Retreat</option>
                       </select>
                     </div>
 
@@ -363,17 +363,17 @@ export default function RegisterPage() {
                       </div>
                     )}
 
-                    {/* Jasper Session Selection */}
-                    {formData.retreat === 'jasper' && (
+                    {/* Texas Session Selection */}
+                    {formData.retreat === 'texas' && (
                       <div className="mt-4">
-                        <label htmlFor="jasperSession" className="block text-sm font-semibold text-charcoal mb-2">
+                        <label htmlFor="texasSession" className="block text-sm font-semibold text-charcoal mb-2">
                           Select Session *
                         </label>
                         <select
-                          id="jasperSession"
-                          name="jasperSession"
+                          id="texasSession"
+                          name="texasSession"
                           required
-                          value={formData.jasperSession}
+                          value={formData.texasSession}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
                         >

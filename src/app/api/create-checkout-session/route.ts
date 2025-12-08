@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine which retreat pricing to use
-    const isJasper = retreat_type === 'jasper';
+    const isTexas = retreat_type === 'texas';
 
     // Costa Rica pricing (in cents)
     const costaRicaPricing = {
@@ -52,16 +52,16 @@ export async function POST(request: NextRequest) {
       'Deposit': { name: 'Deposit', unit_amount: 180000 },                     // $1,800
     };
 
-    // Jasper pricing (in cents)
-    const jasperPricing = {
-      'Full - Early Bird': { name: 'Full - Early Bird', unit_amount: 325000 }, // $3,250
+    // Texas pricing (in cents)
+    const texasPricing = {
+      'Full - Early Bird': { name: 'Full - Early Bird', unit_amount: 385000 }, // $3,850
       'Full - Standard': { name: 'Full - Standard', unit_amount: 400000 },     // $4,000
       'Full - Late': { name: 'Full - Late', unit_amount: 425000 },             // $4,250
       'Deposit': { name: 'Deposit', unit_amount: 100000 },                     // $1,000
     };
 
     // Select the correct pricing based on retreat type
-    const basePricing = isJasper ? jasperPricing : costaRicaPricing;
+    const basePricing = isTexas ? texasPricing : costaRicaPricing;
     const selectedPricing = basePricing[planLabel as keyof typeof basePricing];
 
     if (!selectedPricing) {
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     let finalAmount = selectedPricing.unit_amount;
     let discountApplied = false;
 
-    if (bring_own_camera && !isJasper && planLabel !== 'Deposit') {
+    if (bring_own_camera && !isTexas && planLabel !== 'Deposit') {
       finalAmount -= cameraDiscount;
       discountApplied = true;
     }
@@ -90,8 +90,8 @@ export async function POST(request: NextRequest) {
             currency: 'usd',
             product_data: {
               name: discountApplied ? `${selectedPricing.name} (w/ Camera Discount)` : selectedPricing.name,
-              description: isJasper
-                ? `3-day church media retreat in Jasper, GA - ${retreat_start}`
+              description: isTexas
+                ? `Media Leaders Retreat - Texas Hill Country - ${retreat_start}`
                 : discountApplied
                   ? `9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera - ${retreat_start}`
                   : `9-day Christian filmmaking retreat in Costa Rica - ${retreat_start}`,

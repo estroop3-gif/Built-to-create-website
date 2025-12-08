@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'A closer look at where you will sleep, eat, work, and rest during the Media Leaders Retreat.',
 };
 
-export default function JasperDetailsPage() {
+export default function TexasDetailsPage() {
   return (
     <>
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">

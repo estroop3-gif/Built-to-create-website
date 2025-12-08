@@ -108,7 +108,7 @@ export default function ExperiencesPage() {
             <div className="order-1">
               <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/images/visit-first-mountain-city-jasper-georgia-featured-1.jpg"
+                  src="/images/hero-jasper.jpg"
                   alt="Texas Hill Country retreat"
                   fill
                   className="object-cover"

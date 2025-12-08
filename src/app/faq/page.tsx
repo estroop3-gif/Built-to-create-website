@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import FAQItem from '@/components/FAQItem';
-import { costaRicaFaqData, jasperFaqData } from '@/lib/faq';
+import { costaRicaFaqData, texasFaqData } from '@/lib/faq';
 
 export const metadata: Metadata = {
   title: 'FAQ - Retreat Information | The Born to Create Project',
@@ -41,7 +41,7 @@ export default function FAQPage() {
               Media Leaders Retreat FAQ
             </h2>
             <div className="bg-cream rounded-2xl p-8 shadow-lg">
-              {jasperFaqData.map((faq, index) => (
+              {texasFaqData.map((faq, index) => (
                 <FAQItem key={index} question={faq.question} answer={faq.answer} />
               ))}
             </div>
