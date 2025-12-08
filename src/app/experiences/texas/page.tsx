@@ -97,6 +97,12 @@ export default function JasperExperience() {
             >
               Church Media Toolkit
             </Link>
+            <Link
+              href="/experiences/texas/venue"
+              className="px-6 py-2 text-base font-medium text-ink-700 hover:text-forest-700 hover:bg-sage-100 rounded-full transition-colors duration-200"
+            >
+              The Venue
+            </Link>
           </nav>
         </div>
       </Section>
