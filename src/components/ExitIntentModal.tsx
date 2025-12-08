@@ -90,15 +90,15 @@ export default function ExitIntentModal({
   if (!isVisible) return null;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-2xl max-w-md w-full relative shadow-2xl">
+      <div className="bg-white rounded-2xl max-w-md w-full relative shadow-2xl my-8 max-h-[85vh] overflow-y-auto">
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-ink-400 hover:text-ink-600 transition-colors z-10"
+          className="sticky top-4 float-right mr-4 mt-4 text-ink-400 hover:text-ink-600 transition-colors z-10 bg-white/80 backdrop-blur-sm rounded-full p-1"
           aria-label="Close modal"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +107,7 @@ export default function ExitIntentModal({
         </button>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-8 pt-4">
           <div className="text-center mb-6">
             <div className="text-4xl mb-4">🎬</div>
             <h2 className="text-2xl font-heading font-bold text-ink-900 mb-3">
