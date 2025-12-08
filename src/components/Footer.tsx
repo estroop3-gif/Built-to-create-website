@@ -174,7 +174,15 @@ export default function Footer() {
                   parker@thebtcp.com
                 </a>
               </p>
-              
+              <p className="font-body text-ink-600">
+                <a
+                  href="mailto:estroop3@gmail.com"
+                  className="hover:text-forest-700 transition-colors duration-200 text-lg"
+                >
+                  estroop3@gmail.com
+                </a>
+              </p>
+
               {/* Social Links */}
               <div className="flex justify-center space-x-6">
                 {footerNavigation.social.map((item) => (

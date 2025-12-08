@@ -149,9 +149,14 @@ export default function JasperTravelPage() {
           <p className="text-xl mb-8 text-cream/90">
             We're happy to help coordinate your travel plans and answer any logistics questions.
           </p>
-          <a href="mailto:parker@thebtcp.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
-            Contact Our Team
-          </a>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="mailto:parker@thebtcp.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+              parker@thebtcp.com
+            </a>
+            <a href="mailto:estroop3@gmail.com" className="inline-block bg-cream text-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+              estroop3@gmail.com
+            </a>
+          </div>
           <div className="mt-6 flex flex-col items-center space-y-2">
             <Link
               href="/terms"

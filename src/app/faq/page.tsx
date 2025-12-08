@@ -53,11 +53,17 @@ export default function FAQPage() {
               We're here to help you prepare for your creative journey. Don't hesitate to reach out with any questions or concerns.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="mailto:parker@thebtcp.com" 
+              <a
+                href="mailto:parker@thebtcp.com"
                 className="bg-forest text-cream px-6 py-3 rounded-full hover:bg-moss transition-colors font-semibold"
               >
-                Email Us
+                parker@thebtcp.com
+              </a>
+              <a
+                href="mailto:estroop3@gmail.com"
+                className="bg-forest text-cream px-6 py-3 rounded-full hover:bg-moss transition-colors font-semibold"
+              >
+                estroop3@gmail.com
               </a>
               <a
                 href="tel:+19413764605"
