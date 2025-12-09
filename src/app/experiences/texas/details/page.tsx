@@ -45,7 +45,7 @@ export default function TexasDetailsPage() {
               <ul className="space-y-3">
                 <li className="flex items-start text-charcoal/70">
                   <span className="text-sage mr-2">•</span>
-                  <span><strong>Session 1:</strong> Retreat January 28–30, 2026 • Travel days January 27 and January 31, 2026</span>
+                  <span><strong>Session 1:</strong> Retreat February 4–6, 2026 • Travel days February 3 and February 7, 2026</span>
                 </li>
                 <li className="flex items-start text-charcoal/70">
                   <span className="text-sage mr-2">•</span>

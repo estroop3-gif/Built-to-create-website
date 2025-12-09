@@ -42,7 +42,7 @@ export default function TexasExperience() {
                 A Texas Hill Country retreat for church media leaders who need focus, stillness, and a clear path forward in their calling.
               </p>
               <p className="font-body text-xl sm:text-2xl text-cream-200 font-medium">
-                Two sessions: January 28–30, 2026 & May 6–8, 2026
+                Two sessions: February 4–6, 2026 & May 6–8, 2026
               </p>
             </div>
 

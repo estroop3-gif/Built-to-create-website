@@ -130,7 +130,7 @@ export default function ExperiencesPage() {
                   <span className="text-forest-600 mr-3 mt-1">•</span>
                   <div>
                     <p className="font-semibold text-ink-900">3 days + travel (two sessions)</p>
-                    <p className="text-sm text-ink-600">Session 1: Jan 28-30 • Session 2: May 6-8, 2026</p>
+                    <p className="text-sm text-ink-600">Session 1: Feb 4-6 • Session 2: May 6-8, 2026</p>
                   </div>
                 </div>
                 <div className="flex items-start">

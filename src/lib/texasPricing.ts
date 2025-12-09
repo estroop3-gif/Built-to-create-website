@@ -1,5 +1,5 @@
 // Texas Hill Country Retreat Pricing Configuration
-// Session 1: January 28-30, 2026 (travel days January 27 and 31)
+// Session 1: February 4-6, 2026 (travel days February 3 and 7)
 // Session 2: May 6-8, 2026 (travel days May 5 and 9)
 // Note: Pricing shown currently applies to Session 1
 
@@ -43,10 +43,10 @@ export const TEXAS_LATE_START = '2026-01-10T00:00:00';
 export const TEXAS_LATE_END = '2026-01-25T23:59:59';
 
 // Texas retreat dates
-export const TEXAS_ARRIVAL_TRAVEL_DATE = '2026-01-27T00:00:00';
-export const TEXAS_RETREAT_START_DATE = '2026-01-28T00:00:00';
-export const TEXAS_RETREAT_END_DATE = '2026-01-30T00:00:00';
-export const TEXAS_DEPARTURE_TRAVEL_DATE = '2026-01-31T00:00:00';
+export const TEXAS_ARRIVAL_TRAVEL_DATE = '2026-02-03T00:00:00';
+export const TEXAS_RETREAT_START_DATE = '2026-02-04T00:00:00';
+export const TEXAS_RETREAT_END_DATE = '2026-02-06T00:00:00';
+export const TEXAS_DEPARTURE_TRAVEL_DATE = '2026-02-07T00:00:00';
 
 export const TEXAS_FULL_PAYMENT_DEADLINE = '2026-01-01T23:59:59';
 

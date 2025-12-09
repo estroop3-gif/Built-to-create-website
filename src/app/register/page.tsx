@@ -229,7 +229,7 @@ export default function RegisterPage() {
         retreatName = 'Media Leaders Retreat - Texas';
         retreatLocation = 'Texas Hill Country';
         if (formData.texasSession === 'session-1') {
-          retreatDates = 'Session 1: January 28-30, 2026 (Travel: Jan 27 & 31)';
+          retreatDates = 'Session 1: February 4-6, 2026 (Travel: Feb 3 & 7)';
         } else {
           retreatDates = 'Session 2: May 6-8, 2026 (Travel: May 5 & 9)';
         }
@@ -378,7 +378,7 @@ export default function RegisterPage() {
                           className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
                         >
                           <option value="">Choose a session...</option>
-                          <option value="session-1">Session 1 – Retreat January 28–30, 2026 (Travel January 27 and 31)</option>
+                          <option value="session-1">Session 1 – Retreat February 4–6, 2026 (Travel February 3 and 7)</option>
                           <option value="session-2">Session 2 – Retreat May 6–8, 2026 (Travel May 5 and 9)</option>
                         </select>
                       </div>

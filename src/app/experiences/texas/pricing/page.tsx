@@ -23,7 +23,7 @@ export default function TexasPricingPage() {
             Clear tiered pricing for the Media Leaders Retreat just outside the Austin, Texas area so you can plan your investment with confidence.
           </p>
           <div className="text-lg text-charcoal/80 space-y-1">
-            <p><strong>Session 1:</strong> January 28-30, 2026 • Travel: Jan 27 & 31</p>
+            <p><strong>Session 1:</strong> February 4-6, 2026 • Travel: Feb 3 & 7</p>
             <p><strong>Session 2:</strong> May 6-8, 2026 • Travel: May 5 & 9</p>
             <p className="text-base text-charcoal/70">Pricing shown applies to both sessions</p>
           </div>
