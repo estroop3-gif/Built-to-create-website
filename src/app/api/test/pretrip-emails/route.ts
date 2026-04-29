@@ -56,7 +56,7 @@ export async function POST(request: Request) {
           subject: `[TEST] ${emailData.subject}`,
           html: emailData.html,
           text: emailData.text,
-          replyTo: 'parker@thebtcp.com'
+          replyTo: 'estroop3@gmail.com'
         })
 
         if (result.error) {

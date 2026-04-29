@@ -4,7 +4,7 @@ import { sendTransactionalEmail } from '@/lib/resend';
 import type { RetreatRegistration } from '@/lib/types/retreatRegistration';
 
 // Host email for notifications - change this to your actual email
-const HOST_EMAIL = process.env.RETREAT_HOST_EMAIL || 'parker@thebtcp.com';
+const HOST_EMAIL = process.env.RETREAT_HOST_EMAIL || 'estroop3@gmail.com';
 
 interface SendConfirmationEmailParams {
   registration: RetreatRegistration;

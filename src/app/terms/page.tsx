@@ -252,7 +252,7 @@ export default function TermsPage() {
               </p>
               <p className="text-ink-700 mb-6 leading-relaxed">
                 The Born to Create Project<br />
-                Email: <a href="mailto:parker@thebtcp.com" className="text-forest-700 hover:text-forest-800 underline">parker@thebtcp.com</a>
+                Email: <a href="mailto:estroop3@gmail.com" className="text-forest-700 hover:text-forest-800 underline">estroop3@gmail.com</a>
               </p>
 
               <hr className="my-8 border-sand-300" />

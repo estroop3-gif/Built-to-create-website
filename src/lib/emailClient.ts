@@ -4,7 +4,7 @@ import React from 'react';
 
 export const emailConfig = {
   from: 'Born to Create Project <noreply@thebtcp.com>',
-  replyTo: 'parker@thebtcp.com',
+  replyTo: 'estroop3@gmail.com',
 } as const;
 
 // Get seed list for notifications (ops team)

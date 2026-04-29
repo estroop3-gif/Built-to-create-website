@@ -43,6 +43,12 @@ export async function POST(request: NextRequest) {
 
     // Determine which retreat pricing to use
     const isTexas = retreat_type === 'texas';
+    const isWorkshop = retreat_type === 'filmmaking-workshop';
+
+    // Workshop pricing
+    const workshopPricing = {
+      'Workshop - Full': { name: 'Filmmaking in the Real World Workshop', unit_amount: 5000 }, // $50
+    };
 
     // Costa Rica pricing (in cents)
     const costaRicaPricing = {
@@ -61,8 +67,8 @@ export async function POST(request: NextRequest) {
     };
 
     // Select the correct pricing based on retreat type
-    const basePricing = isTexas ? texasPricing : costaRicaPricing;
-    const selectedPricing = basePricing[planLabel as keyof typeof basePricing];
+    const basePricing: Record<string, { name: string; unit_amount: number }> = isWorkshop ? workshopPricing : isTexas ? texasPricing : costaRicaPricing;
+    const selectedPricing = basePricing[planLabel];
 
     if (!selectedPricing) {
       return NextResponse.json(
@@ -76,10 +82,33 @@ export async function POST(request: NextRequest) {
     let finalAmount = selectedPricing.unit_amount;
     let discountApplied = false;
 
-    if (bring_own_camera && !isTexas && planLabel !== 'Deposit') {
+    if (bring_own_camera && !isTexas && !isWorkshop && planLabel !== 'Deposit') {
       finalAmount -= cameraDiscount;
       discountApplied = true;
     }
+
+    // Handle promo codes
+    const promoCode = (body.promo_code || '').trim().toUpperCase();
+    const VALID_PROMO_CODES: Record<string, { coupon_id: string; percent_off: number }> = {
+      'FREE4303': { coupon_id: 'FREE4303', percent_off: 100 },
+    };
+    const matchedPromo = VALID_PROMO_CODES[promoCode] || null;
+
+    // Ensure the Stripe coupon exists if a valid promo code was entered
+    if (matchedPromo) {
+      try {
+        await stripe.coupons.retrieve(matchedPromo.coupon_id);
+      } catch {
+        // Coupon doesn't exist yet — create it
+        await stripe.coupons.create({
+          id: matchedPromo.coupon_id,
+          percent_off: matchedPromo.percent_off,
+          duration: 'once',
+          name: `Promo: ${matchedPromo.coupon_id}`,
+        });
+      }
+    }
+
     const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
 
     const session = await stripe.checkout.sessions.create({
@@ -90,17 +119,25 @@ export async function POST(request: NextRequest) {
             currency: 'usd',
             product_data: {
               name: discountApplied ? `${selectedPricing.name} (w/ Camera Discount)` : selectedPricing.name,
-              description: isTexas
-                ? `Media Leaders Retreat - Texas Hill Country - ${retreat_start}`
-                : discountApplied
-                  ? `9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera - ${retreat_start}`
-                  : `9-day Christian filmmaking retreat in Costa Rica - ${retreat_start}`,
+              description: isWorkshop
+                ? `Filmmaking in the Real World Workshop - Jasper, GA - ${retreat_start}`
+                : isTexas
+                  ? `Media Leaders Retreat - Texas Hill Country - ${retreat_start}`
+                  : discountApplied
+                    ? `9-day Christian filmmaking retreat in Costa Rica - $300 discount for bringing your own camera - ${retreat_start}`
+                    : `9-day Christian filmmaking retreat in Costa Rica - ${retreat_start}`,
             },
             unit_amount: finalAmount,
           },
           quantity: 1,
         },
       ],
+      ...(matchedPromo
+        ? { discounts: [{ coupon: matchedPromo.coupon_id }] }
+        : promoCode
+          ? { allow_promotion_codes: true }
+          : {}
+      ),
       mode: 'payment',
       success_url: `${siteUrl}/register/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/register/cancel`,
@@ -137,6 +174,7 @@ export async function POST(request: NextRequest) {
         retreat_start: retreat_start || '',
         retreat_location: retreat_location || '',
         retreat_type: retreat_type || 'costa-rica',
+        promo_code: promoCode || '',
       },
     });
 

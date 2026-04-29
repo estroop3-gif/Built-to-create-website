@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
 
         // Send internal notification for re-subscription
         await sendInternalNotification({
-          to: 'parker@thebtcp.com',
+          to: 'estroop3@gmail.com',
           subject: `New Email List Signup: ${email}`,
           template: InternalNewSignup,
           templateProps: {
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
 
       // Send internal notification for new signup
       await sendInternalNotification({
-        to: 'parker@thebtcp.com',
+        to: 'estroop3@gmail.com',
         subject: `New Email List Signup: ${email}`,
         template: InternalNewSignup,
         templateProps: {

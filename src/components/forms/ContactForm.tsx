@@ -175,9 +175,9 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6" role="alert">
           <div className="text-red-800 font-semibold mb-2">Something went wrong</div>
           <p className="text-red-700">
-            {submitError.includes('email parker@thebtcp.com')
+            {submitError.includes('email estroop3@gmail.com')
               ? submitError
-              : `${submitError}. If the issue continues, email parker@thebtcp.com`
+              : `${submitError}. If the issue continues, email estroop3@gmail.com`
             }
           </p>
         </div>

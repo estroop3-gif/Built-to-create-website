@@ -1,5 +1,5 @@
 // app/api/registration-email/route.ts
-// Complete route to send a registration email via Resend to parker@thebtcp.com
+// Complete route to send a registration email via Resend to estroop3@gmail.com
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sendTransactionalEmail } from '@/lib/resend';
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     // Send to Parker using transactional email helper
     const result = await sendTransactionalEmail({
-      to: 'parker@thebtcp.com',
+      to: 'estroop3@gmail.com',
       subject: emailSubject,
       html: emailHtml,
       text: emailText,

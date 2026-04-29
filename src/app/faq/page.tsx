@@ -54,10 +54,10 @@ export default function FAQPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="mailto:parker@thebtcp.com"
+                href="mailto:estroop3@gmail.com"
                 className="bg-forest text-cream px-6 py-3 rounded-full hover:bg-moss transition-colors font-semibold"
               >
-                parker@thebtcp.com
+                estroop3@gmail.com
               </a>
               <a
                 href="mailto:estroop3@gmail.com"

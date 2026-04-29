@@ -40,6 +40,9 @@ export async function POST(req: Request) {
       const amountPaid = (session.amount_total ?? 0) / 100;
       const currency = (session.currency || 'usd').toUpperCase();
 
+      const retreatType = session.metadata?.retreat_type || '';
+      const isWorkshop = retreatType === 'filmmaking-workshop';
+
       const profile = {
         firstName,
         lastName,
@@ -76,7 +79,8 @@ export async function POST(req: Request) {
         retreat: {
           name: session.metadata?.retreat || 'Born to Create Project Retreat',
           start: session.metadata?.retreat_start || 'February 20-28, 2026',
-          location: session.metadata?.retreat_location || 'Costa Rica'
+          location: session.metadata?.retreat_location || 'Costa Rica',
+          type: retreatType,
         },
         stripe: {
           sessionId: session.id,
@@ -151,7 +155,9 @@ export async function POST(req: Request) {
 
       // Send customer confirmation email
       if (clientEmail) {
-        const subjectCustomer = `You're in! ${retreatName} — Registration Confirmed`;
+        const subjectCustomer = isWorkshop
+          ? `You're registered! ${retreatName} — Confirmation`
+          : `You're in! ${retreatName} — Registration Confirmed`;
         const htmlCustomer = generateCustomerEmailHtml({
           firstName: firstName || 'Friend',
           lastName,
@@ -163,6 +169,7 @@ export async function POST(req: Request) {
           retreatName,
           retreatStart,
           retreatLocation,
+          isWorkshop,
           urls,
           sessionId: session.id,
         });
@@ -177,6 +184,7 @@ export async function POST(req: Request) {
           retreatName,
           retreatStart,
           retreatLocation,
+          isWorkshop,
           urls,
           sessionId: session.id,
         });
@@ -184,14 +192,14 @@ export async function POST(req: Request) {
         // DEBUG: Capture client email payload for QA verification
         fs.writeFileSync('/tmp/client_email_rendered.html', htmlCustomer);
         fs.writeFileSync('/tmp/client_email_rendered.txt', textCustomer);
-        fs.writeFileSync('/tmp/client_email_meta.txt', `Subject: ${subjectCustomer}\nTo: ${clientEmail}\nFrom: ${EMAIL_FROM}\nReplyTo: parker@thebtcp.com`);
+        fs.writeFileSync('/tmp/client_email_meta.txt', `Subject: ${subjectCustomer}\nTo: ${clientEmail}\nFrom: ${EMAIL_FROM}\nReplyTo: estroop3@gmail.com`);
 
         const result = await sendTransactionalEmail({
           to: clientEmail,
           subject: subjectCustomer,
           html: htmlCustomer,
           text: textCustomer,
-          replyTo: 'parker@thebtcp.com',
+          replyTo: 'estroop3@gmail.com',
         });
 
         if (result.error) {
@@ -208,10 +216,10 @@ export async function POST(req: Request) {
         // DEBUG: Capture admin email payload for QA verification
         fs.writeFileSync('/tmp/admin_email_rendered.html', htmlAdmin);
         fs.writeFileSync('/tmp/admin_email_rendered.txt', textAdmin);
-        fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: parker@thebtcp.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${profile.email || 'undefined'}`);
+        fs.writeFileSync('/tmp/admin_email_meta.txt', `Subject: ${subjectAdmin}\nTo: estroop3@gmail.com\nFrom: ${EMAIL_FROM}\nReplyTo: ${profile.email || 'undefined'}`);
 
         const adminResult = await sendTransactionalEmail({
-          to: 'parker@thebtcp.com',
+          to: 'estroop3@gmail.com',
           subject: subjectAdmin,
           html: htmlAdmin,
           text: textAdmin,
@@ -244,6 +252,7 @@ type SharedEmailData = {
   retreatName: string;
   retreatStart: string;
   retreatLocation: string;
+  isWorkshop?: boolean;
   urls: {
     homepage: string;
     itinerary: string;
@@ -293,6 +302,7 @@ type RegistrantProfile = {
     name: string;
     start: string;
     location: string;
+    type: string;
   };
   stripe: {
     sessionId: string;
@@ -362,6 +372,16 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
 
         <div class="checklist">
           <h3 style="color: #2d5016; margin-top: 0;">🚀 What happens next:</h3>
+          ${d.isWorkshop ? `
+          <ul>
+            <li>📅 Mark your calendar — ${escapeHtml(d.retreatStart)}</li>
+            <li>📍 Location: ${escapeHtml(d.retreatLocation)}</li>
+            <li>🎬 No gear needed — everything will be provided</li>
+            <li>⏰ Arrive about 10 minutes early to get settled</li>
+            <li>❓ Browse our FAQ for common questions</li>
+            <li>📱 Questions? Reach out anytime</li>
+          </ul>
+          ` : `
           <ul>
             <li>📋 Review your detailed itinerary and daily schedule</li>
             <li>🎒 Check out the packing list for Costa Rica</li>
@@ -369,21 +389,27 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
             <li>❓ Browse our FAQ for common questions</li>
             <li>📱 Connect with us if you need anything</li>
           </ul>
+          `}
         </div>
 
         <div class="button-group">
+          ${d.isWorkshop ? '' : `
           <a class="btn" href="${d.urls.itinerary}">📋 View Itinerary</a>
           <a class="btn" href="${d.urls.packingList}">🎒 Packing List</a>
+          `}
           <a class="btn" href="${d.urls.faq}">❓ FAQ</a>
           <a class="btn" href="${d.urls.contact}">📱 Contact Us</a>
         </div>
 
-        <p>Your retreat portal: <a href="${d.urls.successPortal}">View Registration Details</a></p>
+        <p>Your ${d.isWorkshop ? 'registration details' : 'retreat portal'}: <a href="${d.urls.successPortal}">View Registration Details</a></p>
 
         <p><strong>Need to make changes?</strong> Just reply to this email and we'll take care of it.</p>
 
         <div class="card">
-          <p style="margin: 0;"><strong>Important:</strong> We'll send travel details, packing reminders, and final prep info closer to the retreat date. Keep an eye on your inbox!</p>
+          ${d.isWorkshop
+            ? `<p style="margin: 0;"><strong>Important:</strong> We'll send a reminder as the workshop date approaches. Keep an eye on your inbox!</p>`
+            : `<p style="margin: 0;"><strong>Important:</strong> We'll send travel details, packing reminders, and final prep info closer to the retreat date. Keep an eye on your inbox!</p>`
+          }
         </div>
 
         <p class="muted">If you didn't make this registration, please <a href="${d.urls.contact}">contact us immediately</a>.</p>
@@ -397,8 +423,8 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
 /* ========== Customer Confirmation (Plain Text) ========== */
 function generateCustomerEmailText(d: SharedEmailData): string {
   const amountFmt = `${d.currency} ${d.amountPaid.toFixed(2)}`;
-  return [
-    `🎉 You're in, ${d.firstName}!`,
+  const lines = [
+    d.isWorkshop ? `🎉 You're registered, ${d.firstName}!` : `🎉 You're in, ${d.firstName}!`,
     `${d.retreatName}`,
     `${d.retreatLocation} • ${d.retreatStart}`,
     ``,
@@ -412,21 +438,43 @@ function generateCustomerEmailText(d: SharedEmailData): string {
     `Confirmation: ${d.sessionId}`,
     ``,
     `🚀 What happens next:`,
-    `- Review your itinerary: ${d.urls.itinerary}`,
-    `- Check the packing list: ${d.urls.packingList}`,
-    `- Browse our FAQ: ${d.urls.faq}`,
-    `- Contact us anytime: ${d.urls.contact}`,
+  ];
+
+  if (d.isWorkshop) {
+    lines.push(
+      `- Mark your calendar: ${d.retreatStart}`,
+      `- Location: ${d.retreatLocation}`,
+      `- No gear needed — everything will be provided`,
+      `- Arrive about 10 minutes early to get settled`,
+      `- Browse our FAQ: ${d.urls.faq}`,
+      `- Contact us anytime: ${d.urls.contact}`,
+    );
+  } else {
+    lines.push(
+      `- Review your itinerary: ${d.urls.itinerary}`,
+      `- Check the packing list: ${d.urls.packingList}`,
+      `- Browse our FAQ: ${d.urls.faq}`,
+      `- Contact us anytime: ${d.urls.contact}`,
+    );
+  }
+
+  lines.push(
     ``,
-    `Your retreat portal: ${d.urls.successPortal}`,
+    `Your ${d.isWorkshop ? 'registration details' : 'retreat portal'}: ${d.urls.successPortal}`,
     ``,
     `Need to make changes? Just reply to this email and we'll take care of it.`,
     ``,
-    `We'll send travel details and final prep info closer to the retreat date!`,
-  ].join('\n');
+    d.isWorkshop
+      ? `We'll send a reminder as the workshop date approaches!`
+      : `We'll send travel details and final prep info closer to the retreat date!`,
+  );
+
+  return lines.join('\n');
 }
 
 /* ========== Internal Admin Notification (HTML) ========== */
 function generateAdminEmailHtml(profile: RegistrantProfile): string {
+  const isWorkshop = profile.retreat.type === 'filmmaking-workshop';
   const amountFmt = profile.plan.amountPaid.toLocaleString(undefined, {
     style: 'currency',
     currency: profile.plan.currency || 'USD',
@@ -470,7 +518,7 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
   <body>
     <div class="wrap">
       <h2 class="h">🎉 New Registration: ${escapeHtml(profile.firstName)} ${escapeHtml(profile.lastName)}</h2>
-      
+
       <div class="payment">
         <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">💰 Payment Confirmed: ${amountFmt}</div>
         <div>Plan: ${escapeHtml(profile.plan.label)} • Session: ${escapeHtml(profile.stripe.sessionId)}</div>
@@ -486,7 +534,7 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
         <tr><th>Address</th><td>${escapeHtml(formatAddress())}</td></tr>
       </table>
 
-      ${profile.emergency.name ? `
+      ${!isWorkshop && profile.emergency.name ? `
       <div class="section-title">🚨 Emergency Contact</div>
       <table class="profile-table">
         <tr><th>Name</th><td>${escapeHtml(profile.emergency.name)}</td></tr>
@@ -495,6 +543,13 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
       </table>
       ` : ''}
 
+      ${isWorkshop ? `
+      <div class="section-title">🎬 Workshop Information</div>
+      <table class="profile-table">
+        ${profile.preferences.experienceLevel ? `<tr><th>Experience Level</th><td>${escapeHtml(profile.preferences.experienceLevel)}</td></tr>` : ''}
+        ${profile.preferences.howDidYouHear ? `<tr><th>How Did You Hear</th><td>${escapeHtml(profile.preferences.howDidYouHear)}</td></tr>` : ''}
+      </table>
+      ` : `
       <div class="section-title">🎬 Filmmaking Preferences</div>
       <table class="profile-table">
         ${profile.preferences.experienceLevel ? `<tr><th>Experience Level</th><td>${escapeHtml(profile.preferences.experienceLevel)}</td></tr>` : ''}
@@ -502,8 +557,9 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
         ${profile.preferences.cameraEquipmentDetails ? `<tr><th>Camera Equipment</th><td>${escapeHtml(profile.preferences.cameraEquipmentDetails)}</td></tr>` : ''}
         ${profile.preferences.howDidYouHear ? `<tr><th>How Did You Hear</th><td>${escapeHtml(profile.preferences.howDidYouHear)}</td></tr>` : ''}
       </table>
+      `}
 
-      ${(profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests) ? `
+      ${!isWorkshop && (profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests) ? `
       <div class="section-title">🏥 Health & Special Needs</div>
       <table class="profile-table">
         ${profile.preferences.dietaryRestrictions ? `<tr><th>Dietary Restrictions</th><td>${escapeHtml(profile.preferences.dietaryRestrictions)}</td></tr>` : ''}
@@ -512,23 +568,23 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
       </table>
       ` : ''}
 
-      <div class="section-title">🏝️ Retreat Information</div>
+      <div class="section-title">${isWorkshop ? '🎬 Workshop Information' : '🏝️ Retreat Information'}</div>
       <table class="profile-table">
-        <tr><th>Retreat</th><td>${escapeHtml(profile.retreat.name)}</td></tr>
-        <tr><th>Dates</th><td>${escapeHtml(profile.retreat.start)}</td></tr>
+        <tr><th>${isWorkshop ? 'Workshop' : 'Retreat'}</th><td>${escapeHtml(profile.retreat.name)}</td></tr>
+        <tr><th>${isWorkshop ? 'Date' : 'Dates'}</th><td>${escapeHtml(profile.retreat.start)}</td></tr>
         <tr><th>Location</th><td>${escapeHtml(profile.retreat.location)}</td></tr>
       </table>
 
       <div class="box">
         <div><strong>Quick Actions:</strong></div>
         <div>
-          <a href="${profile.links.successPortal}">Registration Portal</a> • 
-          <a href="${profile.links.itinerary}">Itinerary</a> • 
-          <a href="${profile.links.faq}">FAQ</a> • 
+          <a href="${profile.links.successPortal}">Registration Portal</a> •
+          ${isWorkshop ? '' : `<a href="${profile.links.itinerary}">Itinerary</a> • `}
+          <a href="${profile.links.faq}">FAQ</a> •
           <a href="${profile.links.contact}">Contact</a>
         </div>
       </div>
-      
+
       <p><em>Customer confirmation email has been sent automatically to ${escapeHtml(profile.email)}.</em></p>
     </div>
   </body>
@@ -538,8 +594,9 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
 
 /* ========== Internal Admin Notification (Plain Text) ========== */
 function generateAdminEmailText(profile: RegistrantProfile): string {
+  const isWorkshop = profile.retreat.type === 'filmmaking-workshop';
   const amountFmt = `${profile.plan.currency} ${profile.plan.amountPaid.toFixed(2)}`;
-  
+
   const formatAddress = () => {
     const parts = [
       profile.address.line1,
@@ -570,7 +627,7 @@ function generateAdminEmailText(profile: RegistrantProfile): string {
     ``
   ];
 
-  if (profile.emergency.name) {
+  if (!isWorkshop && profile.emergency.name) {
     lines.push(
       `🚨 EMERGENCY CONTACT`,
       `━━━━━━━━━━━━━━━━━━━━━`,
@@ -581,17 +638,27 @@ function generateAdminEmailText(profile: RegistrantProfile): string {
     );
   }
 
-  lines.push(
-    `🎬 FILMMAKING PREFERENCES`,
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    ...(profile.preferences.experienceLevel ? [`Experience Level: ${profile.preferences.experienceLevel}`] : []),
-    `Bringing Own Camera: ${profile.preferences.bringOwnCamera ? 'Yes' : 'No'}`,
-    ...(profile.preferences.cameraEquipmentDetails ? [`Camera Equipment: ${profile.preferences.cameraEquipmentDetails}`] : []),
-    ...(profile.preferences.howDidYouHear ? [`How Did You Hear: ${profile.preferences.howDidYouHear}`] : []),
-    ``
-  );
+  if (isWorkshop) {
+    lines.push(
+      `🎬 WORKSHOP INFORMATION`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      ...(profile.preferences.experienceLevel ? [`Experience Level: ${profile.preferences.experienceLevel}`] : []),
+      ...(profile.preferences.howDidYouHear ? [`How Did You Hear: ${profile.preferences.howDidYouHear}`] : []),
+      ``
+    );
+  } else {
+    lines.push(
+      `🎬 FILMMAKING PREFERENCES`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      ...(profile.preferences.experienceLevel ? [`Experience Level: ${profile.preferences.experienceLevel}`] : []),
+      `Bringing Own Camera: ${profile.preferences.bringOwnCamera ? 'Yes' : 'No'}`,
+      ...(profile.preferences.cameraEquipmentDetails ? [`Camera Equipment: ${profile.preferences.cameraEquipmentDetails}`] : []),
+      ...(profile.preferences.howDidYouHear ? [`How Did You Hear: ${profile.preferences.howDidYouHear}`] : []),
+      ``
+    );
+  }
 
-  if (profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests) {
+  if (!isWorkshop && (profile.preferences.dietaryRestrictions || profile.preferences.medicalConditions || profile.preferences.specialRequests)) {
     lines.push(
       `🏥 HEALTH & SPECIAL NEEDS`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━`,
@@ -603,16 +670,16 @@ function generateAdminEmailText(profile: RegistrantProfile): string {
   }
 
   lines.push(
-    `🏝️ RETREAT INFORMATION`,
+    isWorkshop ? `🎬 WORKSHOP DETAILS` : `🏝️ RETREAT INFORMATION`,
     `━━━━━━━━━━━━━━━━━━━━━━`,
-    `Retreat: ${profile.retreat.name}`,
-    `Dates: ${profile.retreat.start}`,
+    `${isWorkshop ? 'Workshop' : 'Retreat'}: ${profile.retreat.name}`,
+    `${isWorkshop ? 'Date' : 'Dates'}: ${profile.retreat.start}`,
     `Location: ${profile.retreat.location}`,
     ``,
     `🔗 QUICK LINKS`,
     `━━━━━━━━━━━━━━`,
     `Registration Portal: ${profile.links.successPortal}`,
-    `Itinerary: ${profile.links.itinerary}`,
+    ...(isWorkshop ? [] : [`Itinerary: ${profile.links.itinerary}`]),
     `FAQ: ${profile.links.faq}`,
     `Contact: ${profile.links.contact}`,
     ``,

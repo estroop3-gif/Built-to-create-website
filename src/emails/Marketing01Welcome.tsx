@@ -133,7 +133,7 @@ export default function Marketing01Welcome({
         </Section>
         
         <Text style={signature}>
-          Support parker@thebtcp.com
+          Support estroop3@gmail.com
         </Text>
         
         <Text style={psalm}>

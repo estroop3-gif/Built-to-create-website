@@ -129,8 +129,8 @@ export default function ExperiencesPage() {
                 <div className="flex items-start">
                   <span className="text-forest-600 mr-3 mt-1">•</span>
                   <div>
-                    <p className="font-semibold text-ink-900">3 days + travel (two sessions)</p>
-                    <p className="text-sm text-ink-600">Session 1: Feb 4-6 • Session 2: May 6-8, 2026</p>
+                    <p className="font-semibold text-ink-900">3 days + travel</p>
+                    <p className="text-sm text-ink-600">Dates coming soon</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -156,6 +156,36 @@ export default function ExperiencesPage() {
                   View Itinerary
                 </Button>
               </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Workshops Section */}
+      <Section spacing="xl" background="cream">
+        <Container size="lg">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
+              Workshops
+            </h2>
+            <p className="font-body text-xl text-ink-600 leading-relaxed max-w-3xl mx-auto">
+              Real-world production skills you do not learn fast enough in class. Practical, focused, and taught by a working professional.
+            </p>
+          </div>
+          <div className="max-w-xl mx-auto">
+            <div className="bg-white rounded-2xl p-8 shadow-sm">
+              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-4">
+                Filmmaking in the Real World
+              </h3>
+              <p className="font-body text-base text-ink-600 leading-relaxed mb-6">
+                A 2-hour in-person workshop in Jasper, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have.
+              </p>
+              <p className="font-body text-sm font-medium text-ink-500 mb-6">
+                Jasper, GA · 2 Hours · $50
+              </p>
+              <Button as="link" href="/experiences/filmmaking-in-the-real-world" variant="primary">
+                View Workshop
+              </Button>
             </div>
           </div>
         </Container>

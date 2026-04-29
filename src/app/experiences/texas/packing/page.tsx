@@ -238,8 +238,8 @@ export default function TexasPackingPage() {
             We're here to help you prepare for your creative journey.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:parker@thebtcp.com" className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
-              parker@thebtcp.com
+            <a href="mailto:estroop3@gmail.com" className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
+              estroop3@gmail.com
             </a>
             <a href="mailto:estroop3@gmail.com" className="inline-block bg-cream text-forest px-8 py-4 rounded-full text-lg font-semibold hover:bg-sand transition-colors">
               estroop3@gmail.com

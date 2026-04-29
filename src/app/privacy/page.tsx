@@ -68,7 +68,7 @@ export default function PrivacyPage() {
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">5. Your Rights</h2>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                Depending on your location, you may have the right to access, update, or delete your personal information. To exercise these rights, contact us at <a href="mailto:parker@thebtcp.com" className="text-forest-700 hover:text-forest-800 underline">parker@thebtcp.com</a>.
+                Depending on your location, you may have the right to access, update, or delete your personal information. To exercise these rights, contact us at <a href="mailto:estroop3@gmail.com" className="text-forest-700 hover:text-forest-800 underline">estroop3@gmail.com</a>.
               </p>
 
               <h2 className="text-2xl font-heading font-bold text-ink-900 mb-6">6. Security</h2>
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
                 For questions about this Privacy Policy or our data practices, please contact us at:
               </p>
               <p className="text-ink-700 mb-6 leading-relaxed">
-                <a href="mailto:parker@thebtcp.com" className="text-forest-700 hover:text-forest-800 underline">parker@thebtcp.com</a>
+                <a href="mailto:estroop3@gmail.com" className="text-forest-700 hover:text-forest-800 underline">estroop3@gmail.com</a>
               </p>
 
             </div>

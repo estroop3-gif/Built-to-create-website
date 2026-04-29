@@ -107,10 +107,10 @@ export default function CourseWaitlist() {
         <p className="font-body text-sm text-cream-400 mt-8">
           Questions about the course? Contact us at{' '}
           <a
-            href="mailto:parker@thebtcp.com"
+            href="mailto:estroop3@gmail.com"
             className="text-cream-200 hover:text-cream-100 underline transition-colors duration-200"
           >
-            parker@thebtcp.com
+            estroop3@gmail.com
           </a>
         </p>
       </div>

@@ -168,10 +168,10 @@ export default function Footer() {
             <div className="space-y-4">
               <p className="font-body text-ink-600">
                 <a
-                  href="mailto:parker@thebtcp.com"
+                  href="mailto:estroop3@gmail.com"
                   className="hover:text-forest-700 transition-colors duration-200 text-lg"
                 >
-                  parker@thebtcp.com
+                  estroop3@gmail.com
                 </a>
               </p>
               <p className="font-body text-ink-600">

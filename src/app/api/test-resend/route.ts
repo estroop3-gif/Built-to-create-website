@@ -27,7 +27,7 @@ export async function POST() {
 
     // Test 2: Send to admin
     const adminResult = await sendTransactionalEmail({
-      to: ['parker@thebtcp.com'],
+      to: ['estroop3@gmail.com'],
       subject: '🔧 Test - Enhanced Admin Notification',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
