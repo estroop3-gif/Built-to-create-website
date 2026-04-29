@@ -6,14 +6,19 @@ interface RetreatItineraryProps {
 }
 
 export default function RetreatItinerary({ retreat }: RetreatItineraryProps) {
+  const isWorkshop = retreat.type === 'workshop';
+  const dayCount = retreat.itinerary.length;
+
   return (
     <Section spacing="xl" background="cream">
       <div className="text-center mb-16">
         <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-          9-Day Itinerary
+          {isWorkshop ? 'Workshop Schedule' : `${dayCount}-Day Itinerary`}
         </h2>
         <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
-          A carefully crafted journey through breathtaking locations and transformative experiences.
+          {isWorkshop
+            ? 'What to expect during the workshop.'
+            : 'A carefully crafted journey through breathtaking locations and transformative experiences.'}
         </p>
       </div>
 

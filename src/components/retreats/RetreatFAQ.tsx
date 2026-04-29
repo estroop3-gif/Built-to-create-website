@@ -10,6 +10,7 @@ interface RetreatFAQProps {
 
 export default function RetreatFAQ({ retreat }: RetreatFAQProps) {
   const [openItems, setOpenItems] = useState<number[]>([]);
+  const isWorkshop = retreat.type === 'workshop';
 
   const toggleItem = (index: number) => {
     setOpenItems(prev =>
@@ -26,7 +27,7 @@ export default function RetreatFAQ({ retreat }: RetreatFAQProps) {
           Frequently Asked Questions
         </h2>
         <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
-          Everything you need to know about your {retreat.country} filmmaking adventure.
+          Everything you need to know about {isWorkshop ? 'the workshop' : `your ${retreat.country} filmmaking adventure`}.
         </p>
       </div>
 
