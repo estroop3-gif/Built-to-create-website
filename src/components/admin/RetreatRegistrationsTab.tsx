@@ -429,6 +429,9 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                   </div>
                 </div>
 
+                {(() => {
+                  const isWs = detail.retreat_slug === 'filmmaking-in-the-real-world' || (detail.retreat || '').toLowerCase().includes('workshop');
+                  return (
                 <div className="p-6 space-y-6">
                   {/* Payment Info */}
                   <div className="bg-forest-50 rounded-lg p-4">
@@ -478,13 +481,13 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                     <dl>
                       <DetailRow label="Email" value={detail.email} />
                       <DetailRow label="Phone" value={detail.phone} />
-                      <DetailRow label="Date of Birth" value={detail.date_of_birth} />
-                      <DetailRow label="Address" value={[detail.address_line1, detail.address_line2, detail.city, detail.state_province, detail.postal_code, detail.country].filter(Boolean).join(', ') || undefined} />
+                      {!isWs && <DetailRow label="Date of Birth" value={detail.date_of_birth} />}
+                      {!isWs && <DetailRow label="Address" value={[detail.address_line1, detail.address_line2, detail.city, detail.state_province, detail.postal_code, detail.country].filter(Boolean).join(', ') || undefined} />}
                     </dl>
                   </div>
 
-                  {/* Emergency Contact */}
-                  {(detail.emergency_contact_name || detail.emergency_contact_phone) && (
+                  {/* Emergency Contact — Retreats only */}
+                  {!isWs && (detail.emergency_contact_name || detail.emergency_contact_phone) && (
                     <div>
                       <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">Emergency Contact</h4>
                       <dl>
@@ -495,37 +498,41 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                     </div>
                   )}
 
-                  {/* Preferences */}
-                  {(detail.experience_level || detail.bring_own_camera || detail.camera_equipment_details || detail.how_did_you_hear) && (
+                  {/* Experience & Goals */}
+                  {(detail.experience_level || detail.special_requests) && (
                     <div>
-                      <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">Preferences</h4>
+                      <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">
+                        {isWs ? 'Workshop Details' : 'Filmmaking Preferences'}
+                      </h4>
                       <dl>
                         <DetailRow label="Experience Level" value={detail.experience_level} />
-                        <DetailRow label="Bringing Own Camera" value={detail.bring_own_camera ? 'Yes' : detail.bring_own_camera === false ? 'No' : undefined} />
-                        <DetailRow label="Camera Equipment" value={detail.camera_equipment_details} />
+                        {!isWs && <DetailRow label="Bringing Own Camera" value={detail.bring_own_camera ? 'Yes' : detail.bring_own_camera === false ? 'No' : undefined} />}
+                        {!isWs && <DetailRow label="Camera Equipment" value={detail.camera_equipment_details} />}
+                        <DetailRow label={isWs ? 'What They Hope to Learn' : 'Goals'} value={detail.special_requests} />
                         <DetailRow label="How Did You Hear" value={detail.how_did_you_hear} />
                       </dl>
                     </div>
                   )}
 
-                  {/* Health & Special Needs */}
-                  {(detail.dietary_restrictions || detail.medical_conditions || detail.special_requests) && (
+                  {/* Health & Special Needs — Retreats only */}
+                  {!isWs && (detail.dietary_restrictions || detail.medical_conditions) && (
                     <div>
                       <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">Health & Special Needs</h4>
                       <dl>
                         <DetailRow label="Dietary Restrictions" value={detail.dietary_restrictions} />
                         <DetailRow label="Medical Conditions" value={detail.medical_conditions} />
-                        <DetailRow label="Special Requests" value={detail.special_requests} />
                       </dl>
                     </div>
                   )}
 
-                  {/* Retreat Info */}
+                  {/* Event Info */}
                   <div>
-                    <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">Retreat/Workshop</h4>
+                    <h4 className="font-heading text-sm font-bold text-ink-700 mb-2 uppercase tracking-wide">
+                      {isWs ? 'Workshop' : 'Retreat'}
+                    </h4>
                     <dl>
                       <DetailRow label="Name" value={detail.retreat} />
-                      <DetailRow label="Dates" value={detail.retreat_start} />
+                      <DetailRow label={isWs ? 'Date' : 'Dates'} value={detail.retreat_start} />
                       <DetailRow label="Location" value={detail.retreat_location} />
                     </dl>
                   </div>
@@ -539,6 +546,8 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                     </div>
                   )}
                 </div>
+                  );
+                })()}
               </>
             ) : (
               <div className="p-12 text-center">
