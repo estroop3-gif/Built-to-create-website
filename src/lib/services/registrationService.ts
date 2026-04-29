@@ -119,6 +119,26 @@ export async function getRegistrationById(
   return data;
 }
 
+export async function updateRegistration(
+  id: string,
+  source: 'stripe' | 'retreat',
+  updates: Record<string, unknown>
+): Promise<Record<string, unknown> | null> {
+  const table = source === 'stripe' ? 'registrations' : 'retreat_registrations';
+  const { data, error } = await supabaseAdmin
+    .from(table)
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    if (error.code === 'PGRST116') return null;
+    throw error;
+  }
+  return data;
+}
+
 export async function exportRegistrationsCsv(experienceId?: string): Promise<string> {
   const registrations = await listRegistrations(
     experienceId ? { experienceId } : undefined

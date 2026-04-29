@@ -64,6 +64,7 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
   const [selectedId, setSelectedId] = useState<{ id: string; source: string } | null>(null);
   const [detail, setDetail] = useState<RegistrationDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [statusSaving, setStatusSaving] = useState(false);
 
   const fetchRegistrations = useCallback(async () => {
     try {
@@ -106,6 +107,30 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
   const closeDetail = () => {
     setSelectedId(null);
     setDetail(null);
+  };
+
+  const updateStatus = async (field: string, value: string) => {
+    if (!selectedId || !detail) return;
+    setStatusSaving(true);
+    try {
+      const res = await fetch(`/api/admin/registrations/${selectedId.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: selectedId.source,
+          updates: { [field]: value },
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to update');
+      const updated = await res.json();
+      setDetail(updated);
+      // Refresh the list to reflect changes
+      fetchRegistrations();
+    } catch (error) {
+      console.error('Error updating status:', error);
+    } finally {
+      setStatusSaving(false);
+    }
   };
 
   const handleExportCsv = async () => {
@@ -207,7 +232,7 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                   <td className="py-3 px-2 text-ink-600">{r.email}</td>
                   <td className="py-3 px-2 text-ink-600">{r.plan_label || '—'}</td>
                   <td className="py-3 px-2 text-ink-600">
-                    {r.amount_paid ? `$${r.amount_paid.toLocaleString()}` : '—'}
+                    {r.amount_paid != null ? `$${Number(r.amount_paid).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : '—'}
                   </td>
                   <td className="py-3 px-2">
                     <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
@@ -281,16 +306,28 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                         <p className="text-sm font-medium text-ink-900">{detail.plan_label || '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-forest-600 font-medium">Status</p>
-                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                          detail.payment_status === 'paid' || detail.payment_status === 'paid_in_full' || detail.payment_status === 'completed'
-                            ? 'bg-green-100 text-green-700'
-                            : detail.payment_status === 'cancelled' || detail.payment_status === 'failed' || detail.payment_status === 'refunded'
-                            ? 'bg-red-100 text-red-700'
-                            : 'bg-yellow-100 text-yellow-700'
-                        }`}>
-                          {detail.payment_status || 'unknown'}
-                        </span>
+                        <p className="text-xs text-forest-600 font-medium mb-1">Payment Status</p>
+                        <select
+                          value={detail.payment_status || ''}
+                          onChange={(e) => updateStatus('payment_status', e.target.value)}
+                          disabled={statusSaving}
+                          className={`text-sm font-medium px-2 py-1 rounded border cursor-pointer disabled:opacity-50 ${
+                            detail.payment_status === 'paid' || detail.payment_status === 'paid_in_full' || detail.payment_status === 'completed'
+                              ? 'bg-green-50 border-green-200 text-green-700'
+                              : detail.payment_status === 'cancelled' || detail.payment_status === 'failed' || detail.payment_status === 'refunded'
+                              ? 'bg-red-50 border-red-200 text-red-700'
+                              : 'bg-yellow-50 border-yellow-200 text-yellow-700'
+                          }`}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="paid">Paid</option>
+                          <option value="paid_in_full">Paid in Full</option>
+                          <option value="deposit_paid">Deposit Paid</option>
+                          <option value="completed">Completed</option>
+                          <option value="cancelled">Cancelled</option>
+                          <option value="refunded">Refunded</option>
+                          <option value="failed">Failed</option>
+                        </select>
                       </div>
                     </div>
                   </div>
