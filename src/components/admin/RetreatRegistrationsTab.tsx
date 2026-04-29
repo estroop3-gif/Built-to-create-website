@@ -109,6 +109,138 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
     setDetail(null);
   };
 
+  const downloadReceipt = () => {
+    if (!detail) return;
+    const amount = detail.amount_paid ?? detail.payment_amount ?? 0;
+    const currency = (detail.currency ?? detail.payment_currency ?? 'USD').toUpperCase();
+    const amountFmt = `$${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+    const date = new Date(detail.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const receiptNum = (detail.stripe_session_id || detail.id || '').slice(-8).toUpperCase();
+
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Receipt - ${detail.first_name} ${detail.last_name}</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #222; margin: 0; padding: 40px; background: #fff; }
+  .receipt { max-width: 600px; margin: 0 auto; }
+  .header { border-bottom: 3px solid #2d5016; padding-bottom: 20px; margin-bottom: 30px; }
+  .company { font-size: 24px; font-weight: bold; color: #2d5016; }
+  .company-sub { color: #666; font-size: 13px; margin-top: 4px; }
+  .receipt-title { font-size: 18px; color: #333; margin-top: 16px; }
+  .receipt-meta { color: #666; font-size: 13px; margin-top: 4px; }
+  .section { margin: 24px 0; }
+  .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #2d5016; font-weight: bold; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 10px 12px; background: #f4fbf4; border: 1px solid #e0e0e0; font-size: 13px; color: #2d5016; }
+  td { padding: 10px 12px; border: 1px solid #e0e0e0; font-size: 13px; }
+  .total-row td { font-weight: bold; font-size: 15px; background: #f4fbf4; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .info-block label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 2px; }
+  .info-block p { margin: 0; font-size: 14px; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #888; text-align: center; }
+  @media print { body { padding: 20px; } .no-print { display: none; } }
+</style>
+</head>
+<body>
+<div class="receipt">
+  <div class="header">
+    <div class="company">Born to Create Project</div>
+    <div class="company-sub">thebtcp.com &bull; estroop3@gmail.com</div>
+    <div class="receipt-title">Payment Receipt</div>
+    <div class="receipt-meta">Receipt #${receiptNum} &bull; ${date}</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Bill To</div>
+    <div class="info-grid">
+      <div class="info-block">
+        <label>Name</label>
+        <p>${detail.first_name || ''} ${detail.last_name || ''}</p>
+      </div>
+      <div class="info-block">
+        <label>Email</label>
+        <p>${detail.email}</p>
+      </div>
+      ${detail.phone ? `<div class="info-block"><label>Phone</label><p>${detail.phone}</p></div>` : ''}
+      ${detail.address_line1 ? `<div class="info-block"><label>Address</label><p>${[detail.address_line1, detail.address_line2, detail.city, detail.state_province, detail.postal_code, detail.country].filter(Boolean).join(', ')}</p></div>` : ''}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Payment Details</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Plan</th>
+          <th style="text-align:right">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${detail.retreat || 'Registration'}</td>
+          <td>${detail.plan_label || '—'}</td>
+          <td style="text-align:right">${amountFmt} ${currency}</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2">Total Paid</td>
+          <td style="text-align:right">${amountFmt} ${currency}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  ${detail.retreat ? `
+  <div class="section">
+    <div class="section-title">Event Details</div>
+    <div class="info-grid">
+      <div class="info-block">
+        <label>Event</label>
+        <p>${detail.retreat}</p>
+      </div>
+      ${detail.retreat_start ? `<div class="info-block"><label>Date</label><p>${detail.retreat_start}</p></div>` : ''}
+      ${detail.retreat_location ? `<div class="info-block"><label>Location</label><p>${detail.retreat_location}</p></div>` : ''}
+    </div>
+  </div>
+  ` : ''}
+
+  ${detail.stripe_session_id ? `
+  <div class="section">
+    <div class="section-title">Reference</div>
+    <div class="info-block">
+      <label>Transaction ID</label>
+      <p style="font-family: monospace; font-size: 12px;">${detail.stripe_session_id}</p>
+    </div>
+  </div>
+  ` : ''}
+
+  <div class="footer">
+    <p>Thank you for your registration!</p>
+    <p>Born to Create Project &bull; thebtcp.com</p>
+  </div>
+
+  <div class="no-print" style="text-align:center; margin-top: 30px;">
+    <button onclick="window.print()" style="padding: 10px 24px; background: #2d5016; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">Print / Save as PDF</button>
+  </div>
+</div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const w = window.open(url, '_blank');
+    if (!w) {
+      // Fallback: download as file
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `receipt-${(detail.first_name || '').toLowerCase()}-${(detail.last_name || '').toLowerCase()}-${receiptNum}.html`;
+      a.click();
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  };
+
   const updateStatus = async (field: string, value: string) => {
     if (!selectedId || !detail) return;
     setStatusSaving(true);
@@ -279,14 +411,22 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                       Registered {new Date(detail.created_at).toLocaleString()}
                     </p>
                   </div>
-                  <button
-                    onClick={closeDetail}
-                    className="text-ink-400 hover:text-ink-700 p-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={downloadReceipt}
+                      className="bg-forest-600 text-cream-50 px-3 py-1.5 rounded-lg text-sm hover:bg-forest-700 transition-colors"
+                    >
+                      Receipt
+                    </button>
+                    <button
+                      onClick={closeDetail}
+                      className="text-ink-400 hover:text-ink-700 p-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-6 space-y-6">

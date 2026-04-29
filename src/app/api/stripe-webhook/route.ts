@@ -401,12 +401,46 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
       <div class="content">
         <p>Congratulations! Your registration is confirmed and we've received your payment of <strong>${amountFmt}</strong>.</p>
 
-        <div class="card">
-          <div class="row"><span class="label">Name:</span> ${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</div>
-          <div class="row"><span class="label">Email:</span> ${escapeHtml(d.email)}</div>
-          <div class="row"><span class="label">Plan:</span> ${escapeHtml(d.planLabel)}</div>
-          <div class="row"><span class="label">Amount Paid:</span> ${amountFmt} ${escapeHtml(d.currency)}</div>
-          <div class="row"><span class="label">Confirmation:</span> ${escapeHtml(d.sessionId)}</div>
+        <!-- Receipt -->
+        <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin: 20px 0;">
+          <div style="background: #2d5016; color: #fff; padding: 12px 16px;">
+            <div style="font-size: 16px; font-weight: bold;">Payment Receipt</div>
+            <div style="font-size: 12px; opacity: 0.8;">Receipt #${escapeHtml(d.sessionId.slice(-8).toUpperCase())} &bull; ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+          </div>
+          <div style="padding: 16px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr>
+                <td style="padding: 6px 0; color: #666; width: 120px;">Name</td>
+                <td style="padding: 6px 0;">${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0; color: #666;">Email</td>
+                <td style="padding: 6px 0;">${escapeHtml(d.email)}</td>
+              </tr>
+            </table>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 12px 0;" />
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr style="border-bottom: 1px solid #eee;">
+                <th style="text-align: left; padding: 8px 0; color: #2d5016; font-size: 12px;">Description</th>
+                <th style="text-align: left; padding: 8px 0; color: #2d5016; font-size: 12px;">Plan</th>
+                <th style="text-align: right; padding: 8px 0; color: #2d5016; font-size: 12px;">Amount</th>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">${escapeHtml(d.retreatName)}</td>
+                <td style="padding: 8px 0;">${escapeHtml(d.planLabel)}</td>
+                <td style="padding: 8px 0; text-align: right;">${amountFmt}</td>
+              </tr>
+              <tr style="border-top: 2px solid #2d5016;">
+                <td colspan="2" style="padding: 8px 0; font-weight: bold;">Total Paid</td>
+                <td style="padding: 8px 0; text-align: right; font-weight: bold; font-size: 16px;">${amountFmt} ${escapeHtml(d.currency)}</td>
+              </tr>
+            </table>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 12px 0;" />
+            <div style="font-size: 11px; color: #999;">
+              Transaction ID: ${escapeHtml(d.sessionId)}<br/>
+              Born to Create Project &bull; thebtcp.com
+            </div>
+          </div>
         </div>
 
         <div class="checklist">
@@ -469,12 +503,23 @@ function generateCustomerEmailText(d: SharedEmailData): string {
     ``,
     `Congratulations! Your registration is confirmed and we received your payment of ${amountFmt}.`,
     ``,
-    `Registration Details:`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    `PAYMENT RECEIPT`,
+    `Receipt #${d.sessionId.slice(-8).toUpperCase()}`,
+    `${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `Name: ${d.firstName} ${d.lastName}`,
     `Email: ${d.email}`,
+    ``,
+    `Description: ${d.retreatName}`,
     `Plan: ${d.planLabel}`,
-    `Amount Paid: ${amountFmt}`,
-    `Confirmation: ${d.sessionId}`,
+    `Amount: ${amountFmt}`,
+    ``,
+    `TOTAL PAID: ${amountFmt} ${d.currency}`,
+    ``,
+    `Transaction ID: ${d.sessionId}`,
+    `Born to Create Project • thebtcp.com`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
     ``,
     `🚀 What happens next:`,
   ];
