@@ -85,6 +85,10 @@ function EditPageTab({ experienceId }: { experienceId: string }) {
   const [capacity, setCapacity] = useState('');
   const [heroImage, setHeroImage] = useState('');
   const [ogImage, setOgImage] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [venue, setVenue] = useState('');
+  const [venueAddress, setVenueAddress] = useState('');
   const [learningOutcomes, setLearningOutcomes] = useState<string[]>([]);
   const [itinerary, setItinerary] = useState<DayItem[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
@@ -116,6 +120,10 @@ function EditPageTab({ experienceId }: { experienceId: string }) {
         setCapacity(data.capacity?.toString() ?? '');
         setHeroImage(data.hero_image ?? '');
         setOgImage(data.og_image ?? '');
+        setStartTime(data.start_time ?? '');
+        setEndTime(data.end_time ?? '');
+        setVenue(data.venue ?? '');
+        setVenueAddress(data.venue_address ?? '');
         setLearningOutcomes(data.learning_outcomes?.length ? data.learning_outcomes : ['']);
         setItinerary(data.itinerary?.length ? data.itinerary : [{ day: 1, title: '', description: '', location: '' }]);
         setFaqs(data.faqs?.length ? data.faqs : [{ question: '', answer: '' }]);
@@ -152,6 +160,10 @@ function EditPageTab({ experienceId }: { experienceId: string }) {
         capacity: capacity ? parseInt(capacity) : null,
         hero_image: heroImage || null,
         og_image: ogImage || null,
+        start_time: startTime || null,
+        end_time: endTime || null,
+        venue: venue || null,
+        venue_address: venueAddress || null,
         learning_outcomes: learningOutcomes.filter(o => o.trim()),
         itinerary: itinerary.filter(i => i.title.trim()),
         faqs: faqs.filter(f => f.question.trim()),
@@ -255,6 +267,22 @@ function EditPageTab({ experienceId }: { experienceId: string }) {
           <div>
             <label className={labelClass}>Duration Display</label>
             <input type="text" value={durationDisplay} onChange={e => setDurationDisplay(e.target.value)} placeholder="e.g. 2 hours" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Start Time</label>
+            <input type="text" value={startTime} onChange={e => setStartTime(e.target.value)} placeholder="e.g. 2:00 PM" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>End Time</label>
+            <input type="text" value={endTime} onChange={e => setEndTime(e.target.value)} placeholder="e.g. 4:00 PM" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Venue</label>
+            <input type="text" value={venue} onChange={e => setVenue(e.target.value)} placeholder="e.g. Pickens County Recreation Center" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Venue Address</label>
+            <input type="text" value={venueAddress} onChange={e => setVenueAddress(e.target.value)} placeholder="e.g. 1329 Camp Rd, Jasper, GA 30143" className={inputClass} />
           </div>
           <div>
             <label className={labelClass}>Register URL</label>

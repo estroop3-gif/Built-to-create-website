@@ -63,6 +63,10 @@ export interface Experience {
   gear_note: string | null;
   price_display: string | null;
   duration_display: string | null;
+  start_time: string | null;
+  end_time: string | null;
+  venue: string | null;
+  venue_address: string | null;
   learning_outcomes: string[];
   itinerary: DayItem[];
   faqs: FAQ[];
@@ -100,6 +104,10 @@ export interface ExperienceInsert {
   gear_note?: string | null;
   price_display?: string | null;
   duration_display?: string | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  venue?: string | null;
+  venue_address?: string | null;
   learning_outcomes?: string[];
   itinerary?: DayItem[];
   faqs?: FAQ[];
@@ -135,6 +143,10 @@ export interface ExperienceUpdate {
   gear_note?: string | null;
   price_display?: string | null;
   duration_display?: string | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  venue?: string | null;
+  venue_address?: string | null;
   learning_outcomes?: string[];
   itinerary?: DayItem[];
   faqs?: FAQ[];

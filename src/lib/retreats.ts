@@ -23,6 +23,10 @@ export interface RetreatData {
   gearNote?: string;
   price?: string;
   duration?: string;
+  startTime?: string;
+  endTime?: string;
+  venue?: string;
+  venueAddress?: string;
 }
 
 export type { DayItem, FAQ };
@@ -854,7 +858,11 @@ export const RETREATS: Record<string, RetreatData> = {
     ],
     gearNote: 'No gear needed — everything will be provided!',
     price: '$50',
-    duration: '2 hours'
+    duration: '2 hours',
+    startTime: '2:00 PM',
+    endTime: '4:00 PM',
+    venue: 'Pickens County Recreation Center',
+    venueAddress: '1329 Camp Rd, Jasper, GA 30143'
   }
 };
 
@@ -903,6 +911,10 @@ export function experienceToRetreatData(exp: Experience, fallback?: RetreatData 
     gearNote: exp.gear_note ?? fb?.gearNote,
     price: exp.price_display ?? fb?.price,
     duration: exp.duration_display ?? fb?.duration,
+    startTime: exp.start_time ?? fb?.startTime,
+    endTime: exp.end_time ?? fb?.endTime,
+    venue: exp.venue ?? fb?.venue,
+    venueAddress: exp.venue_address ?? fb?.venueAddress,
   };
 }
 
