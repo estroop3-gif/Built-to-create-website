@@ -27,9 +27,7 @@ export async function listRegistrations(filters?: ListFilters): Promise<UnifiedR
     );
   }
   if (filters?.experienceId) {
-    // For stripe registrations, filter by retreat name matching experience
-    // This is a loose match since stripe registrations store retreat name, not experience_id
-    stripeQuery = stripeQuery.eq('retreat', filters.experienceId);
+    stripeQuery = stripeQuery.eq('retreat_slug', filters.experienceId);
   }
 
   // Query retreat registrations

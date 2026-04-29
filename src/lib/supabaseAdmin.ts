@@ -39,6 +39,7 @@ export interface RegistrationData {
   retreat?: string
   retreat_start?: string
   retreat_location?: string
+  retreat_slug?: string
 }
 
 export async function upsertRegistration(data: RegistrationData) {

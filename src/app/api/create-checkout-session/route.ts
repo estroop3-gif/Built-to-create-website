@@ -187,6 +187,7 @@ export async function POST(request: NextRequest) {
         retreat_start: retreat_start || '',
         retreat_location: retreat_location || '',
         retreat_type: retreat_type || 'costa-rica',
+        retreat_slug: body.retreat_slug || '',
         promo_code: promoCode || '',
       },
     });

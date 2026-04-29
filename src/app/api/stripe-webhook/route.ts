@@ -144,7 +144,8 @@ export async function POST(req: Request) {
           currency: profile.plan.currency,
           retreat: profile.retreat.name,
           retreat_start: profile.retreat.start,
-          retreat_location: profile.retreat.location
+          retreat_location: profile.retreat.location,
+          retreat_slug: session.metadata?.retreat_slug || ''
         };
 
         await upsertRegistration(registrationData);
@@ -168,12 +169,12 @@ export async function POST(req: Request) {
         // Increment experience registered_count if identifiable
         try {
           const { supabaseAdmin: adminClient } = await import('@/lib/supabaseAdmin');
-          const retreatName = session.metadata?.retreat;
-          if (retreatName) {
+          const retreatSlug = session.metadata?.retreat_slug;
+          if (retreatSlug) {
             const { data: exp } = await adminClient
               .from('experiences')
               .select('id, registered_count')
-              .eq('title', retreatName)
+              .eq('slug', retreatSlug)
               .single();
 
             if (exp) {
@@ -181,7 +182,7 @@ export async function POST(req: Request) {
                 .from('experiences')
                 .update({ registered_count: (exp.registered_count || 0) + 1 })
                 .eq('id', exp.id);
-              console.log('✅ Experience registered_count incremented for:', retreatName);
+              console.log('✅ Experience registered_count incremented for slug:', retreatSlug);
             }
           }
         } catch (expError) {

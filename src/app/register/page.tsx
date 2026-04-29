@@ -345,6 +345,7 @@ export default function RegisterPage() {
           retreat_start: retreatDates,
           retreat_location: retreatLocation,
           retreat_type: formData.retreat,
+          retreat_slug: formData.retreat === 'filmmaking-workshop' ? 'filmmaking-in-the-real-world' : formData.retreat === 'texas' ? 'texas' : 'costa-rica',
           promo_code: formData.promoCode || undefined,
           costa_rica_session: formData.retreat === 'costa-rica' ? formData.costaRicaSession : undefined,
           texas_session: formData.retreat === 'texas' ? formData.texasSession : undefined
