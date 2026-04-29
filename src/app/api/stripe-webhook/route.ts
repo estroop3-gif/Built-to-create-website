@@ -149,6 +149,44 @@ export async function POST(req: Request) {
 
         await upsertRegistration(registrationData);
         console.log('✅ Registration stored in Supabase:', registrationData.email);
+
+        // Increment promo code usage if one was used
+        const usedPromo = session.metadata?.promo_code;
+        if (usedPromo) {
+          try {
+            const { validatePromoCode, incrementUsage } = await import('@/lib/services/promoCodeService');
+            const validation = await validatePromoCode(usedPromo);
+            if (validation.valid && validation.promo_code) {
+              await incrementUsage(validation.promo_code.id);
+              console.log('✅ Promo code usage incremented:', usedPromo);
+            }
+          } catch (promoError) {
+            console.error('❌ Failed to increment promo code usage:', promoError);
+          }
+        }
+
+        // Increment experience registered_count if identifiable
+        try {
+          const { supabaseAdmin: adminClient } = await import('@/lib/supabaseAdmin');
+          const retreatName = session.metadata?.retreat;
+          if (retreatName) {
+            const { data: exp } = await adminClient
+              .from('experiences')
+              .select('id, registered_count')
+              .eq('title', retreatName)
+              .single();
+
+            if (exp) {
+              await adminClient
+                .from('experiences')
+                .update({ registered_count: (exp.registered_count || 0) + 1 })
+                .eq('id', exp.id);
+              console.log('✅ Experience registered_count incremented for:', retreatName);
+            }
+          }
+        } catch (expError) {
+          console.error('❌ Failed to increment experience count:', expError);
+        }
       } catch (error) {
         console.error('❌ Failed to store registration in Supabase:', error);
       }

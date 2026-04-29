@@ -1,6 +1,11 @@
+import type { Experience, DayItem, FAQ } from '@/lib/types/experience';
+
+export type ExperienceKind = 'retreat' | 'workshop';
+
 export interface RetreatData {
   slug: string;
   title: string;
+  type?: ExperienceKind;
   country: string;
   city?: string;
   startDate: string; // ISO date string
@@ -16,19 +21,11 @@ export interface RetreatData {
   itinerary: DayItem[];
   faqs: FAQ[];
   gearNote?: string;
+  price?: string;
+  duration?: string;
 }
 
-interface DayItem {
-  day: number;
-  title: string;
-  description: string;
-  location?: string;
-}
-
-interface FAQ {
-  question: string;
-  answer: string;
-}
+export type { DayItem, FAQ };
 
 export const RETREATS: Record<string, RetreatData> = {
   'costa-rica': {
@@ -806,6 +803,58 @@ export const RETREATS: Record<string, RetreatData> = {
       }
     ],
     gearNote: 'Gear: bring your own or rental options available.'
+  },
+  'filmmaking-in-the-real-world': {
+    slug: 'filmmaking-in-the-real-world',
+    title: 'Filmmaking in the Real World',
+    type: 'workshop',
+    country: 'United States',
+    city: 'Jasper, Georgia',
+    startDate: '2026-05-16',
+    endDate: '2026-05-16',
+    theme: 'Camera Basics & Documentary Storytelling',
+    heroImage: '/images/hero-filmmaking.jpg',
+    ogImage: '/images/og-filmmaking.jpg',
+    registerUrl: '/register',
+    emailCtaText: 'Reserve Your Seat',
+    seoDescription: 'A 2-hour in-person workshop in Jasper, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. $50.',
+    overview: 'Camera basics, set experience, documentary storytelling, and how to start creating with what you already have. A 2-hour in-person workshop for students, creators, church media teams, small business owners, photographers, and anyone who wants to understand how real productions work and start making better video.',
+    learningOutcomes: [
+      'Understand camera basics and how to get great shots with any gear',
+      'Experience what a real set looks and feels like',
+      'Learn documentary storytelling techniques',
+      'Start creating better video with what you already have',
+      'Connect with fellow creators in your area'
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Workshop Session',
+        description: 'Full 2-hour hands-on workshop covering camera fundamentals, set experience, and documentary storytelling.',
+        location: 'Jasper, GA'
+      }
+    ],
+    faqs: [
+      {
+        question: 'Do I need to bring any equipment?',
+        answer: 'No gear needed — everything will be provided for the workshop.'
+      },
+      {
+        question: 'What is the cost?',
+        answer: 'The workshop is $50 per person.'
+      },
+      {
+        question: 'How long is the workshop?',
+        answer: 'The workshop is approximately 2 hours.'
+      },
+      {
+        question: 'Who is this for?',
+        answer: 'Students, creators, church media teams, small business owners, photographers, and anyone who wants to understand how real productions work.'
+      }
+    ],
+    gearNote: 'No gear needed — everything will be provided!',
+    price: '$50',
+    duration: '2 hours'
   }
 };
 
@@ -817,9 +866,49 @@ export function getAllRetreats(): RetreatData[] {
   return Object.values(RETREATS);
 }
 
+/**
+ * Parse a date string as local time (not UTC).
+ * `new Date('2026-05-16')` parses as UTC midnight, which shifts to the
+ * previous day in US timezones. Appending `T00:00:00` forces local parsing.
+ */
+function parseLocalDate(dateStr: string): Date {
+  if (dateStr.includes('T')) return new Date(dateStr);
+  return new Date(dateStr + 'T00:00:00');
+}
+
+/**
+ * Maps a DB Experience record to the RetreatData shape used by Retreat* components.
+ * Falls back to hardcoded RETREATS data for any null fields.
+ */
+export function experienceToRetreatData(exp: Experience, fallback?: RetreatData | null): RetreatData {
+  const fb = fallback ?? RETREATS[exp.slug] ?? null;
+  return {
+    slug: exp.slug,
+    title: exp.title ?? fb?.title ?? '',
+    type: (exp.type as ExperienceKind) ?? fb?.type,
+    country: exp.country ?? fb?.country ?? '',
+    city: exp.city ?? fb?.city,
+    startDate: exp.start_date ?? fb?.startDate ?? '',
+    endDate: exp.end_date ?? fb?.endDate ?? '',
+    theme: exp.theme ?? fb?.theme ?? '',
+    heroImage: exp.hero_image ?? fb?.heroImage ?? '',
+    ogImage: exp.og_image ?? fb?.ogImage ?? '',
+    registerUrl: exp.register_url ?? fb?.registerUrl ?? '/register',
+    emailCtaText: exp.email_cta_text ?? fb?.emailCtaText ?? 'Join the Email List',
+    seoDescription: exp.seo_description ?? fb?.seoDescription ?? '',
+    overview: exp.overview ?? fb?.overview ?? '',
+    learningOutcomes: exp.learning_outcomes?.length ? exp.learning_outcomes : (fb?.learningOutcomes ?? []),
+    itinerary: exp.itinerary?.length ? exp.itinerary : (fb?.itinerary ?? []),
+    faqs: exp.faqs?.length ? exp.faqs : (fb?.faqs ?? []),
+    gearNote: exp.gear_note ?? fb?.gearNote,
+    price: exp.price_display ?? fb?.price,
+    duration: exp.duration_display ?? fb?.duration,
+  };
+}
+
 export function formatDateRange(startDate: string, endDate: string): string {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  const start = parseLocalDate(startDate);
+  const end = parseLocalDate(endDate);
 
   const formatOptions: Intl.DateTimeFormatOptions = {
     month: 'long',

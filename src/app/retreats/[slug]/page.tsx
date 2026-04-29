@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getRetreat, getAllRetreats } from '@/lib/retreats';
+import { getRetreat, getAllRetreats, experienceToRetreatData } from '@/lib/retreats';
+import { getExperienceBySlug } from '@/lib/services/experienceService';
 import RetreatHero from '@/components/retreats/RetreatHero';
 import RetreatOverview from '@/components/retreats/RetreatOverview';
 import RetreatLearning from '@/components/retreats/RetreatLearning';
@@ -8,6 +9,8 @@ import RetreatItinerary from '@/components/retreats/RetreatItinerary';
 import RetreatGear from '@/components/retreats/RetreatGear';
 import RetreatFAQ from '@/components/retreats/RetreatFAQ';
 import RetreatCTA from '@/components/retreats/RetreatCTA';
+
+export const revalidate = 60;
 
 interface RetreatPageProps {
   params: {
@@ -22,9 +25,22 @@ export async function generateStaticParams() {
   }));
 }
 
+async function getRetreatData(slug: string) {
+  const hardcoded = getRetreat(slug);
+  try {
+    const experience = await getExperienceBySlug(slug);
+    if (experience) {
+      return experienceToRetreatData(experience, hardcoded);
+    }
+  } catch {
+    // DB unavailable — fall through to hardcoded
+  }
+  return hardcoded;
+}
+
 export async function generateMetadata({ params }: RetreatPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const retreat = getRetreat(slug);
+  const retreat = await getRetreatData(slug);
 
   if (!retreat) {
     return {
@@ -59,7 +75,7 @@ export async function generateMetadata({ params }: RetreatPageProps): Promise<Me
 
 export default async function RetreatPage({ params }: RetreatPageProps) {
   const { slug } = await params;
-  const retreat = getRetreat(slug);
+  const retreat = await getRetreatData(slug);
 
   if (!retreat) {
     notFound();

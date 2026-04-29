@@ -156,7 +156,8 @@ export const getTexasPricingTiers = () => {
 };
 
 export const formatTexasPaymentDate = (dateString: string) => {
-  const date = new Date(dateString);
+  // Append T00:00:00 to date-only strings to prevent UTC midnight shift
+  const date = dateString.includes('T') ? new Date(dateString) : new Date(dateString + 'T00:00:00');
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 

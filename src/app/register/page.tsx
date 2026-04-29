@@ -32,8 +32,47 @@ export default function RegisterPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [showRefundModal, setShowRefundModal] = useState(false);
+  const [capacityStatus, setCapacityStatus] = useState<{
+    capacity: number | null;
+    registered_count: number;
+    available: number | null;
+    is_full: boolean;
+    waitlist_count: number;
+  } | null>(null);
+  const [capacityLoading, setCapacityLoading] = useState(false);
+  const [waitlistForm, setWaitlistForm] = useState({ firstName: '', lastName: '', email: '', phone: '' });
+  const [waitlistSubmitting, setWaitlistSubmitting] = useState(false);
+  const [waitlistSuccess, setWaitlistSuccess] = useState(false);
+  const [waitlistError, setWaitlistError] = useState('');
 
   const isWorkshop = formData.retreat === 'filmmaking-workshop';
+
+  // Map form retreat value to experience slug for capacity lookup
+  const experienceSlugMap: Record<string, string> = {
+    'filmmaking-workshop': 'filmmaking-in-the-real-world',
+    'costa-rica': 'costa-rica',
+    'texas': 'texas',
+  };
+
+  // Fetch capacity when experience changes
+  useEffect(() => {
+    if (!formData.retreat) {
+      setCapacityStatus(null);
+      setWaitlistSuccess(false);
+      setWaitlistError('');
+      return;
+    }
+    const slug = experienceSlugMap[formData.retreat] || formData.retreat;
+    setCapacityLoading(true);
+    setWaitlistSuccess(false);
+    setWaitlistError('');
+    fetch(`/api/experiences/${slug}/capacity`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => setCapacityStatus(data))
+      .catch(() => setCapacityStatus(null))
+      .finally(() => setCapacityLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.retreat]);
 
   // Force full payment if after deadline for selected retreat
   useEffect(() => {
@@ -152,6 +191,35 @@ export default function RegisterPage() {
       return calculateTexasRemainingBalance(calculateTotal());
     }
     return calculateRemainingBalance(calculateTotal());
+  };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!waitlistForm.email || !waitlistForm.firstName) return;
+
+    setWaitlistSubmitting(true);
+    setWaitlistError('');
+    try {
+      const slug = experienceSlugMap[formData.retreat] || formData.retreat;
+      const res = await fetch(`/api/experiences/${slug}/waitlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: waitlistForm.email,
+          full_name: `${waitlistForm.firstName} ${waitlistForm.lastName}`.trim(),
+          phone: waitlistForm.phone || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to join waitlist');
+      }
+      setWaitlistSuccess(true);
+    } catch (error) {
+      setWaitlistError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    } finally {
+      setWaitlistSubmitting(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -397,6 +465,105 @@ export default function RegisterPage() {
                     )}
                   </div>
 
+                  {/* Capacity loading */}
+                  {formData.retreat && capacityLoading && (
+                    <div className="text-center py-2">
+                      <div className="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-forest"></div>
+                    </div>
+                  )}
+
+                  {/* Capacity indicator — spots remaining */}
+                  {formData.retreat && !capacityLoading && capacityStatus && capacityStatus.capacity !== null && !capacityStatus.is_full && (
+                    <div className="bg-forest/5 border border-forest/20 rounded-lg p-3 text-sm text-forest font-medium">
+                      {capacityStatus.available} {capacityStatus.available === 1 ? 'spot' : 'spots'} remaining
+                    </div>
+                  )}
+
+                  {/* Waitlist form — shown when experience is full */}
+                  {formData.retreat && !capacityLoading && capacityStatus?.is_full && (
+                    <div className="border-t border-stone/20 pt-6">
+                      {waitlistSuccess ? (
+                        <div className="bg-forest/5 border border-forest/20 rounded-lg p-6 text-center">
+                          <svg className="w-12 h-12 mx-auto text-forest mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <h3 className="text-lg font-semibold text-charcoal mb-2">You&apos;re on the Waitlist!</h3>
+                          <p className="text-charcoal/70 text-sm">
+                            We&apos;ll email you when a spot opens up. Keep an eye on your inbox!
+                          </p>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                            <h3 className="text-base font-semibold text-amber-800 mb-1">This experience is currently full</h3>
+                            <p className="text-amber-700 text-sm">Join the waitlist and we&apos;ll notify you when a spot opens up!</p>
+                          </div>
+                          <div className="space-y-4">
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <div>
+                                <label htmlFor="wl-firstName" className="block text-sm font-semibold text-charcoal mb-2">First Name *</label>
+                                <input
+                                  type="text"
+                                  id="wl-firstName"
+                                  required
+                                  value={waitlistForm.firstName}
+                                  onChange={(e) => setWaitlistForm({ ...waitlistForm, firstName: e.target.value })}
+                                  className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                                />
+                              </div>
+                              <div>
+                                <label htmlFor="wl-lastName" className="block text-sm font-semibold text-charcoal mb-2">Last Name *</label>
+                                <input
+                                  type="text"
+                                  id="wl-lastName"
+                                  required
+                                  value={waitlistForm.lastName}
+                                  onChange={(e) => setWaitlistForm({ ...waitlistForm, lastName: e.target.value })}
+                                  className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label htmlFor="wl-email" className="block text-sm font-semibold text-charcoal mb-2">Email *</label>
+                              <input
+                                type="email"
+                                id="wl-email"
+                                required
+                                value={waitlistForm.email}
+                                onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
+                                className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="wl-phone" className="block text-sm font-semibold text-charcoal mb-2">Phone (optional)</label>
+                              <input
+                                type="tel"
+                                id="wl-phone"
+                                value={waitlistForm.phone}
+                                onChange={(e) => setWaitlistForm({ ...waitlistForm, phone: e.target.value })}
+                                className="w-full px-4 py-3 rounded-lg border border-stone/30 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-colors"
+                              />
+                            </div>
+                            {waitlistError && (
+                              <p className="text-red-600 text-sm">{waitlistError}</p>
+                            )}
+                            <button
+                              type="button"
+                              onClick={handleWaitlistSubmit}
+                              disabled={waitlistSubmitting || !waitlistForm.email || !waitlistForm.firstName}
+                              className="w-full bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-forest-500 hover:text-white focus:bg-forest-500 focus:text-white active:bg-forest-500 active:text-white focus:outline-none focus:ring-2 focus:ring-forest-400 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            >
+                              {waitlistSubmitting ? 'Joining...' : 'Join the Waitlist'}
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Regular form — hidden when experience is full */}
+                  {(!capacityStatus?.is_full || !formData.retreat) && (
+                  <>
                   {/* Personal Information */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
@@ -667,6 +834,8 @@ export default function RegisterPage() {
                       'Continue to Payment'
                     )}
                   </button>
+                  </>
+                  )}
                 </form>
               </div>
             </div>

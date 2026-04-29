@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { NAV_ITEMS } from '@/lib/navigation';
+import { createClient } from '@/lib/supabase/client';
 import HeaderCTA from './HeaderCTA';
 import Button from '../Button';
 
@@ -15,11 +16,35 @@ interface MobileDrawerProps {
 
 export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDrawerProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const drawerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstFocusableRef = useRef<HTMLButtonElement>(null);
   const lastFocusableRef = useRef<HTMLAnchorElement>(null);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [user, setUser] = useState<{ email?: string } | null>(null);
+
+  // Check auth state
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user ? { email: data.user.email ?? undefined } : null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ? { email: session.user.email ?? undefined } : null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    onClose();
+    router.push('/');
+  };
 
   // Handle focus trap
   useEffect(() => {
@@ -259,8 +284,60 @@ export default function MobileDrawer({ isOpen, onClose, hamburgerRef }: MobileDr
             })}
           </nav>
 
+          {/* Auth section */}
+          <div className="mt-6 pt-6 border-t border-sage-200">
+            {user ? (
+              <div className="space-y-2">
+                <p className="px-3 text-sm text-ink-500 truncate">{user.email}</p>
+                <Link
+                  href="/account"
+                  onClick={() => handleLinkClick('/account')}
+                  className={`
+                    block py-3 px-3 text-lg font-medium rounded-md transition-colors duration-200
+                    focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2
+                    ${pathname === '/account'
+                      ? 'text-forest-700 bg-forest-50 font-semibold'
+                      : 'text-ink-700 hover:text-forest-600 hover:bg-sage-50'
+                    }
+                  `}
+                >
+                  <span className="flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    My Account
+                  </span>
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="w-full py-3 px-3 text-lg font-medium rounded-md text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors duration-200 text-left focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                >
+                  <span className="flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Sign Out
+                  </span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth/login"
+                onClick={() => handleLinkClick('/auth/login')}
+                className="block py-3 px-3 text-lg font-medium rounded-md text-ink-700 hover:text-forest-600 hover:bg-sage-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2"
+              >
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Sign In
+                </span>
+              </Link>
+            )}
+          </div>
+
           {/* CTAs for mobile */}
-          <div className="mt-8 space-y-3 sm:hidden">
+          <div className="mt-6 space-y-3 sm:hidden">
             <div
               onClick={() => {
                 if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && (window as Window & { gtag?: (event: string, action: string, params?: Record<string, unknown>) => void }).gtag) {

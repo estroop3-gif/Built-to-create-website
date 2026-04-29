@@ -87,25 +87,38 @@ export async function POST(request: NextRequest) {
       discountApplied = true;
     }
 
-    // Handle promo codes
+    // Handle promo codes — validate against database
     const promoCode = (body.promo_code || '').trim().toUpperCase();
-    const VALID_PROMO_CODES: Record<string, { coupon_id: string; percent_off: number }> = {
-      'FREE4303': { coupon_id: 'FREE4303', percent_off: 100 },
-    };
-    const matchedPromo = VALID_PROMO_CODES[promoCode] || null;
+    let matchedPromo: { coupon_id: string; percent_off?: number; amount_off?: number } | null = null;
 
-    // Ensure the Stripe coupon exists if a valid promo code was entered
-    if (matchedPromo) {
-      try {
-        await stripe.coupons.retrieve(matchedPromo.coupon_id);
-      } catch {
-        // Coupon doesn't exist yet — create it
-        await stripe.coupons.create({
-          id: matchedPromo.coupon_id,
-          percent_off: matchedPromo.percent_off,
-          duration: 'once',
-          name: `Promo: ${matchedPromo.coupon_id}`,
-        });
+    if (promoCode) {
+      const { validatePromoCode } = await import('@/lib/services/promoCodeService');
+      const validation = await validatePromoCode(promoCode);
+
+      if (validation.valid && validation.promo_code) {
+        const pc = validation.promo_code;
+        const couponId = `PROMO_${pc.code}`;
+
+        if (pc.discount_type === 'percent') {
+          matchedPromo = { coupon_id: couponId, percent_off: Number(pc.discount_value) };
+        } else {
+          // fixed discount — amount_off is in cents for Stripe
+          matchedPromo = { coupon_id: couponId, amount_off: Number(pc.discount_value) };
+        }
+
+        // Ensure the Stripe coupon exists
+        try {
+          await stripe.coupons.retrieve(couponId);
+        } catch {
+          await stripe.coupons.create({
+            id: couponId,
+            ...(pc.discount_type === 'percent'
+              ? { percent_off: Number(pc.discount_value) }
+              : { amount_off: Number(pc.discount_value), currency: 'usd' }),
+            duration: 'once',
+            name: `Promo: ${pc.code}`,
+          });
+        }
       }
     }
 

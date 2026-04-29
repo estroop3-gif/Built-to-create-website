@@ -171,10 +171,10 @@ export default function AdminDashboard() {
                 className="block bg-forest-50 rounded-lg p-4 hover:bg-forest-100 transition-colors"
               >
                 <h3 className="font-heading text-lg font-bold text-ink-900 mb-2">
-                  Manage Retreats
+                  Manage Experiences
                 </h3>
                 <p className="font-body text-ink-600 text-sm">
-                  Edit retreat content, manage access, update information
+                  Edit retreats, workshops, content, and access
                 </p>
               </Link>
             </div>
