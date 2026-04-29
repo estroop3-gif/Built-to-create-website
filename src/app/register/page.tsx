@@ -6,7 +6,7 @@ import { pricing, DEPOSIT, getCurrentTotal, isAfterFullPaymentDeadline, calculat
 import { TEXAS_DEPOSIT, getTexasCurrentTotal, isTexasAfterFullPaymentDeadline, calculateTexasRemainingBalance, formatTexasPaymentDate, TEXAS_FULL_PAYMENT_DEADLINE, TEXAS_LATE_TOTAL, getTexasActiveWindow } from '@/lib/texasPricing';
 import { RefundPolicyContent } from '@/shared/refundPolicyContent';
 
-type ExperienceType = 'costa-rica' | 'texas' | 'filmmaking-workshop';
+type ExperienceType = 'costa-rica' | 'texas' | 'filmmaking-workshop' | 'canton-workshop';
 type CostaRicaSession = 'session-1' | 'session-2' | '';
 type TexasSession = 'session-1' | 'session-2' | '';
 
@@ -45,11 +45,12 @@ export default function RegisterPage() {
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
   const [waitlistError, setWaitlistError] = useState('');
 
-  const isWorkshop = formData.retreat === 'filmmaking-workshop';
+  const isWorkshop = formData.retreat === 'filmmaking-workshop' || formData.retreat === 'canton-workshop';
 
   // Map form retreat value to experience slug for capacity lookup
   const experienceSlugMap: Record<string, string> = {
     'filmmaking-workshop': 'filmmaking-in-the-real-world',
+    'canton-workshop': 'filmmaking-canton',
     'costa-rica': 'costa-rica',
     'texas': 'texas',
   };
@@ -268,8 +269,13 @@ export default function RegisterPage() {
       if (isWorkshop) {
         planLabel = 'Workshop - Full';
         retreatName = 'Filmmaking in the Real World Workshop';
-        retreatDates = 'May 16, 2026';
-        retreatLocation = 'Jasper, GA';
+        if (formData.retreat === 'canton-workshop') {
+          retreatDates = 'May 23, 2026';
+          retreatLocation = 'Canton, GA';
+        } else {
+          retreatDates = 'May 16, 2026';
+          retreatLocation = 'Jasper, GA';
+        }
       } else {
         // Determine the correct plan label based on current pricing tier and payment option
         const activeWindow = formData.retreat === 'texas'
@@ -345,7 +351,7 @@ export default function RegisterPage() {
           retreat_start: retreatDates,
           retreat_location: retreatLocation,
           retreat_type: formData.retreat,
-          retreat_slug: formData.retreat === 'filmmaking-workshop' ? 'filmmaking-in-the-real-world' : formData.retreat === 'texas' ? 'texas' : 'costa-rica',
+          retreat_slug: formData.retreat === 'canton-workshop' ? 'filmmaking-canton' : formData.retreat === 'filmmaking-workshop' ? 'filmmaking-in-the-real-world' : formData.retreat === 'texas' ? 'texas' : 'costa-rica',
           promo_code: formData.promoCode || undefined,
           costa_rica_session: formData.retreat === 'costa-rica' ? formData.costaRicaSession : undefined,
           texas_session: formData.retreat === 'texas' ? formData.texasSession : undefined
@@ -418,6 +424,7 @@ export default function RegisterPage() {
                       >
                         <option value="">Choose an experience...</option>
                         <option value="filmmaking-workshop">Filmmaking in the Real World — Jasper, GA · May 16, 2026 · $50</option>
+                        <option value="canton-workshop">Filmmaking in the Real World — Canton, GA · May 23, 2026 · $50</option>
                         {/* <option value="costa-rica">Costa Rica – Filmmaking Retreat</option> */}
                         {/* <option value="texas">Texas – Media Leaders Retreat</option> */}
                       </select>
@@ -854,11 +861,11 @@ export default function RegisterPage() {
                       </div>
                       <div className="flex justify-between text-cream/80">
                         <span>Date:</span>
-                        <span>May 16, 2026</span>
+                        <span>{formData.retreat === 'canton-workshop' ? 'May 23, 2026' : 'May 16, 2026'}</span>
                       </div>
                       <div className="flex justify-between text-cream/80">
                         <span>Location:</span>
-                        <span>Jasper, GA</span>
+                        <span>{formData.retreat === 'canton-workshop' ? 'Canton, GA' : 'Jasper, GA'}</span>
                       </div>
                       <div className="flex justify-between text-cream/80">
                         <span>Duration:</span>

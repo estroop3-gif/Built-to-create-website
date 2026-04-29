@@ -10,9 +10,8 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: "Experiences",
     children: [
-      { label: "Filmmaking in the Real World", href: "/experiences/filmmaking-in-the-real-world" },
-      { label: "Costa Rica", href: "/experiences/costa-rica" },
-      { label: "Media Leaders Retreat", href: "/experiences/texas" }
+      { label: "Filmmaking — Jasper, GA", href: "/experiences/filmmaking-in-the-real-world" },
+      { label: "Filmmaking — Canton, GA", href: "/experiences/filmmaking-canton" }
     ]
   },
   { label: "FAQ", href: "/faq" },

@@ -12,7 +12,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <Image
             src="/images/hero-costa-rica.jpg"
-            alt="Filmmaking retreat location"
+            alt="Born to Create Project"
             fill
             className="object-cover"
             priority
@@ -39,13 +39,13 @@ export default function Home() {
             </div>
 
             <p className="font-body text-base sm:text-lg text-cream-300/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Born to Create Project is a gathering place for Christian creatives who feel called to tell stories that matter. Through immersive retreats and hands-on experiences, we help you step away from the noise, encounter God, and return home with real projects, real community, and a renewed sense of purpose.
+              Born to Create Project is a gathering place for creatives who feel called to tell stories that matter. Through hands-on workshops and immersive experiences, we help you grow your craft, build real skills, and connect with a community of storytellers who take filmmaking seriously.
             </p>
 
             {/* Call to Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
               <Button as="link" href="/experiences" size="lg" variant="primary">
-                Explore Experiences
+                View Workshops
               </Button>
               <Button as="link" href="#who-leads" size="lg" variant="ghost">
                 Meet Your Guide
@@ -64,26 +64,26 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project is a series of faith centered filmmaking and storytelling retreats designed for people who know they were made to create, but feel stuck, scattered, or alone in the process.
+                Born to Create Project is a series of filmmaking workshops and experiences designed for people who know they were made to create, but feel stuck, scattered, or alone in the process.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Each experience combines real world production, practical teaching, and dedicated time in God's presence. You will not just sit in a classroom and take notes. You will shoot, direct, edit, and leave with finished work in your hands, spiritual momentum in your heart, and a community of creatives walking alongside you.
+                Each experience combines real world production with practical teaching. You will not just sit in a classroom and take notes. You will get behind real cameras, learn how productions actually work, and leave with the skills and confidence to start creating on your own.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Whether you are just starting out or already working in the industry, these retreats are built to help you:
+                Whether you are just starting out or already working in the industry, these workshops are built to help you:
               </p>
               <ul className="space-y-3 ml-6">
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Hear God more clearly in your creative process</span>
+                  <span>Understand how real productions actually work</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Level up your craft with hands on production days</span>
+                  <span>Level up your craft with hands on experience and professional gear</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Build lifelong friendships with like minded storytellers</span>
+                  <span>Connect with other creators and storytellers in your area</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
@@ -104,10 +104,10 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                We believe every artist is born to create and called to reflect the Creator.
+                We believe every creative has something worth saying — and the skills to say it well can be learned.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project exists to raise up a generation of visual storytellers who carry the presence of God into culture, shape narratives with truth, and create work that reverberates into eternity.
+                Born to Create Project exists to raise up a generation of visual storytellers who shape narratives with truth, create work that matters, and build real careers doing what they love.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 We do this by creating spaces where:
@@ -115,15 +115,15 @@ export default function Home() {
               <ul className="space-y-3 ml-6">
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Presence comes before performance</span>
+                  <span>Learning comes before showing off</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Excellence is an act of worship, not self promotion</span>
+                  <span>Excellence is the standard, not the exception</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Truth is told even when it is raw, uncomfortable, or costly</span>
+                  <span>Honest storytelling is valued over flashy content</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
@@ -131,7 +131,7 @@ export default function Home() {
                 </li>
               </ul>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                These retreats are not about chasing clout. They are about becoming the kind of person who can carry what God wants to entrust to you.
+                These workshops are not about chasing clout. They are about building a real foundation in your craft and taking the next step forward as a filmmaker.
               </p>
             </div>
           </div>
@@ -147,108 +147,113 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project is led by filmmaker and camera operator Edward Parker Stroop, a faith based storyteller with nearly a decade of experience across TV, documentary, motorsports, and narrative work.
+                Born to Create Project is led by filmmaker and camera operator Edward Parker Stroop, with nearly a decade of experience across TV, documentary, motorsports, and narrative work.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Parker has worked with major networks and brands, but his deepest passion is helping believers step into their calling as creatives. He carries a unique blend of industry experience and pastoral heart, creating environments that are both technically challenging and spiritually safe.
+                Parker has worked with major networks and brands including National Geographic, History Channel, ABC, HGTV, Lifetime, and Fox. His passion is helping new creators understand how the industry actually works and build real skills they can use immediately.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                On each trip, Parker is not just teaching. He is in the field with you:
+                In each workshop, Parker is not just lecturing. He is working alongside you:
               </p>
               <ul className="space-y-3 ml-6">
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Walking you through real productions</span>
+                  <span>Walking you through how real productions work</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Giving feedback on your shots, edits, and story choices</span>
+                  <span>Giving direct feedback on your shots, technique, and story choices</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>Helping you listen for what God is saying in the middle of the process</span>
+                  <span>Helping you figure out your next steps — whether that is personal projects, paid work, or building a reel</span>
                 </li>
               </ul>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                You will not be left to figure it out later. The goal is that you leave each experience with work you are proud of and a renewed sense of why you create.
+                You will not be left to figure it out later. The goal is that you leave each workshop with real skills and a clear plan for what to do next.
+              </p>
+              <p className="font-body text-lg text-ink-600 leading-relaxed">
+                <a href="https://www.imdb.com/name/nm10358218/" target="_blank" rel="noopener noreferrer" className="font-semibold text-forest-700 underline underline-offset-2 hover:text-forest-900 transition-colors">Check out his work on IMDb &rarr;</a>
               </p>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* The Experiences Section */}
+      {/* Upcoming Workshops Section */}
       <Section spacing="xl" background="cream">
         <Container size="xl">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-              The Experience
+              Upcoming Workshops
             </h2>
             <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
-              Each retreat offers a unique opportunity to reconnect with your creative spirit while immersed in purposeful environments—from vibrant international landscapes to the quiet Texas Hill Country—where you can step away from distraction and focus on what matters most.
-            </p>
-            <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
-              Over multiple transformative days, you'll learn fundamentals of filmmaking from industry professionals, collaborate with fellow creatives, and produce work that reflects your authentic voice and faith.
-            </p>
-            <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed mb-6">
-              Mornings begin with devotion and prayer; evenings may include testimony circles, worship nights, or reflection. Field work spans practical projects like travel sequences, portraits, interviews, testimonies, and worship coverage across real locations.
+              Our &ldquo;Filmmaking in the Real World&rdquo; workshops are practical, hands-on sessions taught by a working professional. In two hours you will learn real-world camera fundamentals, understand how productions actually work, and walk away knowing how to start creating with what you already have.
             </p>
             <p className="font-body text-xl text-ink-600 max-w-3xl mx-auto leading-relaxed">
-              You'll leave not just with sharpened skills, but with a renewed sense of calling and a community that will support your creative and spiritual journey long after the retreat ends.
+              Each workshop includes time with professional cinema cameras, direct feedback, and a clear plan for your next steps — whether that is personal projects, paid work, or building a reel.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-            {/* Costa Rica Card */}
+            {/* Jasper Workshop Card */}
             <div className="bg-sage-50 rounded-lg overflow-hidden shadow-card hover:shadow-xl transition-all duration-300 group">
               <div className="p-8">
-                <h3 className="font-heading text-3xl font-bold text-ink-900 mb-4">
-                  Costa Rica
+                <h3 className="font-heading text-3xl font-bold text-ink-900 mb-2">
+                  Jasper, GA
                 </h3>
-                <p className="font-body text-base text-ink-600 mb-6 leading-relaxed">
-                  A filmmaking retreat set in lush landscapes, where you will shoot both travel and product style projects, learn on location storytelling, and encounter God away from the noise of everyday life.
+                <p className="font-body text-sm font-medium text-ink-500 mb-4">
+                  May 16, 2026 · 2:00 – 4:00 PM
                 </p>
+                <p className="font-body text-base text-ink-600 mb-6 leading-relaxed">
+                  Camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. Held at Pickens County Recreation Center.
+                </p>
+                <p className="font-heading text-2xl font-bold text-forest-700 mb-6">$50</p>
                 <Button
                   as="link"
-                  href="/experiences/costa-rica"
+                  href="/experiences/filmmaking-in-the-real-world"
                   size="md"
                   variant="primary"
                   className="group-hover:bg-forest-700 transition-colors duration-200"
                 >
-                  Explore Costa Rica
+                  View Workshop
                 </Button>
               </div>
             </div>
 
-            {/* Media Leaders Retreat Card */}
+            {/* Canton Workshop Card */}
             <div className="bg-white rounded-lg overflow-hidden shadow-card hover:shadow-xl transition-all duration-300 group">
               <div className="p-8">
-                <h3 className="font-heading text-3xl font-bold text-ink-900 mb-4">
-                  Media Leaders Retreat
+                <h3 className="font-heading text-3xl font-bold text-ink-900 mb-2">
+                  Canton, GA
                 </h3>
-                <p className="font-body text-base text-ink-600 mb-6 leading-relaxed">
-                  A Texas Hill Country retreat designed for focused, intimate teaching, with space to breathe, create, and connect deeply with God and other filmmakers.
+                <p className="font-body text-sm font-medium text-ink-500 mb-4">
+                  May 23, 2026 · 2:00 – 4:00 PM
                 </p>
+                <p className="font-body text-base text-ink-600 mb-6 leading-relaxed">
+                  The same practical, hands-on workshop — camera fundamentals, production workflow, and documentary storytelling. Held at River Church Canton — Community Room.
+                </p>
+                <p className="font-heading text-2xl font-bold text-forest-700 mb-6">$50</p>
                 <Button
                   as="link"
-                  href="/experiences/texas"
+                  href="/experiences/filmmaking-canton"
                   size="md"
                   variant="secondary"
                   className="group-hover:bg-sage-100 transition-colors duration-200"
                 >
-                  Explore Media Leaders Retreat
+                  View Workshop
                 </Button>
               </div>
             </div>
           </div>
 
           <p className="font-body text-lg text-ink-600 text-center max-w-3xl mx-auto leading-relaxed mb-8">
-            Each experience includes hands on production days, teaching sessions, time in Scripture and prayer, and structured feedback on your work.
+            Each workshop includes teaching, hands-on time with professional gear, and a Q&amp;A session with practical next steps.
           </p>
 
           <div className="text-center">
-            <Button as="link" href="/experiences" size="lg" variant="primary">
-              View All Experiences
+            <Button as="link" href="/register" size="lg" variant="primary">
+              Register Now
             </Button>
           </div>
         </Container>
@@ -263,28 +268,28 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                These retreats are for you if:
+                These workshops are for you if:
               </p>
               <ul className="space-y-3 ml-6">
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>You sense a call to create but feel stuck, burnt out, or alone</span>
+                  <span>You are curious about filmmaking but do not know where to start</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>You want to grow technically without losing sight of what God is doing in your heart</span>
+                  <span>You want practical, real-world skills taught by someone who works in the industry</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>You are hungry for community with other believers who take both Jesus and filmmaking seriously</span>
+                  <span>You are a student, creator, church media volunteer, or small business owner who wants to make better video</span>
                 </li>
                 <li className="font-body text-lg text-ink-600 leading-relaxed flex items-start">
                   <span className="text-forest-600 mr-3">•</span>
-                  <span>You are ready to step out of your normal routine and give God focused time and attention in your craft</span>
+                  <span>You want hands-on time with professional cinema cameras and honest feedback on your next steps</span>
                 </li>
               </ul>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                You do not have to be established or successful to come. You just have to be willing to show up, be honest, and give your yes.
+                You do not need experience or expensive gear. You just have to be willing to show up and learn.
               </p>
             </div>
           </div>
@@ -299,14 +304,14 @@ export default function Home() {
               Ready to Take the Next Step?
             </h2>
             <p className="font-body text-xl text-ink-600 leading-relaxed mb-8 max-w-3xl mx-auto">
-              Start by exploring our current experiences, reading through the itineraries, and praying about where God might be leading you.
+              Check out our upcoming workshops, pick a date that works, and reserve your seat. Spaces are limited so everyone gets real attention.
             </p>
             <p className="font-body text-lg text-ink-600 leading-relaxed mb-12 max-w-3xl mx-auto">
-              If you have questions about gear, skill level, travel, or whether a specific retreat is the right fit, reach out. We are happy to talk it through with you.
+              If you have questions about gear, skill level, or whether a workshop is the right fit, reach out. We are happy to talk it through with you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button as="link" href="/experiences" size="lg" variant="primary">
-                Explore Experiences
+              <Button as="link" href="/register" size="lg" variant="primary">
+                Register Now
               </Button>
               <Button as="link" href="/contact" size="lg" variant="secondary">
                 Contact Us

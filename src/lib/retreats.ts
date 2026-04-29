@@ -863,6 +863,62 @@ export const RETREATS: Record<string, RetreatData> = {
     endTime: '4:00 PM',
     venue: 'Pickens County Recreation Center',
     venueAddress: '1329 Camp Rd, Jasper, GA 30143'
+  },
+  'filmmaking-canton': {
+    slug: 'filmmaking-canton',
+    title: 'Filmmaking in the Real World',
+    type: 'workshop',
+    country: 'United States',
+    city: 'Canton, Georgia',
+    startDate: '2026-05-23',
+    endDate: '2026-05-23',
+    theme: 'Camera Basics & Documentary Storytelling',
+    heroImage: '/images/hero-canton-workshop.avif',
+    ogImage: '/images/hero-canton-workshop.avif',
+    registerUrl: '/register',
+    emailCtaText: 'Reserve Your Seat',
+    seoDescription: 'A 2-hour in-person workshop in Canton, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. $50.',
+    overview: 'Camera basics, set experience, documentary storytelling, and how to start creating with what you already have. A 2-hour in-person workshop for students, creators, church media teams, small business owners, photographers, and anyone who wants to understand how real productions work and start making better video.',
+    learningOutcomes: [
+      'Understand camera basics and how to get great shots with any gear',
+      'Experience what a real set looks and feels like',
+      'Learn documentary storytelling techniques',
+      'Start creating better video with what you already have',
+      'Connect with fellow creators in your area'
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Workshop Session',
+        description: 'Full 2-hour hands-on workshop covering camera fundamentals, set experience, and documentary storytelling.',
+        location: 'Canton, GA'
+      }
+    ],
+    faqs: [
+      {
+        question: 'Do I need to bring any equipment?',
+        answer: 'No gear needed — everything will be provided for the workshop.'
+      },
+      {
+        question: 'What is the cost?',
+        answer: 'The workshop is $50 per person.'
+      },
+      {
+        question: 'How long is the workshop?',
+        answer: 'The workshop is approximately 2 hours.'
+      },
+      {
+        question: 'Who is this for?',
+        answer: 'Students, creators, church media teams, small business owners, photographers, and anyone in Canton or the surrounding area who wants to understand how real productions work.'
+      }
+    ],
+    gearNote: 'No gear needed — everything will be provided!',
+    price: '$50',
+    duration: '2 hours',
+    startTime: '2:00 PM',
+    endTime: '4:00 PM',
+    venue: 'River Church Canton — Community Room',
+    venueAddress: '2335 Sixes Rd, Canton, GA 30144'
   }
 };
 

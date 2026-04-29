@@ -15,29 +15,7 @@ const footerNavigation = {
     { name: 'Contact', href: '/contact' },
     { name: 'About', href: '/about' },
   ],
-  experiences: [
-    {
-      name: 'Costa Rica',
-      items: [
-        { name: 'Overview', href: '/experiences/costa-rica' },
-        { name: 'Itinerary', href: '/experiences/costa-rica/itinerary' },
-        { name: 'Pricing', href: '/experiences/costa-rica/pricing' },
-        { name: 'Packing', href: '/experiences/costa-rica/packing' },
-        { name: 'Travel', href: '/experiences/costa-rica/travel' },
-      ]
-    },
-    {
-      name: 'Texas',
-      items: [
-        { name: 'Overview', href: '/experiences/texas' },
-        { name: 'Itinerary', href: '/experiences/texas/itinerary' },
-        { name: 'Pricing', href: '/experiences/texas/pricing' },
-        { name: 'Packing', href: '/experiences/texas/packing' },
-        { name: 'Travel', href: '/experiences/texas/travel' },
-        { name: 'Church Media Toolkit', href: '/experiences/texas/what-you-bring-back' },
-      ]
-    },
-  ],
+  experiences: [],
   social: [
     {
       name: 'Instagram',
@@ -99,44 +77,22 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Experiences */}
+            {/* Workshops */}
             <div>
               <h3 className="font-heading text-lg font-bold text-ink-900 mb-6">
-                Experiences
+                Workshops
               </h3>
               <ul className="space-y-4">
-                {footerNavigation.experiences.map((experience) => (
-                  <li key={experience.name} className="flex flex-col items-center">
-                    <button
-                      onClick={() => setExpandedExperience(expandedExperience === experience.name ? null : experience.name)}
-                      className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg font-semibold flex items-center gap-2"
-                    >
-                      {experience.name}
-                      <svg
-                        className={`w-4 h-4 transition-transform ${expandedExperience === experience.name ? 'rotate-180' : ''}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {expandedExperience === experience.name && (
-                      <ul className="mt-3 space-y-2">
-                        {experience.items.map((item) => (
-                          <li key={item.name} className="text-center">
-                            <Link
-                              href={item.href}
-                              className="font-body text-sm text-ink-600 hover:text-forest-700 transition-colors duration-200"
-                            >
-                              {item.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
+                <li className="text-center">
+                  <Link href="/experiences/filmmaking-in-the-real-world" className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg">
+                    Jasper, GA
+                  </Link>
+                </li>
+                <li className="text-center">
+                  <Link href="/experiences/filmmaking-canton" className="font-body text-ink-600 hover:text-forest-700 transition-colors duration-200 text-lg">
+                    Canton, GA
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -204,8 +160,8 @@ export default function Footer() {
           {/* Experience Details */}
           <div className="mb-12 py-8 border-t border-b border-sand-300/50">
             <div className="font-body text-ink-600 text-lg">
-              <p className="mb-2">2 Experience Destinations</p>
-              <p>Costa Rica • Texas</p>
+              <p className="mb-2">2 Workshop Locations</p>
+              <p>Jasper, GA • Canton, GA</p>
             </div>
           </div>
 

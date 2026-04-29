@@ -177,6 +177,18 @@ export default function AdminDashboard() {
                   Edit retreats, workshops, content, and access
                 </p>
               </Link>
+
+              <Link
+                href="/admin/subscribers"
+                className="block bg-forest-50 rounded-lg p-4 hover:bg-forest-100 transition-colors"
+              >
+                <h3 className="font-heading text-lg font-bold text-ink-900 mb-2">
+                  Email Subscribers
+                </h3>
+                <p className="font-body text-ink-600 text-sm">
+                  View mailing list, send notifications about new workshops and experiences
+                </p>
+              </Link>
             </div>
           </div>
 

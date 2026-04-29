@@ -13,6 +13,12 @@ export default function RetreatWaitlistTab({ experienceId, slug }: RetreatWaitli
   const [loading, setLoading] = useState(true);
   const [notifying, setNotifying] = useState<Set<string>>(new Set());
   const [bulkNotifying, setBulkNotifying] = useState(false);
+  const [showCompose, setShowCompose] = useState(false);
+  const [composeSubject, setComposeSubject] = useState('');
+  const [composeMessage, setComposeMessage] = useState('');
+  const [sendToAll, setSendToAll] = useState(true);
+  const [sendingUpdate, setSendingUpdate] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState('');
 
   const fetchEntries = useCallback(async () => {
     try {
@@ -95,6 +101,38 @@ export default function RetreatWaitlistTab({ experienceId, slug }: RetreatWaitli
     }
   };
 
+  const handleSendUpdate = async () => {
+    if (!composeSubject.trim() || !composeMessage.trim()) return;
+    setSendingUpdate(true);
+    try {
+      const res = await fetch(
+        `/api/admin/experiences/${experienceId}/waitlist/update-email`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subject: composeSubject,
+            message: composeMessage,
+            sendToAll,
+          }),
+        }
+      );
+      if (!res.ok) throw new Error('Failed to send');
+      const data = await res.json();
+      setShowCompose(false);
+      setComposeSubject('');
+      setComposeMessage('');
+      setUpdateMessage(`Update sent to ${data.sent} ${data.sent === 1 ? 'person' : 'people'}`);
+      setTimeout(() => setUpdateMessage(''), 4000);
+    } catch (error) {
+      console.error('Error sending update:', error);
+      setUpdateMessage('Failed to send update');
+      setTimeout(() => setUpdateMessage(''), 4000);
+    } finally {
+      setSendingUpdate(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="p-6 text-center">
@@ -104,11 +142,15 @@ export default function RetreatWaitlistTab({ experienceId, slug }: RetreatWaitli
     );
   }
 
-  // Suppress unused variable — slug kept for future use
-  void slug;
-
   return (
     <div className="p-6">
+      {/* Update sent message */}
+      {updateMessage && (
+        <div className={`mb-4 px-4 py-3 rounded-lg text-sm font-medium ${updateMessage.includes('Failed') ? 'bg-red-50 border border-red-200 text-red-800' : 'bg-green-50 border border-green-200 text-green-800'}`}>
+          {updateMessage}
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-6">
         <h3 className="font-heading text-xl font-bold text-ink-900">
           Waitlist ({entries.length})
@@ -118,16 +160,84 @@ export default function RetreatWaitlistTab({ experienceId, slug }: RetreatWaitli
             </span>
           )}
         </h3>
-        {unnotifiedCount > 0 && (
-          <button
-            onClick={handleNotifyAll}
-            disabled={bulkNotifying}
-            className="bg-forest-600 text-cream-50 px-4 py-2 rounded-lg text-sm hover:bg-forest-700 transition-colors disabled:opacity-50"
-          >
-            {bulkNotifying ? 'Notifying...' : `Notify All Un-notified (${unnotifiedCount})`}
-          </button>
-        )}
+        <div className="flex gap-2">
+          {entries.length > 0 && (
+            <button
+              onClick={() => setShowCompose(!showCompose)}
+              className="bg-white text-forest-700 border border-forest-300 px-4 py-2 rounded-lg text-sm hover:bg-forest-50 transition-colors"
+            >
+              Send Update
+            </button>
+          )}
+          {unnotifiedCount > 0 && (
+            <button
+              onClick={handleNotifyAll}
+              disabled={bulkNotifying}
+              className="bg-forest-600 text-cream-50 px-4 py-2 rounded-lg text-sm hover:bg-forest-700 transition-colors disabled:opacity-50"
+            >
+              {bulkNotifying ? 'Notifying...' : `Notify All Un-notified (${unnotifiedCount})`}
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Compose update email */}
+      {showCompose && (
+        <div className="bg-sage-50 border border-sage-200 rounded-lg p-4 mb-6">
+          <h4 className="font-heading text-sm font-bold text-ink-800 mb-3 uppercase tracking-wide">
+            Send Custom Update to Waitlist
+          </h4>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1">Subject</label>
+              <input
+                type="text"
+                value={composeSubject}
+                onChange={(e) => setComposeSubject(e.target.value)}
+                placeholder="e.g. New dates added for..."
+                className="w-full px-3 py-2 border border-sage-200 rounded-lg text-sm focus:ring-2 focus:ring-forest-200 focus:border-forest-400"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1">Message</label>
+              <textarea
+                value={composeMessage}
+                onChange={(e) => setComposeMessage(e.target.value)}
+                placeholder="Write your update message..."
+                rows={4}
+                className="w-full px-3 py-2 border border-sage-200 rounded-lg text-sm focus:ring-2 focus:ring-forest-200 focus:border-forest-400"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="sendToAll"
+                checked={sendToAll}
+                onChange={(e) => setSendToAll(e.target.checked)}
+                className="rounded border-sage-300 text-forest-600 focus:ring-forest-200"
+              />
+              <label htmlFor="sendToAll" className="text-sm text-ink-700">
+                Send to all waitlist entries (including already notified)
+              </label>
+            </div>
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={handleSendUpdate}
+                disabled={sendingUpdate || !composeSubject.trim() || !composeMessage.trim()}
+                className="bg-forest-600 text-cream-50 px-4 py-2 rounded-lg text-sm hover:bg-forest-700 disabled:opacity-50"
+              >
+                {sendingUpdate ? 'Sending...' : `Send to ${sendToAll ? entries.length : unnotifiedCount} ${(sendToAll ? entries.length : unnotifiedCount) === 1 ? 'person' : 'people'}`}
+              </button>
+              <button
+                onClick={() => { setShowCompose(false); setComposeSubject(''); setComposeMessage(''); }}
+                className="bg-white text-ink-700 px-4 py-2 rounded-lg text-sm border border-sage-200 hover:bg-sage-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {entries.length === 0 ? (
         <p className="text-ink-500 italic">No one on the waitlist yet.</p>

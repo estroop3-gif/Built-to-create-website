@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       const currency = (session.currency || 'usd').toUpperCase();
 
       const retreatType = session.metadata?.retreat_type || '';
-      const isWorkshop = retreatType === 'filmmaking-workshop';
+      const isWorkshop = retreatType === 'filmmaking-workshop' || retreatType === 'canton-workshop';
 
       const profile = {
         firstName,
@@ -447,12 +447,42 @@ function generateCustomerEmailHtml(d: SharedEmailData): string {
           <h3 style="color: #2d5016; margin-top: 0;">🚀 What happens next:</h3>
           ${d.isWorkshop ? `
           <ul>
-            <li>📅 Mark your calendar — ${escapeHtml(d.retreatStart)}</li>
-            <li>📍 Location: ${escapeHtml(d.retreatLocation)}</li>
-            <li>🎬 No gear needed — everything will be provided</li>
-            <li>⏰ Arrive about 10 minutes early to get settled</li>
-            <li>❓ Browse our FAQ for common questions</li>
-            <li>📱 Questions? Reach out anytime</li>
+            <li>📅 <strong>Date:</strong> ${escapeHtml(d.retreatStart)}</li>
+            <li>⏰ <strong>Time:</strong> 2:00 – 4:00 PM</li>
+            <li>📍 <strong>Venue:</strong> ${d.retreatLocation === 'Canton, GA' ? 'River Church Canton — Community Room, 2335 Sixes Rd, Canton, GA 30144' : 'Pickens County Recreation Center, 1329 Camp Rd, Jasper, GA 30143'}</li>
+            <li>🎬 No gear needed — professional cinema cameras and all equipment will be provided</li>
+            <li>⏰ Please arrive about 10 minutes early to get settled</li>
+          </ul>
+
+          <h3 style="color: #2d5016; margin-top: 20px;">🎬 What You'll Cover</h3>
+          <div style="background: #f9fcf9; padding: 16px; border-radius: 6px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr>
+                <td style="padding: 8px 0; vertical-align: top; width: 110px; font-weight: bold; color: #2d5016;">First 20 min</td>
+                <td style="padding: 8px 0;"><strong>How Real Productions Work</strong> — What happens on set, who does what, how projects move from idea to finished product</td>
+              </tr>
+              <tr style="border-top: 1px solid #e8f0e8;">
+                <td style="padding: 8px 0; vertical-align: top; font-weight: bold; color: #2d5016;">Next 45 min</td>
+                <td style="padding: 8px 0;"><strong>Camera Basics & Coverage</strong> — Frame rate, shutter speed, aperture, ISO, lenses, composition, and multicam thinking</td>
+              </tr>
+              <tr style="border-top: 1px solid #e8f0e8;">
+                <td style="padding: 8px 0; vertical-align: top; font-weight: bold; color: #2d5016;">Next 30 min</td>
+                <td style="padding: 8px 0;"><strong>Documentary Fundamentals</strong> — Interviews, B-roll, finding story in real situations, avoiding common lighting and audio mistakes</td>
+              </tr>
+              <tr style="border-top: 1px solid #e8f0e8;">
+                <td style="padding: 8px 0; vertical-align: top; font-weight: bold; color: #2d5016;">Final 25 min</td>
+                <td style="padding: 8px 0;"><strong>Q&amp;A and Next Steps</strong> — Open questions, direct answers, and a practical plan for what to do after the workshop</td>
+              </tr>
+            </table>
+          </div>
+
+          <h3 style="color: #2d5016; margin-top: 20px;">📋 What to Know</h3>
+          <ul>
+            <li><strong>No experience required</strong> — this workshop is designed for beginners and anyone who wants a stronger foundation</li>
+            <li><strong>No gear needed</strong> — you will get hands-on time with professional cinema cameras used on real TV and documentary sets</li>
+            <li><strong>Bring something to take notes with</strong> — phone, notebook, whatever works for you</li>
+            <li><strong>Dress comfortably</strong> — you may be standing and moving around during hands-on portions</li>
+            <li><strong>Questions?</strong> Reply to this email or <a href="${d.urls.contact}" style="color: #2d5016;">contact us</a> anytime</li>
           </ul>
           ` : `
           <ul>
@@ -525,13 +555,37 @@ function generateCustomerEmailText(d: SharedEmailData): string {
   ];
 
   if (d.isWorkshop) {
+    const venue = d.retreatLocation === 'Canton, GA'
+      ? 'River Church Canton — Community Room, 2335 Sixes Rd, Canton, GA 30144'
+      : 'Pickens County Recreation Center, 1329 Camp Rd, Jasper, GA 30143';
     lines.push(
-      `- Mark your calendar: ${d.retreatStart}`,
-      `- Location: ${d.retreatLocation}`,
-      `- No gear needed — everything will be provided`,
-      `- Arrive about 10 minutes early to get settled`,
-      `- Browse our FAQ: ${d.urls.faq}`,
-      `- Contact us anytime: ${d.urls.contact}`,
+      `📅 Date: ${d.retreatStart}`,
+      `⏰ Time: 2:00 – 4:00 PM`,
+      `📍 Venue: ${venue}`,
+      `🎬 No gear needed — professional cinema cameras and all equipment provided`,
+      `⏰ Please arrive about 10 minutes early to get settled`,
+      ``,
+      `🎬 WHAT YOU'LL COVER`,
+      `━━━━━━━━━━━━━━━━━━━━━━`,
+      `First 20 min — How Real Productions Work`,
+      `  What happens on set, who does what, how projects move from idea to finished product`,
+      ``,
+      `Next 45 min — Camera Basics & Coverage`,
+      `  Frame rate, shutter speed, aperture, ISO, lenses, composition, and multicam thinking`,
+      ``,
+      `Next 30 min — Documentary Fundamentals`,
+      `  Interviews, B-roll, finding story in real situations, lighting and audio mistakes to avoid`,
+      ``,
+      `Final 25 min — Q&A and Next Steps`,
+      `  Open questions, direct answers, and a practical plan for what to do after the workshop`,
+      ``,
+      `📋 WHAT TO KNOW`,
+      `━━━━━━━━━━━━━━━━`,
+      `- No experience required`,
+      `- No gear needed — you'll use professional cinema cameras`,
+      `- Bring something to take notes with`,
+      `- Dress comfortably`,
+      `- Questions? Reply to this email or visit ${d.urls.contact}`,
     );
   } else {
     lines.push(
@@ -558,7 +612,7 @@ function generateCustomerEmailText(d: SharedEmailData): string {
 
 /* ========== Internal Admin Notification (HTML) ========== */
 function generateAdminEmailHtml(profile: RegistrantProfile): string {
-  const isWorkshop = profile.retreat.type === 'filmmaking-workshop';
+  const isWorkshop = profile.retreat.type === 'filmmaking-workshop' || profile.retreat.type === 'canton-workshop';
   const amountFmt = profile.plan.amountPaid.toLocaleString(undefined, {
     style: 'currency',
     currency: profile.plan.currency || 'USD',
@@ -678,7 +732,7 @@ function generateAdminEmailHtml(profile: RegistrantProfile): string {
 
 /* ========== Internal Admin Notification (Plain Text) ========== */
 function generateAdminEmailText(profile: RegistrantProfile): string {
-  const isWorkshop = profile.retreat.type === 'filmmaking-workshop';
+  const isWorkshop = profile.retreat.type === 'filmmaking-workshop' || profile.retreat.type === 'canton-workshop';
   const amountFmt = `${profile.plan.currency} ${profile.plan.amountPaid.toFixed(2)}`;
 
   const formatAddress = () => {

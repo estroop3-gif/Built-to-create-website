@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { contactSchemaServer } from '@/lib/validation/contact';
-import { insertContactMessage } from '@/lib/supabase';
+import { insertContactMessage, upsertEmailSubscriber } from '@/lib/supabase';
 import { sendTransactionalEmail, CONTACT_INBOX_EMAIL } from '@/lib/resend';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { render } from '@react-email/render';
@@ -105,6 +105,18 @@ export async function POST(request: NextRequest) {
 
     // Insert into database
     await insertContactMessage(contactData);
+
+    // Auto-add to email subscriber list
+    try {
+      await upsertEmailSubscriber({
+        email: validatedData.email,
+        name: validatedData.name,
+        phone: validatedData.phone,
+        source: 'contact_form',
+      });
+    } catch (subError) {
+      console.error('Failed to add subscriber:', subError);
+    }
 
     const now = new Date().toISOString();
 

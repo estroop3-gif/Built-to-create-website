@@ -59,7 +59,7 @@ type TabKey = 'overview' | 'edit-page' | 'attendee-content' | 'registrations' | 
 
 // ─── Edit Page Tab Component ───────────────────────────────────────────────────
 
-function EditPageTab({ experienceId }: { experienceId: string }) {
+function EditPageTab({ experienceId, slug, onCapacityIncrease }: { experienceId: string; slug: string; onCapacityIncrease?: (waitlistCount: number) => void }) {
   const [experience, setExperience] = useState<Experience | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -176,9 +176,27 @@ function EditPageTab({ experienceId }: { experienceId: string }) {
       });
       if (!res.ok) throw new Error('Failed to save');
       const updated = await res.json();
+      const oldCapacity = experience?.capacity ?? null;
+      const newCapacity = capacity ? parseInt(capacity) : null;
       setExperience(updated);
       setSaveMessage('Saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
+
+      // Check if capacity increased
+      const capacityIncreased =
+        (oldCapacity !== null && newCapacity !== null && newCapacity > oldCapacity) ||
+        (oldCapacity !== null && newCapacity === null);
+      if (capacityIncreased && onCapacityIncrease) {
+        try {
+          const capRes = await fetch(`/api/experiences/${slug}/capacity`);
+          if (capRes.ok) {
+            const capData = await capRes.json();
+            if (capData.waitlist_count > 0) {
+              onCapacityIncrease(capData.waitlist_count);
+            }
+          }
+        } catch { /* ignore */ }
+      }
     } catch (err) {
       console.error('Error saving:', err);
       setSaveMessage('Error saving changes');
@@ -583,6 +601,8 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
   const [capacityInput, setCapacityInput] = useState('');
   const [savingCapacity, setSavingCapacity] = useState(false);
   const [experienceRecord, setExperienceRecord] = useState<ExperienceRecord | null>(null);
+  const [capacityNotifyPrompt, setCapacityNotifyPrompt] = useState<{ count: number } | null>(null);
+  const [capacityNotifying, setCapacityNotifying] = useState(false);
 
   const supabase = createClient();
 
@@ -730,6 +750,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
     if (!experienceRecord) return;
     setSavingCapacity(true);
     try {
+      const oldCapacity = capacityStatus?.capacity ?? null;
       const newCapacity = capacityInput === '' ? null : parseInt(capacityInput);
       const res = await fetch(`/api/admin/experiences/${experienceRecord.id}`, {
         method: 'PATCH',
@@ -738,11 +759,41 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
       });
       if (!res.ok) throw new Error('Failed to update capacity');
       setEditingCapacity(false);
-      fetchCapacity();
+      await fetchCapacity();
+
+      // Check if capacity increased and waitlist has entries
+      const capacityIncreased =
+        (oldCapacity !== null && newCapacity !== null && newCapacity > oldCapacity) ||
+        (oldCapacity !== null && newCapacity === null); // removing limit = unlimited
+      if (capacityIncreased && capacityStatus && capacityStatus.waitlist_count > 0) {
+        setCapacityNotifyPrompt({ count: capacityStatus.waitlist_count });
+      }
     } catch (error) {
       console.error('Error updating capacity:', error);
     } finally {
       setSavingCapacity(false);
+    }
+  }
+
+  async function handleCapacityNotify() {
+    if (!experienceRecord) return;
+    setCapacityNotifying(true);
+    try {
+      const res = await fetch(
+        `/api/admin/experiences/${experienceRecord.id}/waitlist/notify`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ all: true }),
+        }
+      );
+      if (!res.ok) throw new Error('Failed to notify');
+      setCapacityNotifyPrompt(null);
+      fetchCapacity();
+    } catch (error) {
+      console.error('Error notifying waitlist:', error);
+    } finally {
+      setCapacityNotifying(false);
     }
   }
 
@@ -917,6 +968,30 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
                 </div>
               )}
 
+              {/* Capacity notify prompt */}
+              {capacityNotifyPrompt && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <p className="text-sm text-amber-800 font-medium mb-3">
+                    Capacity increased! {capacityNotifyPrompt.count} {capacityNotifyPrompt.count === 1 ? 'person is' : 'people are'} on the waitlist. Notify them about the new availability?
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCapacityNotify}
+                      disabled={capacityNotifying}
+                      className="bg-forest-600 text-cream-50 px-4 py-2 rounded-lg text-sm hover:bg-forest-700 disabled:opacity-50"
+                    >
+                      {capacityNotifying ? 'Notifying...' : 'Notify All'}
+                    </button>
+                    <button
+                      onClick={() => setCapacityNotifyPrompt(null)}
+                      className="bg-white text-ink-700 px-4 py-2 rounded-lg text-sm border border-sage-200 hover:bg-sage-50"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Details Grid */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -1048,7 +1123,11 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
 
           {/* Edit Page Tab */}
           {activeTab === 'edit-page' && experienceRecord && (
-            <EditPageTab experienceId={experienceRecord.id} />
+            <EditPageTab
+              experienceId={experienceRecord.id}
+              slug={retreat.slug}
+              onCapacityIncrease={(count) => setCapacityNotifyPrompt({ count })}
+            />
           )}
           {activeTab === 'edit-page' && !experienceRecord && (
             <div className="p-6">
@@ -1207,7 +1286,7 @@ export default function AdminRetreatDetailPage({ retreat }: AdminRetreatDetailPa
 
           {/* Registrations Tab */}
           {activeTab === 'registrations' && (
-            <RetreatRegistrationsTab slug={retreat.slug} />
+            <RetreatRegistrationsTab slug={retreat.slug} experienceId={experienceRecord?.id} />
           )}
 
           {/* Waitlist Tab */}

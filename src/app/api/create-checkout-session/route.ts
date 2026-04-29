@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     // Determine which retreat pricing to use
     const isTexas = retreat_type === 'texas';
-    const isWorkshop = retreat_type === 'filmmaking-workshop';
+    const isWorkshop = retreat_type === 'filmmaking-workshop' || retreat_type === 'canton-workshop';
 
     // Workshop pricing
     const workshopPricing = {
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: discountApplied ? `${selectedPricing.name} (w/ Camera Discount)` : selectedPricing.name,
               description: isWorkshop
-                ? `Filmmaking in the Real World Workshop - Jasper, GA - ${retreat_start}`
+                ? `Filmmaking in the Real World Workshop - ${retreat_location || 'GA'} - ${retreat_start}`
                 : isTexas
                   ? `Media Leaders Retreat - Texas Hill Country - ${retreat_start}`
                   : discountApplied
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
         retreat: retreat || 'Born to Create Project Retreat',
         retreat_start: retreat_start || '',
         retreat_location: retreat_location || '',
-        retreat_type: retreat_type || 'costa-rica',
+        retreat_type: retreat_type || '',
         retreat_slug: body.retreat_slug || '',
         promo_code: promoCode || '',
       },

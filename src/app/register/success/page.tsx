@@ -78,10 +78,10 @@ export default async function RegistrationSuccessPage({ searchParams }: PageProp
 
   // Extract retreat info from metadata
   const retreatType = session.metadata?.retreat_type || '';
-  const isWorkshop = retreatType === 'filmmaking-workshop';
-  const retreatName = session.metadata?.retreat || (isWorkshop ? 'Filmmaking Workshop' : 'Born to Create Project Retreat');
-  const retreatStart = session.metadata?.retreat_start || (isWorkshop ? 'May 16, 2026' : 'February 20-28, 2026');
-  const retreatLocation = session.metadata?.retreat_location || (isWorkshop ? 'Jasper, GA' : 'Costa Rica');
+  const isWorkshop = retreatType === 'filmmaking-workshop' || retreatType === 'canton-workshop';
+  const retreatName = session.metadata?.retreat || (isWorkshop ? 'Filmmaking in the Real World Workshop' : 'Born to Create Project Retreat');
+  const retreatStart = session.metadata?.retreat_start || (isWorkshop ? (retreatType === 'canton-workshop' ? 'May 23, 2026' : 'May 16, 2026') : '');
+  const retreatLocation = session.metadata?.retreat_location || (isWorkshop ? (retreatType === 'canton-workshop' ? 'Canton, GA' : 'Jasper, GA') : '');
 
   // Payment details - safely handle payment intent
   let lastFour: string | undefined;
@@ -101,9 +101,9 @@ export default async function RegistrationSuccessPage({ searchParams }: PageProp
             {/* Workshop Hero */}
             <div className="bg-green-600 text-white text-center py-8 px-6">
               <div className="text-6xl mb-4">🎉</div>
-              <h1 className="text-3xl font-bold mb-2">You're Registered, {firstName}!</h1>
+              <h1 className="text-3xl font-bold mb-2">You&apos;re Registered, {firstName}!</h1>
               <p className="text-green-100 text-lg">{retreatName}</p>
-              <p className="text-green-200">May 16, 2026 — Jasper, GA</p>
+              <p className="text-green-200">{retreatStart} — {retreatLocation}</p>
             </div>
 
             <div className="p-8">
@@ -127,40 +127,96 @@ export default async function RegistrationSuccessPage({ searchParams }: PageProp
                 </div>
               </div>
 
-              {/* What Happens Next — Workshop */}
+              {/* Workshop Details */}
+              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">📋 Workshop Details</h2>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-semibold text-gray-700">Date:</span> {retreatStart}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-700">Time:</span> 2:00 – 4:00 PM
+                  </div>
+                  <div className="md:col-span-2">
+                    <span className="font-semibold text-gray-700">Venue:</span>{' '}
+                    {retreatLocation === 'Canton, GA'
+                      ? 'River Church Canton — Community Room, 2335 Sixes Rd, Canton, GA 30144'
+                      : 'Pickens County Recreation Center, 1329 Camp Rd, Jasper, GA 30143'}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-700">Duration:</span> 2 hours
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-700">Gear:</span> All equipment provided
+                  </div>
+                </div>
+              </div>
+
+              {/* Workshop Breakdown */}
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">🚀 What happens next</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">1</div>
-                      <div className="ml-3">
-                        <h3 className="font-semibold text-gray-900">Check Your Email</h3>
-                        <p className="text-gray-600 text-sm">We've sent a confirmation with all the details</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">2</div>
-                      <div className="ml-3">
-                        <h3 className="font-semibold text-gray-900">Mark Your Calendar</h3>
-                        <p className="text-gray-600 text-sm">May 16, 2026 — Jasper, GA</p>
-                      </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">🎬 What You&apos;ll Cover</h2>
+                <div className="space-y-4">
+                  <div className="flex items-start bg-green-50 rounded-lg p-4">
+                    <div className="flex-shrink-0 bg-green-600 text-white text-xs font-bold rounded px-2 py-1 mt-0.5">20 min</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">How Real Productions Work</h3>
+                      <p className="text-gray-600 text-sm">What happens on set, who does what, how projects move from idea to finished product</p>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">3</div>
-                      <div className="ml-3">
-                        <h3 className="font-semibold text-gray-900">No Gear Needed</h3>
-                        <p className="text-gray-600 text-sm">Everything will be provided — just bring yourself</p>
-                      </div>
+                  <div className="flex items-start bg-green-50 rounded-lg p-4">
+                    <div className="flex-shrink-0 bg-green-600 text-white text-xs font-bold rounded px-2 py-1 mt-0.5">45 min</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">Camera Basics, Coverage &amp; Common Mistakes</h3>
+                      <p className="text-gray-600 text-sm">Frame rate, shutter speed, aperture, ISO, lenses, composition, and multicam thinking — taught the way working professionals use them</p>
                     </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">4</div>
-                      <div className="ml-3">
-                        <h3 className="font-semibold text-gray-900">Questions? Reach Out</h3>
-                        <p className="text-gray-600 text-sm">We're here to help — contact us anytime</p>
-                      </div>
+                  </div>
+                  <div className="flex items-start bg-green-50 rounded-lg p-4">
+                    <div className="flex-shrink-0 bg-green-600 text-white text-xs font-bold rounded px-2 py-1 mt-0.5">30 min</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">Documentary Fundamentals</h3>
+                      <p className="text-gray-600 text-sm">Interviews that feel real, B-roll that supports the story, and common lighting and audio mistakes to avoid</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start bg-green-50 rounded-lg p-4">
+                    <div className="flex-shrink-0 bg-green-600 text-white text-xs font-bold rounded px-2 py-1 mt-0.5">25 min</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">Q&amp;A and Next Steps</h3>
+                      <p className="text-gray-600 text-sm">Open questions, direct answers, and a practical plan for what to do after the workshop</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* What to Know */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">📝 What to Know</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">✓</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">No Experience Required</h3>
+                      <p className="text-gray-600 text-sm">Designed for beginners and anyone who wants a stronger foundation</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">✓</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">No Gear Needed</h3>
+                      <p className="text-gray-600 text-sm">You&apos;ll use professional cinema cameras used on real TV and documentary sets</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">✓</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">Bring Something to Take Notes</h3>
+                      <p className="text-gray-600 text-sm">Phone, notebook, whatever works for you</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">✓</div>
+                    <div className="ml-3">
+                      <h3 className="font-semibold text-gray-900">Arrive 10 Minutes Early</h3>
+                      <p className="text-gray-600 text-sm">Give yourself time to get settled before we start</p>
                     </div>
                   </div>
                 </div>

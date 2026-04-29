@@ -5,6 +5,7 @@ import type { UnifiedRegistration } from '@/lib/types/unifiedRegistration';
 
 interface RetreatRegistrationsTabProps {
   slug: string;
+  experienceId?: string;
 }
 
 interface RegistrationDetail {
@@ -55,7 +56,7 @@ function DetailRow({ label, value }: { label: string; value: string | undefined 
   );
 }
 
-export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTabProps) {
+export default function RetreatRegistrationsTab({ slug, experienceId }: RetreatRegistrationsTabProps) {
   const [registrations, setRegistrations] = useState<UnifiedRegistration[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -65,6 +66,14 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
   const [detail, setDetail] = useState<RegistrationDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [statusSaving, setStatusSaving] = useState(false);
+  // Delete flow state
+  const [deleteStep, setDeleteStep] = useState<0 | 1 | 2 | 3>(0);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  // Waitlist notify prompt
+  const [waitlistPrompt, setWaitlistPrompt] = useState<{ count: number; experienceSlug: string } | null>(null);
+  const [notifyingSent, setNotifyingSent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchRegistrations = useCallback(async () => {
     try {
@@ -107,6 +116,60 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
   const closeDetail = () => {
     setSelectedId(null);
     setDetail(null);
+    setDeleteStep(0);
+    setDeleteConfirmText('');
+  };
+
+  const handleDelete = async () => {
+    if (!selectedId || !detail) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/registrations/${selectedId.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source: selectedId.source }),
+      });
+      if (!res.ok) throw new Error('Failed to delete');
+      const result = await res.json();
+      closeDetail();
+      fetchRegistrations();
+      setSuccessMessage('Registration deleted successfully');
+      setTimeout(() => setSuccessMessage(''), 4000);
+
+      if (result.has_waitlist && result.waitlist_count > 0) {
+        setWaitlistPrompt({
+          count: result.waitlist_count,
+          experienceSlug: result.experience_slug,
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting registration:', error);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleNotifyWaitlist = async () => {
+    if (!waitlistPrompt || !experienceId) return;
+    setNotifyingSent(true);
+    try {
+      const res = await fetch(
+        `/api/admin/experiences/${experienceId}/waitlist/notify`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ all: true }),
+        }
+      );
+      if (!res.ok) throw new Error('Failed to notify');
+      setWaitlistPrompt(null);
+      setSuccessMessage('Waitlist notifications sent!');
+      setTimeout(() => setSuccessMessage(''), 4000);
+    } catch (error) {
+      console.error('Error notifying waitlist:', error);
+    } finally {
+      setNotifyingSent(false);
+    }
   };
 
   const downloadReceipt = () => {
@@ -302,6 +365,37 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
 
   return (
     <div className="p-6">
+      {/* Success message */}
+      {successMessage && (
+        <div className="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-medium">
+          {successMessage}
+        </div>
+      )}
+
+      {/* Waitlist notify prompt */}
+      {waitlistPrompt && (
+        <div className="mb-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <p className="text-sm text-amber-800 font-medium mb-3">
+            A spot just opened up! {waitlistPrompt.count} {waitlistPrompt.count === 1 ? 'person is' : 'people are'} on the waitlist. Notify them?
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={handleNotifyWaitlist}
+              disabled={notifyingSent}
+              className="bg-forest-600 text-cream-50 px-4 py-2 rounded-lg text-sm hover:bg-forest-700 disabled:opacity-50"
+            >
+              {notifyingSent ? 'Notifying...' : 'Notify All'}
+            </button>
+            <button
+              onClick={() => setWaitlistPrompt(null)}
+              className="bg-white text-ink-700 px-4 py-2 rounded-lg text-sm border border-sage-200 hover:bg-sage-50"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-6">
         <h3 className="font-heading text-xl font-bold text-ink-900">
           Registrations ({registrations.length})
@@ -545,6 +639,68 @@ export default function RetreatRegistrationsTab({ slug }: RetreatRegistrationsTa
                       </p>
                     </div>
                   )}
+
+                  {/* Delete Registration */}
+                  <div className="pt-4 border-t border-sage-200">
+                    {deleteStep === 0 && (
+                      <button
+                        onClick={() => setDeleteStep(1)}
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700 transition-colors"
+                      >
+                        Delete Registration
+                      </button>
+                    )}
+                    {deleteStep === 1 && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="text-sm text-red-800 font-medium mb-3">
+                          Are you sure? This will permanently remove this registration.
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setDeleteStep(2)}
+                            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700"
+                          >
+                            Yes, Delete
+                          </button>
+                          <button
+                            onClick={() => setDeleteStep(0)}
+                            className="bg-white text-ink-700 px-4 py-2 rounded-lg text-sm border border-sage-200 hover:bg-sage-50"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                    {deleteStep === 2 && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="text-sm text-red-800 font-medium mb-2">
+                          This action cannot be undone. Type <strong>DELETE</strong> to confirm.
+                        </p>
+                        <input
+                          type="text"
+                          value={deleteConfirmText}
+                          onChange={(e) => setDeleteConfirmText(e.target.value)}
+                          placeholder="Type DELETE"
+                          className="w-48 px-3 py-2 border border-red-300 rounded-lg text-sm mb-3 focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            onClick={handleDelete}
+                            disabled={deleteConfirmText !== 'DELETE' || deleting}
+                            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {deleting ? 'Deleting...' : `Permanently Delete ${detail.first_name || 'This'}'s Registration`}
+                          </button>
+                          <button
+                            onClick={() => { setDeleteStep(0); setDeleteConfirmText(''); }}
+                            className="bg-white text-ink-700 px-4 py-2 rounded-lg text-sm border border-sage-200 hover:bg-sage-50"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                   );
                 })()}

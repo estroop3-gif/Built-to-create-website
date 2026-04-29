@@ -4,16 +4,16 @@ import Button from '@/components/Button';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Filmmaking in the Real World — Workshop in Jasper, GA | The Born to Create Project',
-  description: 'A 2-hour in-person workshop in Jasper, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. $50.',
+  title: 'Filmmaking in the Real World — Workshop in Canton, GA | The Born to Create Project',
+  description: 'A 2-hour in-person workshop in Canton, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. $50.',
 };
 
-export default function FilmmakingInTheRealWorldPage() {
+export default function FilmmakingCantonPage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-end justify-center bg-forest-900 overflow-hidden pb-24 pt-32">
-        <img src="/images/hero-filmmaking.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero-canton-workshop.avif" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-br from-forest-900/90 via-forest-800/80 to-forest-900/90"></div>
         <Container className="relative z-10" size="lg">
           <div className="text-center max-w-4xl mx-auto">
@@ -24,11 +24,11 @@ export default function FilmmakingInTheRealWorldPage() {
               Camera basics, set experience, documentary storytelling, and how to start creating with what you already have.
             </p>
             <p className="font-body text-lg text-cream-300/90 leading-relaxed mb-10 max-w-2xl mx-auto">
-              A 2-hour in-person workshop in Jasper, Georgia for students, creators, church media teams, small business owners, photographers, and anyone who wants to understand how real productions work and start making better video.
+              A 2-hour in-person workshop in Canton, Georgia for students, creators, church media teams, small business owners, photographers, and anyone who wants to understand how real productions work and start making better video.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-4">
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-cream-50/10 text-cream-100 border border-cream-200/20">
-                Jasper, Georgia
+                Canton, Georgia
               </span>
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-cream-50/10 text-cream-100 border border-cream-200/20">
                 2 Hours
@@ -43,11 +43,11 @@ export default function FilmmakingInTheRealWorldPage() {
                 Limited Seats
               </span>
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-cream-50/10 text-cream-100 border border-cream-200/20">
-                May 16, 2026
+                May 23, 2026
               </span>
             </div>
             <p className="font-body text-base text-cream-200/90 mb-10">
-              2:00 – 4:00 PM · Pickens County Recreation Center · 1329 Camp Rd, Jasper, GA 30143
+              2:00 – 4:00 PM · River Church Canton — Community Room · 2335 Sixes Rd, Canton, GA 30144
             </p>
             <Button as="link" href="/register" size="lg" variant="primary">
               Reserve Your Seat
@@ -262,7 +262,7 @@ export default function FilmmakingInTheRealWorldPage() {
               </div>
               <div className="flex items-start">
                 <span className="text-forest-600 mr-3 mt-1">&bull;</span>
-                <p className="font-body text-lg text-ink-600 leading-relaxed">Anyone in Jasper or the surrounding area who wants to learn how video production actually works</p>
+                <p className="font-body text-lg text-ink-600 leading-relaxed">Anyone in Canton or the surrounding area who wants to learn how video production actually works</p>
               </div>
             </div>
           </div>

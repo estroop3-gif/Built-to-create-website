@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Experiences - Born to Create Project | Filmmaking Retreats',
-  description: 'Explore our faith-centered filmmaking retreats in Costa Rica and the Austin, Texas area. Hands-on production, spiritual growth, and creative community.',
+  title: 'Experiences - Born to Create Project | Filmmaking Workshops',
+  description: 'Explore our hands-on filmmaking workshops in Jasper and Canton, Georgia. Real-world production skills, professional gear, and practical next steps.',
 };
 
 export default function ExperiencesPage() {
@@ -17,7 +17,7 @@ export default function ExperiencesPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-costa-rica.jpg"
+            src="/images/hero-filmmaking.jpg"
             alt="Born to Create Project experiences"
             fill
             className="object-cover"
@@ -35,155 +35,64 @@ export default function ExperiencesPage() {
               OUR EXPERIENCES
             </h1>
             <p className="font-body text-xl sm:text-2xl text-cream-200 leading-relaxed max-w-3xl mx-auto mb-8">
-              Faith-centered filmmaking retreats where creativity meets calling. Each experience is designed to help you grow in your craft, encounter God, and build lasting community with other Christian storytellers.
+              Hands-on filmmaking workshops where you learn real-world production skills from a working professional. Practical, focused, and designed to help you start creating with confidence.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* Costa Rica Experience */}
-      <Section spacing="xl" background="white">
-        <Container size="lg">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-            <div className="order-2 lg:order-1">
-              <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-                Costa Rica
-              </h2>
-              <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
-                A 9-day filmmaking retreat set in the diverse landscapes of Costa Rica. From the bustling streets of San José to the beach town of Jacó and the mountain community of Santiago de Puriscal, you will capture travel sequences, product-style pieces, interviews, and documentary vérité while learning the fundamentals of visual storytelling.
-              </p>
-              <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
-                This experience combines hands-on production with spiritual rhythms: daily devotion, worship nights, testimony circles, and structured time to hear from God about your calling as a creative. You will leave with finished projects, new friendships, and a clearer sense of how your craft fits into God's story.
-              </p>
-              <div className="space-y-3 mb-8">
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">9 days</p>
-                    <p className="text-sm text-ink-600">Multiple locations across Costa Rica</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">All-inclusive</p>
-                    <p className="text-sm text-ink-600">Lodging, meals, and transportation included</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">Production focused</p>
-                    <p className="text-sm text-ink-600">Documentary, travel, and product filmmaking</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button as="link" href="/experiences/costa-rica" size="lg" variant="primary">
-                  Explore Costa Rica
-                </Button>
-                <Button as="link" href="/experiences/costa-rica/itinerary" size="lg" variant="ghost">
-                  View Itinerary
-                </Button>
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
-              <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src="/images/hero-costa-rica.jpg"
-                  alt="Costa Rica filmmaking retreat"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Texas Experience */}
-      <Section spacing="xl" background="sage">
-        <Container size="lg">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-1">
-              <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src="/images/hero-jasper.jpg"
-                  alt="Texas Hill Country retreat"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="order-2">
-              <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-                Media Leaders Retreat
-              </h2>
-              <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
-                A Texas Hill Country retreat for church media leaders who need focus, stillness, and a clear path forward in their calling. Just outside the Austin, Texas area, this small group experience is designed for media leaders and creatives serving in the local church.
-              </p>
-              <p className="font-body text-lg text-ink-600 leading-relaxed mb-6">
-                Across three days you will capture real testimonies, interviews, worship and teaching coverage, and a short film, while learning simple, repeatable workflows you can take back home. You will leave with usable footage, practical systems for Sundays and special events, and a renewed vision for how your media team can serve your church.
-              </p>
-              <div className="space-y-3 mb-8">
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">3 days + travel</p>
-                    <p className="text-sm text-ink-600">Dates coming soon</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">Retreat accommodations</p>
-                    <p className="text-sm text-ink-600">Private rooms on retreat property, all meals included</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-forest-600 mr-3 mt-1">•</span>
-                  <div>
-                    <p className="font-semibold text-ink-900">Church media focused</p>
-                    <p className="text-sm text-ink-600">Testimonies, worship coverage, and practical workflows</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button as="link" href="/experiences/texas" size="lg" variant="primary">
-                  Explore Media Leaders Retreat
-                </Button>
-                <Button as="link" href="/experiences/texas/itinerary" size="lg" variant="ghost">
-                  View Itinerary
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
       {/* Workshops Section */}
-      <Section spacing="xl" background="cream">
+      <Section spacing="xl" background="white">
         <Container size="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-6">
-              Workshops
+              Filmmaking in the Real World
             </h2>
             <p className="font-body text-xl text-ink-600 leading-relaxed max-w-3xl mx-auto">
-              Real-world production skills you do not learn fast enough in class. Practical, focused, and taught by a working professional.
+              A 2-hour in-person workshop covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have. Practical, focused, and taught by a working professional.
             </p>
           </div>
-          <div className="max-w-xl mx-auto">
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
-              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-4">
-                Filmmaking in the Real World
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Jasper Card */}
+            <div className="bg-sage-50 rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-2">
+                Jasper, GA
               </h3>
-              <p className="font-body text-base text-ink-600 leading-relaxed mb-6">
-                A 2-hour in-person workshop in Jasper, GA covering camera basics, real set experience, documentary storytelling, and how to start creating better video with what you already have.
+              <p className="font-body text-sm font-medium text-forest-700 mb-4">
+                May 16, 2026 · 2:00 – 4:00 PM
               </p>
-              <p className="font-body text-sm font-medium text-ink-500 mb-6">
-                Jasper, GA · 2 Hours · $50
-              </p>
+              <div className="space-y-2 mb-6">
+                <p className="font-body text-base text-ink-600 leading-relaxed">
+                  Pickens County Recreation Center
+                </p>
+                <p className="font-body text-sm text-ink-500">
+                  1329 Camp Rd, Jasper, GA 30143
+                </p>
+              </div>
+              <p className="font-heading text-2xl font-bold text-forest-700 mb-6">$50</p>
               <Button as="link" href="/experiences/filmmaking-in-the-real-world" variant="primary">
+                View Workshop
+              </Button>
+            </div>
+
+            {/* Canton Card */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-sage-100 hover:shadow-xl transition-all duration-300">
+              <h3 className="font-heading text-2xl font-bold text-ink-900 mb-2">
+                Canton, GA
+              </h3>
+              <p className="font-body text-sm font-medium text-forest-700 mb-4">
+                May 23, 2026 · 2:00 – 4:00 PM
+              </p>
+              <div className="space-y-2 mb-6">
+                <p className="font-body text-base text-ink-600 leading-relaxed">
+                  River Church Canton — Community Room
+                </p>
+                <p className="font-body text-sm text-ink-500">
+                  2335 Sixes Rd, Canton, GA 30144
+                </p>
+              </div>
+              <p className="font-heading text-2xl font-bold text-forest-700 mb-6">$50</p>
+              <Button as="link" href="/experiences/filmmaking-canton" variant="primary">
                 View Workshop
               </Button>
             </div>
@@ -199,7 +108,7 @@ export default function ExperiencesPage() {
               What to Expect
             </h2>
             <p className="font-body text-xl text-ink-600 leading-relaxed mb-12 max-w-3xl mx-auto">
-              Every Born to Create Project experience includes the same core elements, shaped to fit the location and focus of each retreat.
+              Every Born to Create Project workshop is built around the same core elements — practical teaching, real gear, and honest next steps.
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-left">
               <div>
@@ -212,20 +121,20 @@ export default function ExperiencesPage() {
                   Hands-On Production
                 </h3>
                 <p className="font-body text-base text-ink-600 leading-relaxed text-center">
-                  Real shoots, real edits, real projects you can take home and use in your portfolio or ministry.
+                  Real cameras, real settings, real techniques you can apply immediately to your own projects.
                 </p>
               </div>
               <div>
                 <div className="bg-sage-100 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                   <svg className="w-8 h-8 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
                 <h3 className="font-heading text-xl font-bold text-ink-900 mb-3 text-center">
-                  Spiritual Rhythms
+                  Expert Teaching
                 </h3>
                 <p className="font-body text-base text-ink-600 leading-relaxed text-center">
-                  Daily devotion, worship, prayer, and space to encounter God in the middle of the creative process.
+                  Learn from a working Director of Photography with nearly a decade of experience across TV, documentary, and commercial work.
                 </p>
               </div>
               <div>
@@ -238,7 +147,7 @@ export default function ExperiencesPage() {
                   Creative Community
                 </h3>
                 <p className="font-body text-base text-ink-600 leading-relaxed text-center">
-                  Build genuine friendships with other Christian filmmakers who understand your calling and your struggles.
+                  Connect with other aspiring filmmakers, ask questions, and leave with a network of people on the same journey.
                 </p>
               </div>
             </div>
@@ -254,14 +163,14 @@ export default function ExperiencesPage() {
               Ready to Take the Next Step?
             </h2>
             <p className="font-body text-xl text-ink-600 leading-relaxed mb-12 max-w-3xl mx-auto">
-              Explore the full details of each experience, read through the itineraries, and pray about where God might be leading you. If you have questions, we're here to help.
+              Pick the workshop date and location that works for you, reserve your seat, and come ready to learn. If you have questions, we are here to help.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button as="link" href="/contact" size="lg" variant="primary">
-                Contact Us
+              <Button as="link" href="/register" size="lg" variant="primary">
+                Register Now
               </Button>
-              <Button as="link" href="/faq" size="lg" variant="secondary">
-                View FAQ
+              <Button as="link" href="/contact" size="lg" variant="secondary">
+                Contact Us
               </Button>
             </div>
           </div>
