@@ -1,22 +1,47 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Client-side Supabase client (using anon key)
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-// Server-side admin client (using service role key)
-export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
+// Client-side Supabase client (using anon key) — lazy to avoid build-time errors
+let _supabase: ReturnType<typeof createClient> | null = null;
+export function getSupabase() {
+  if (!_supabase) {
+    _supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
   }
-);
+  return _supabase;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const supabase: any = new Proxy({}, {
+  get(_target, prop) {
+    return (getSupabase() as any)[prop];
+  },
+});
+
+// Server-side admin client (using service role key) — lazy singleton to avoid build-time errors
+let _supabaseAdmin: ReturnType<typeof createClient> | null = null;
+
+export function getSupabaseAdmin() {
+  if (!_supabaseAdmin) {
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+    if (!key) throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
+    _supabaseAdmin = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      key,
+      { auth: { autoRefreshToken: false, persistSession: false } }
+    );
+  }
+  return _supabaseAdmin;
+}
+
+// Backward-compatible alias — re-export the getter as `supabaseAdmin` for files that import it
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const supabaseAdmin: any = new Proxy({}, {
+  get(_target, prop) {
+    return (getSupabaseAdmin() as any)[prop];
+  },
+});
 
 // Contact message types
 export interface ContactMessage {
@@ -78,8 +103,9 @@ export async function upsertEmailSubscriber(data: EmailSubscriber) {
 }
 
 // Get all email subscribers
-export async function getEmailSubscribers(statusFilter?: 'subscribed' | 'unsubscribed') {
-  let query = supabaseAdmin
+export async function getEmailSubscribers(statusFilter?: 'subscribed' | 'unsubscribed'): Promise<EmailSubscriber[]> {
+  const admin = getSupabaseAdmin();
+  let query = admin
     .from('email_subscribers')
     .select('*')
     .order('created_at', { ascending: false });
@@ -95,7 +121,7 @@ export async function getEmailSubscribers(statusFilter?: 'subscribed' | 'unsubsc
     throw error;
   }
 
-  return data;
+  return (data || []) as EmailSubscriber[];
 }
 
 // Get subscriber count

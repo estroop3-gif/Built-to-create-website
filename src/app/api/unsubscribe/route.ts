@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyUnsubscribeToken } from '@/lib/token';
-import { createClient } from '@supabase/supabase-js';
-
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE!
-);
+import { getSupabaseAdmin } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -31,7 +25,8 @@ export async function POST(request: NextRequest) {
                request.headers.get('x-real-ip') ||
                'unknown';
 
-    const { error } = await supabase.rpc('unsubscribe_email', {
+    const { error } = // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (getSupabaseAdmin() as any).rpc('unsubscribe_email', {
       email_address: email,
       unsubscribe_reason: 'One-click unsubscribe',
       unsubscribe_source: 'one-click',
@@ -44,7 +39,8 @@ export async function POST(request: NextRequest) {
       return new NextResponse('Internal server error', { status: 500 });
     }
 
-    await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (getSupabaseAdmin() as any)
       .from('leads')
       .update({
         consent_marketing: false,
@@ -86,7 +82,8 @@ export async function GET(request: NextRequest) {
                request.headers.get('x-real-ip') ||
                'unknown';
 
-    const { error } = await supabase.rpc('unsubscribe_email', {
+    const { error } = // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (getSupabaseAdmin() as any).rpc('unsubscribe_email', {
       email_address: email,
       unsubscribe_reason: 'User clicked unsubscribe link',
       unsubscribe_source: 'manual',
@@ -102,7 +99,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (getSupabaseAdmin() as any)
       .from('leads')
       .update({
         consent_marketing: false,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkIsAdmin } from '@/lib/admin';
-import { getEmailSubscribers, supabaseAdmin } from '@/lib/supabase';
+import { getEmailSubscribers, getSupabaseAdmin } from '@/lib/supabase';
 import { sendPromotionalEmail } from '@/lib/resend';
 import { render } from '@react-email/render';
 import NewExperienceNotification from '@/emails/NewExperienceNotification';
@@ -49,9 +49,10 @@ export async function POST(request: NextRequest) {
           html,
         });
 
-        // Track the send
+        // Track the send (non-critical)
         try {
-          await supabaseAdmin.from('email_sends').insert({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (getSupabaseAdmin() as any).from('email_sends').insert({
             template_key: `notification_${Date.now()}`,
             subscriber_email: subscriber.email,
             subscriber_first_name: subscriber.name,
