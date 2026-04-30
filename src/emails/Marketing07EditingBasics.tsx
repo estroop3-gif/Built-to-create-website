@@ -8,7 +8,7 @@ interface Marketing07EditingBasicsProps {
 
 export default function Marketing07EditingBasics({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing07EditingBasicsProps) {
   return (
     <MarketingBaseTemplate previewText="A calm path from mess to message">
@@ -108,13 +108,17 @@ export default function Marketing07EditingBasics({
           • Practice J and L cuts until they become instinctive<br/>
           • Study your favorite documentary: how does it use music?
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={buttonContainer}>
           <Button
             href={registerUrl}
             style={button}
           >
-            Perfect Your Editing in Costa Rica
+            Perfect Your Editing at a Workshop
           </Button>
         </Section>
         

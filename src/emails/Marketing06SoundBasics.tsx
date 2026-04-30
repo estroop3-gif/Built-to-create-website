@@ -8,7 +8,7 @@ interface Marketing06SoundBasicsProps {
 
 export default function Marketing06SoundBasics({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing06SoundBasicsProps) {
   return (
     <MarketingBaseTemplate previewText="Capturing clean dialogue anywhere">
@@ -101,10 +101,10 @@ export default function Marketing06SoundBasics({
           • <strong>Backup placement:</strong> Always have a second position ready if first doesn't work
         </Text>
         
-        <Heading as="h2" style={h2}>The Costa Rica Reality</Heading>
-        
+        <Heading as="h2" style={h2}>The Workshop Reality</Heading>
+
         <Text style={paragraph}>
-          In Costa Rica, you'll be dealing with jungle ambiance, ocean waves, mountain wind, and group activities. Having solid audio fundamentals means you'll capture usable sound even in challenging environments.
+          At our workshops, you'll be shooting in real-world environments—forests, open fields, busy streets, and group activities. Having solid audio fundamentals means you'll capture usable sound even in challenging environments.
         </Text>
         
         <Text style={paragraph}>
@@ -119,13 +119,17 @@ export default function Marketing06SoundBasics({
           • Build a pocket wind kit: deadcat, medical tape, small clips<br/>
           • Practice gain staging until you can set levels by ear
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={buttonContainer}>
           <Button
             href={registerUrl}
             style={button}
           >
-            Capture Clear Audio in Costa Rica
+            Capture Clear Audio Live
           </Button>
         </Section>
         

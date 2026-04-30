@@ -9,7 +9,7 @@ interface Marketing01WelcomeProps {
 
 export default function Marketing01Welcome({
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing01WelcomeProps) {
   return (
     <MarketingBaseTemplate previewText="A mini workshop using AE/AF Lock, HDR, and the exposure slider">
@@ -96,10 +96,10 @@ export default function Marketing01Welcome({
           • Letting auto HDR flatten the scene use it to save windows but still set exposure for faces
         </Text>
         
-        <Heading as="h2" style={h2}>About the trip</Heading>
-        
+        <Heading as="h2" style={h2}>Go deeper with a workshop</Heading>
+
         <Text style={paragraph}>
-          Nine days in Costa Rica. Daily shoots. Morning devotions. Hands on workshops. You will create from presence and come home with work that carries weight.
+          We run hands-on filmmaking workshops and retreats in places like Jasper, Canton, Texas, and Costa Rica. Daily shoots. Morning devotions. Real community. You will create from presence and come home with work that carries weight.
         </Text>
         
         <Heading as="h2" style={h2}>What is coming next</Heading>
@@ -118,9 +118,9 @@ export default function Marketing01Welcome({
         </Text>
         
         <Heading as="h2" style={h2}>Action</Heading>
-        
+
         <Text style={paragraph}>
-          • Reply with a screenshot from today's drill and tell me which scenario challenged you most I will send feedback
+          Send a screenshot from today's drill to estroop3@gmail.com or just reply to this email. Tell me which scenario challenged you most — I will send you personal feedback on your work.
         </Text>
         
         <Section style={buttonContainer}>
@@ -128,7 +128,7 @@ export default function Marketing01Welcome({
             href={registerUrl}
             style={button}
           >
-            Register for the Retreat
+            Explore the Experiences
           </Button>
         </Section>
         

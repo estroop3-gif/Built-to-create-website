@@ -51,7 +51,7 @@ export default function SubscribePage() {
                     </svg>
                     <div>
                       <strong className="text-ink-800">Weekly Pro Tips:</strong>
-                      <span className="text-ink-600"> Receive filmmaker education leading up to our Costa Rica retreat</span>
+                      <span className="text-ink-600"> Receive filmmaker education to grow your craft and your voice</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -67,11 +67,11 @@ export default function SubscribePage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="/register" 
+                <a
+                  href="/experiences"
                   className="inline-flex items-center justify-center px-8 py-4 bg-forest-600 text-white font-semibold rounded-lg hover:bg-forest-700 transition-colors"
                 >
-                  Reserve Your Spot in Costa Rica
+                  Explore the Experiences
                 </a>
                 <Link 
                   href="/" 
@@ -228,24 +228,19 @@ export default function SubscribePage() {
             </div>
           </div>
 
-          {/* Retreat CTA */}
+          {/* Experiences CTA */}
           <div className="bg-forest-600 rounded-2xl text-white p-8 text-center">
             <h2 className="text-3xl font-heading font-bold mb-4">
               Ready to Take It Further?
             </h2>
             <p className="text-forest-100 text-lg mb-6">
-              Join us in Costa Rica for an immersive filmmaking retreat that will transform your creative practice.
+              Explore hands-on workshops and retreats designed to grow your craft.
             </p>
-            <div className="flex items-center justify-center gap-2 text-forest-200 mb-6">
-              <span className="text-xl font-semibold">February 20–28, 2026</span>
-              <span>•</span>
-              <span className="text-xl font-semibold">Costa Rica</span>
-            </div>
-            <a 
-              href="/register" 
+            <a
+              href="/experiences"
               className="inline-flex items-center justify-center px-8 py-4 bg-white text-forest-600 font-bold rounded-lg hover:bg-forest-50 transition-colors"
             >
-              Reserve Your Spot
+              Explore the Experiences
             </a>
           </div>
 

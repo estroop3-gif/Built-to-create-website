@@ -1,7 +1,7 @@
 import { Text, Heading, Section, Button } from '@react-email/components';
 import MarketingBaseTemplate from './MarketingBaseTemplate';
 
-export default function Marketing10FaithAndAction({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register` }) {
+export default function Marketing10FaithAndAction({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences` }) {
   return (
     <MarketingBaseTemplate previewText="Bold creativity begins with obedience">
       <Section>
@@ -18,29 +18,29 @@ export default function Marketing10FaithAndAction({ firstName = 'Friend', regist
         
         <Text style={paragraph}>The stories around you—in your church, your community, your family—are waiting for someone with both the heart to see and the skill to capture them well. That someone is you.</Text>
         
-        <Heading as="h2" style={h2}>What Costa Rica Offers</Heading>
-        <Text style={paragraph}>February 20–28, 2026, isn't just about improving your technique. It's about stepping into the fullness of your creative calling alongside others who understand that art and ministry aren't separate categories.</Text>
-        
+        <Heading as="h2" style={h2}>What Our Experiences Offer</Heading>
+        <Text style={paragraph}>Our workshops and retreats aren't just about improving your technique. They're about stepping into the fullness of your creative calling alongside others who understand that art and ministry aren't separate categories.</Text>
+
         <Text style={bulletList}>• <strong>Advanced technical training</strong> with professional equipment in stunning locations<br/>• <strong>Real ministry documentation</strong> that serves ongoing Kingdom work<br/>• <strong>Community with other called creatives</strong> who will become lifelong collaborators<br/>• <strong>Spiritual formation</strong> that aligns your gifts with God's heart<br/>• <strong>Completed work</strong> that you'll use for years to open doors</Text>
         
         <Heading as="h2" style={h2}>Before You Go</Heading>
-        <Text style={paragraph}>Whether you join us in Costa Rica or continue growing where you are, here's what I want you to commit to:</Text>
-        
-        <Text style={bulletList}>• <strong>Pick one story to finish this month</strong> — Apply everything you've learned to complete one meaningful project<br/>• <strong>Book the retreat or set a decision deadline</strong> — Don't let indecision rob you of clarity<br/>• <strong>Tell one friend about your creative calling</strong> — You weren't meant to walk this path alone</Text>
+        <Text style={paragraph}>Whether you join us at a workshop or continue growing where you are, here's what I want you to commit to:</Text>
+
+        <Text style={bulletList}>• <strong>Pick one story to finish this month</strong> — Apply everything you've learned to complete one meaningful project<br/>• <strong>Explore our upcoming experiences</strong> — Don't let indecision rob you of clarity<br/>• <strong>Tell one friend about your creative calling</strong> — You weren't meant to walk this path alone</Text>
         
         <Heading as="h2" style={h2}>Your Next Step</Heading>
         <Text style={paragraph}>I want to hear from you. Reply to this email with:</Text>
-        <Text style={bulletList}>• Your one-sentence logline for the story you're going to finish<br/>• One specific way you want to grow as a visual storyteller<br/>• Whether you're ready to join us in Costa Rica</Text>
+        <Text style={bulletList}>• Your one-sentence logline for the story you're going to finish<br/>• One specific way you want to grow as a visual storyteller<br/>• Whether you're ready to join us at an upcoming experience</Text>
         
-        <Text style={paragraph}>I read every response personally and often reply with specific guidance for your situation.</Text>
+        <Text style={paragraph}>Send a screenshot, a clip, or just reply to this email at estroop3@gmail.com — I read every response personally and will send you feedback on your work.</Text>
         
         <Section style={urgencyBox}>
-          <Heading as="h3" style={h3}>Costa Rica Registration Closes Soon</Heading>
-          <Text style={urgencyText}>We're accepting applications for the February 2026 retreat now. Spots are limited to ensure personalized attention and strong community. Early registration includes bonus pre-trip training and equipment consultations.</Text>
+          <Heading as="h3" style={h3}>Spots Are Limited</Heading>
+          <Text style={urgencyText}>We keep our workshops small to ensure personalized attention and strong community. Explore upcoming experiences and find the one that fits your schedule and goals.</Text>
         </Section>
-        
+
         <Section style={buttonContainer}>
-          <Button href={registerUrl} style={button}>Register for Costa Rica Today</Button>
+          <Button href={registerUrl} style={button}>Explore the Experiences</Button>
         </Section>
         
         <Text style={paragraph}>Your creative calling isn't a someday thing. It's a right now thing. The technical skills are just the beginning—the real work is using them to shine light in dark places and tell stories that matter for eternity.</Text>

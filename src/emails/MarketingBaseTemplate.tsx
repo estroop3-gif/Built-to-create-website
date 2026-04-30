@@ -46,10 +46,10 @@ export default function MarketingBaseTemplate({ children, previewText }: Marketi
           {/* Footer */}
           <Section style={footer}>
             <Text style={footerText}>
-              Born to Create Project • Costa Rica Retreat
+              Born to Create Project • Workshops & Experiences
             </Text>
             <Text style={footerText}>
-              February 20–28, 2026 • Transform your creative calling
+              Hands-on filmmaking for creators who want to grow
             </Text>
             <Text style={footerLinks}>
               <Link href={`${process.env.BASE_URL || 'https://thebtcp.com'}/unsubscribe`} style={unsubscribeLink}>
@@ -60,8 +60,8 @@ export default function MarketingBaseTemplate({ children, previewText }: Marketi
                 Visit Website
               </Link>
               {' • '}
-              <Link href={`${process.env.BASE_URL || 'https://thebtcp.com'}/register`} style={link}>
-                Register Now
+              <Link href={`${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`} style={link}>
+                Explore Experiences
               </Link>
             </Text>
           </Section>

@@ -8,7 +8,7 @@ interface Marketing05LightingBasicsProps {
 
 export default function Marketing05LightingBasics({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing05LightingBasicsProps) {
   return (
     <MarketingBaseTemplate previewText="Shape contrast, not just exposure">
@@ -96,7 +96,7 @@ export default function Marketing05LightingBasics({
         <Heading as="h2" style={h2}>Reading Natural Light</Heading>
         
         <Text style={paragraph}>
-          In Costa Rica, you'll work primarily with natural light. Here's how to read it like a pro:
+          At our workshops, you'll work primarily with natural light. Here's how to read it like a pro:
         </Text>
         
         <Text style={bulletList}>
@@ -118,13 +118,17 @@ export default function Marketing05LightingBasics({
           • Practice reading the quality of light throughout one full day<br/>
           • Film a 30-second testimony using only natural light
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={buttonContainer}>
           <Button
             href={registerUrl}
             style={button}
           >
-            Master Natural Light in Costa Rica
+            Master Natural Light Live
           </Button>
         </Section>
         

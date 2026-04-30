@@ -8,7 +8,7 @@ interface Marketing02ManualModeProps {
 
 export default function Marketing02ManualMode({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing02ManualModeProps) {
   return (
     <MarketingBaseTemplate previewText="Master exposure with three decisions">
@@ -105,7 +105,7 @@ export default function Marketing02ManualMode({
         </Text>
         
         <Text style={paragraph}>
-          In Costa Rica, you'll be shooting in constantly changing light—from jungle canopies to beach sunrise to mountain fog. Auto mode will fight you. Manual mode will give you creative control to capture the beauty exactly as you see it.
+          In our workshops, you'll be shooting in constantly changing light—from forest canopies to open fields to golden hour landscapes. Auto mode will fight you. Manual mode will give you creative control to capture the beauty exactly as you see it.
         </Text>
         
         <Heading as="h2" style={h2}>This Week's Practice Assignment</Heading>
@@ -120,13 +120,17 @@ export default function Marketing02ManualMode({
         <Text style={paragraph}>
           Don't worry about perfect exposure yet. Focus on understanding the relationship between the three settings. Every professional went through this learning curve—the difference is having a clear system to follow.
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={buttonContainer}>
           <Button
             href={registerUrl}
             style={button}
           >
-            Master This in Costa Rica
+            Practice This at a Workshop
           </Button>
         </Section>
         

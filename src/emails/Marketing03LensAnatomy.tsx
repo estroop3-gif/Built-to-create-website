@@ -8,7 +8,7 @@ interface Marketing03LensAnatomyProps {
 
 export default function Marketing03LensAnatomy({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing03LensAnatomyProps) {
   return (
     <MarketingBaseTemplate previewText="Focal length, focus, aperture, stabilization">
@@ -98,7 +98,7 @@ export default function Marketing03LensAnatomy({
         </Section>
         
         <Text style={paragraph}>
-          In Costa Rica, you'll be shooting testimonies, group activities, and stunning landscapes. Understanding which lens serves each moment is crucial for effective storytelling.
+          At our workshops, you'll be shooting testimonies, group activities, and stunning landscapes. Understanding which lens serves each moment is crucial for effective storytelling.
         </Text>
         
         <Heading as="h2" style={h2}>This Week's Assignment</Heading>
@@ -113,13 +113,17 @@ export default function Marketing03LensAnatomy({
         <Text style={paragraph}>
           Pay attention to how each focal length makes you <em>feel</em> about the subject differently. That's the power of lens choice—it's not just technical, it's emotional.
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={buttonContainer}>
           <Button
             href={registerUrl}
             style={button}
           >
-            Master Advanced Techniques in Costa Rica
+            Master Advanced Techniques Live
           </Button>
         </Section>
         

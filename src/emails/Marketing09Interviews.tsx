@@ -1,7 +1,7 @@
 import { Text, Heading, Section, Button } from '@react-email/components';
 import MarketingBaseTemplate from './MarketingBaseTemplate';
 
-export default function Marketing09Interviews({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register` }) {
+export default function Marketing09Interviews({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences` }) {
   return (
     <MarketingBaseTemplate previewText="Questions that go below the surface">
       <Section>
@@ -22,9 +22,11 @@ export default function Marketing09Interviews({ firstName = 'Friend', registerUr
         
         <Heading as="h2" style={h2}>This Week's Assignment</Heading>
         <Text style={bulletList}>• Write five prompts that cannot be answered with yes or no<br/>• Record a five-minute practice interview with someone you trust<br/>• Focus on listening, not your next question<br/>• Practice comfortable silence after responses</Text>
-        
+
+        <Text style={paragraph}>Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.</Text>
+
         <Section style={buttonContainer}>
-          <Button href={registerUrl} style={button}>Interview Real People in Costa Rica</Button>
+          <Button href={registerUrl} style={button}>Interview Real People at a Workshop</Button>
         </Section>
         
         <Text style={signature}>Drawing deep waters,<br/>Parker</Text>

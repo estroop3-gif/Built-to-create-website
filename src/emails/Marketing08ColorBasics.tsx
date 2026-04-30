@@ -1,7 +1,7 @@
 import { Text, Heading, Section, Button } from '@react-email/components';
 import MarketingBaseTemplate from './MarketingBaseTemplate';
 
-export default function Marketing08ColorBasics({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register` }) {
+export default function Marketing08ColorBasics({ firstName = 'Friend', registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences` }) {
   return (
     <MarketingBaseTemplate previewText="A simple pipeline you can repeat">
       <Section>
@@ -18,9 +18,11 @@ export default function Marketing08ColorBasics({ firstName = 'Friend', registerU
         
         <Heading as="h2" style={h2}>This Week's Practice</Heading>
         <Text style={bulletList}>• Grade a closeup portrait to natural skin, then build mood with contrast only<br/>• Check your work on phone, laptop, and TV if available<br/>• Study three films and identify their color schemes<br/>• Practice white balance correction until it becomes instinctive</Text>
-        
+
+        <Text style={paragraph}>Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.</Text>
+
         <Section style={buttonContainer}>
-          <Button href={registerUrl} style={button}>Master Professional Grading in Costa Rica</Button>
+          <Button href={registerUrl} style={button}>Master Professional Grading Live</Button>
         </Section>
         
         <Text style={signature}>Painting with pixels,<br/>Parker</Text>

@@ -63,7 +63,7 @@ export default function ContactAcknowledgement({
           <Hr style={hr} />
 
           <Text style={text}>
-            While you wait, feel free to explore more about our Costa Rica filmmaking retreat:
+            While you wait, feel free to explore our filmmaking workshops and experiences:
           </Text>
 
           <Section style={buttonSection}>
@@ -75,9 +75,9 @@ export default function ContactAcknowledgement({
             </Button>
             <Button
               style={secondaryButton}
-              href="https://www.thebtcp.com/register"
+              href="https://www.thebtcp.com/experiences"
             >
-              Register for Retreat
+              Explore Experiences
             </Button>
           </Section>
 
@@ -85,7 +85,7 @@ export default function ContactAcknowledgement({
 
           <Text style={footer}>
             Born to Create Project<br />
-            Costa Rica Filmmaking Retreat<br />
+            Workshops & Experiences<br />
             <Link href="https://www.thebtcp.com" style={link}>
               thebtcp.com
             </Link>

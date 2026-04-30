@@ -8,7 +8,7 @@ interface Marketing04StoryBasicsProps {
 
 export default function Marketing04StoryBasics({ 
   firstName = 'Friend',
-  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/register`
+  registerUrl = `${process.env.BASE_URL || 'https://thebtcp.com'}/experiences`
 }: Marketing04StoryBasicsProps) {
   return (
     <MarketingBaseTemplate previewText="A simple structure you can shoot today">
@@ -98,7 +98,7 @@ export default function Marketing04StoryBasics({
         </Text>
         
         <Text style={paragraph}>
-          In Costa Rica, you'll be documenting real ministry happening in real time. Having a clear story framework means you'll know exactly what shots to prioritize when moments unfold quickly.
+          At our workshops, you'll be documenting real stories happening in real time. Having a clear story framework means you'll know exactly what shots to prioritize when moments unfold quickly.
         </Text>
         
         <Heading as="h2" style={h2}>This Week's Practice</Heading>
@@ -113,7 +113,11 @@ export default function Marketing04StoryBasics({
         <Text style={paragraph}>
           Don't overthink it. Pick something simple: making coffee, helping a neighbor, solving a small problem. The framework works at any scale.
         </Text>
-        
+
+        <Text style={paragraph}>
+          Send a screenshot or a clip to estroop3@gmail.com or just reply to this email — I'll send you personal feedback on your work.
+        </Text>
+
         <Section style={calloutBox}>
           <Text style={calloutText}>
             <strong>Pro tip:</strong> If you can't explain your story in one sentence, you don't have a story yet—you have footage. Keep refining until the spine is crystal clear.
@@ -125,7 +129,7 @@ export default function Marketing04StoryBasics({
             href={registerUrl}
             style={button}
           >
-            Document Real Stories in Costa Rica
+            Document Real Stories at a Workshop
           </Button>
         </Section>
         

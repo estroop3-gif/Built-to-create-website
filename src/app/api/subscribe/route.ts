@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     // Initialize Supabase with service role key for server-side operations
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE!
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
     // Check if email already exists
@@ -222,7 +222,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Subscribe API error:', error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
+      { success: false, error: 'Internal server error', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
