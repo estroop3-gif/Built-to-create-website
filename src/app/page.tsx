@@ -62,6 +62,18 @@ export default function Home() {
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
               What is Born to Create Project?
             </h2>
+            <div className="grid grid-cols-2 gap-4 mb-10">
+              <img
+                src="/images/dinner-scene-bw.jpg"
+                alt="Film crew shooting a dinner scene on set"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+              <img
+                src="/images/slate-greenscreen.jpg"
+                alt="Film slate on set with green screen"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+            </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 Born to Create Project is a series of filmmaking workshops and experiences designed for people who know they were made to create, but feel stuck, scattered, or alone in the process.
@@ -102,6 +114,18 @@ export default function Home() {
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
               Our Mission
             </h2>
+            <div className="grid grid-cols-2 gap-4 mb-10">
+              <img
+                src="/images/cinema-camera-rig.jpg"
+                alt="Professional cinema camera rig on set"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+              <img
+                src="/images/filmmaker-garage.jpg"
+                alt="Filmmaker operating camera on location"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+            </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 We believe every creative has something worth saying — and the skills to say it well can be learned.
@@ -145,6 +169,13 @@ export default function Home() {
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
               Who Leads These Trips?
             </h2>
+            <div className="flex justify-center mb-8">
+              <img
+                src="/images/parker-mountain.jpg"
+                alt="Parker Stroop with camera in the mountains"
+                className="w-64 h-64 object-cover rounded-full shadow-lg"
+              />
+            </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 Born to Create Project is led by filmmaker and camera operator Edward Parker Stroop, with nearly a decade of experience across TV, documentary, motorsports, and narrative work.
@@ -266,6 +297,18 @@ export default function Home() {
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
               Is Born to Create Project for Me?
             </h2>
+            <div className="grid grid-cols-2 gap-4 mb-10">
+              <img
+                src="/images/camera-ocean-bw.jpg"
+                alt="Filmmaker operating cinema camera by the ocean"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+              <img
+                src="/images/interview-setup.jpg"
+                alt="Professional interview setup with lighting and cameras"
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+            </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 These workshops are for you if:
