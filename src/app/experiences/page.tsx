@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Experiences - Born to Create Project | Filmmaking Workshops',
+  title: 'Experiences - The Born to Create Project | Filmmaking Workshops',
   description: 'Explore our hands-on filmmaking workshops in Jasper and Canton, Georgia. Real-world production skills, professional gear, and practical next steps.',
 };
 

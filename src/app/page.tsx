@@ -39,7 +39,7 @@ export default function Home() {
             </div>
 
             <p className="font-body text-base sm:text-lg text-cream-300/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Born to Create Project is a gathering place for creatives who feel called to tell stories that matter. Through hands-on workshops and immersive experiences, we help you grow your craft, build real skills, and connect with a community of storytellers who take filmmaking seriously.
+              The Born to Create Project is a gathering place for creatives who feel called to tell stories that matter. Through hands-on workshops and immersive experiences, we help you grow your craft, build real skills, and connect with a community of storytellers who take filmmaking seriously.
             </p>
 
             {/* Call to Action Buttons */}
@@ -60,7 +60,7 @@ export default function Home() {
         <Container size="lg">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
-              What is Born to Create Project?
+              What is The Born to Create Project?
             </h2>
             <div className="grid grid-cols-2 gap-4 mb-10">
               <img
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project is a series of filmmaking workshops and experiences designed for people who know they were made to create, but feel stuck, scattered, or alone in the process.
+                The Born to Create Project is a series of filmmaking workshops and experiences designed for people who know they were made to create, but feel stuck, scattered, or alone in the process.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 Each experience combines real world production with practical teaching. You will not just sit in a classroom and take notes. You will get behind real cameras, learn how productions actually work, and leave with the skills and confidence to start creating on your own.
@@ -131,7 +131,7 @@ export default function Home() {
                 We believe every creative has something worth saying — and the skills to say it well can be learned.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project exists to raise up a generation of visual storytellers who shape narratives with truth, create work that matters, and build real careers doing what they love.
+                The Born to Create Project exists to raise up a generation of visual storytellers who shape narratives with truth, create work that matters, and build real careers doing what they love.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 We do this by creating spaces where:
@@ -167,7 +167,7 @@ export default function Home() {
         <Container size="lg">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
-              Who Leads These Trips?
+              Who Leads These Experiences?
             </h2>
             <div className="flex justify-center mb-8">
               <img
@@ -178,7 +178,7 @@ export default function Home() {
             </div>
             <div className="space-y-6 text-left">
               <p className="font-body text-lg text-ink-600 leading-relaxed">
-                Born to Create Project is led by filmmaker and camera operator Edward Parker Stroop, with nearly a decade of experience across TV, documentary, motorsports, and narrative work.
+                The Born to Create Project is led by filmmaker and camera operator Parker Stroop, with nearly a decade of experience across TV, documentary, motorsports, and narrative work.
               </p>
               <p className="font-body text-lg text-ink-600 leading-relaxed">
                 Parker has worked with major networks and brands including National Geographic, History Channel, ABC, HGTV, Lifetime, and Fox. His passion is helping new creators understand how the industry actually works and build real skills they can use immediately.
@@ -295,7 +295,7 @@ export default function Home() {
         <Container size="lg">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold text-ink-900 mb-8 text-center">
-              Is Born to Create Project for Me?
+              Is The Born to Create Project for Me?
             </h2>
             <div className="grid grid-cols-2 gap-4 mb-10">
               <img

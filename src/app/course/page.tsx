@@ -6,10 +6,10 @@ import CoursePillars from '@/components/course/CoursePillars';
 import CourseWaitlist from '@/components/course/CourseWaitlist';
 
 export const metadata: Metadata = {
-  title: 'Online Course — Born to Create Project',
+  title: 'Online Course — The Born to Create Project',
   description: 'A year-long Christian filmmaking curriculum pairing craft with calling. Course will be required to unlock retreats in the future.',
   openGraph: {
-    title: 'Online Course — Born to Create Project',
+    title: 'Online Course — The Born to Create Project',
     description: 'A year-long Christian filmmaking curriculum pairing craft with calling.',
     images: [
       {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Online Course — Born to Create Project',
+    title: 'Online Course — The Born to Create Project',
     description: 'A year-long Christian filmmaking curriculum pairing craft with calling.',
     images: ['/images/og-course.jpg'],
   },

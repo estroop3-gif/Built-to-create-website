@@ -239,7 +239,7 @@ export default function SubscribeForm({
               className="mt-1 rounded border-sand-300 text-forest-600 focus:ring-forest-500"
             />
             <span>
-              I agree to receive emails about filmmaking tips and the Born to Create Project retreat. 
+              I agree to receive emails about filmmaking tips and The Born to Create Project. 
               You can unsubscribe at any time.
             </span>
           </label>

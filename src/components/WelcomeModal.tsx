@@ -73,7 +73,7 @@ export default function WelcomeModal() {
           <div className="text-center mb-6">
             <div className="text-5xl mb-4">🎬🌿</div>
             <h2 className="text-3xl font-heading font-bold text-ink-900 mb-3">
-              Welcome to Born to Create Project
+              Welcome to The Born to Create Project
             </h2>
             <p className="text-lg text-ink-600 leading-relaxed mb-4">
               Learn filmmaking and create from presence.

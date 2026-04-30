@@ -37,7 +37,7 @@ export default function ContactAcknowledgement({
           <Text style={greeting}>Hi {name},</Text>
 
           <Text style={text}>
-            Thanks for reaching out to Born to Create Project! We've received your message and will reply within one to two business days.
+            Thanks for reaching out to The Born to Create Project! We've received your message and will reply within one to two business days.
           </Text>
 
           <Section style={summarySection}>

@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Also fetch leads with consent to merge in
-    const supabase = getSupabaseAdmin();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = getSupabaseAdmin() as any;
     const { data: leads } = await supabase
       .from('leads')
       .select('id, email, first_name, consent_marketing, created_at')
@@ -28,8 +29,8 @@ export async function GET(request: NextRequest) {
       .order('created_at', { ascending: false });
 
     // Merge: add leads that aren't already in email_subscribers
-    const existingEmails = new Set(emailSubscribers.map(s => s.email.toLowerCase()));
-    const mergedLeads = (leads || [])
+    const existingEmails = new Set(emailSubscribers.map((s: { email: string }) => s.email.toLowerCase()));
+    const mergedLeads = ((leads || []) as { id: string; email: string; first_name: string | null; created_at: string }[])
       .filter(l => !existingEmails.has(l.email.toLowerCase()))
       .map(l => ({
         id: l.id,
@@ -44,7 +45,7 @@ export async function GET(request: NextRequest) {
       .filter(l => l.status !== null); // filter out if viewing unsubscribed only
 
     const subscribers = [...emailSubscribers, ...mergedLeads]
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
     const totalActive = totalSubscribed + mergedLeads.length;
 

@@ -50,10 +50,10 @@ export async function generateMetadata({ params }: RetreatPageProps): Promise<Me
   }
 
   return {
-    title: `${retreat.title} — Born to Create Project`,
+    title: `${retreat.title} — The Born to Create Project`,
     description: retreat.seoDescription,
     openGraph: {
-      title: `${retreat.title} — Born to Create Project`,
+      title: `${retreat.title} — The Born to Create Project`,
       description: retreat.seoDescription,
       images: [
         {
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: RetreatPageProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${retreat.title} — Born to Create Project`,
+      title: `${retreat.title} — The Born to Create Project`,
       description: retreat.seoDescription,
       images: [retreat.ogImage],
     },

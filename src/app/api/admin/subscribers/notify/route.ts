@@ -25,7 +25,8 @@ export async function POST(request: NextRequest) {
     const emailSubscribers = await getEmailSubscribers('subscribed');
 
     // Also get leads with consent who may not be in email_subscribers yet
-    const supabase = getSupabaseAdmin();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = getSupabaseAdmin() as any;
     const { data: leads } = await supabase
       .from('leads')
       .select('email, first_name')
@@ -39,10 +40,10 @@ export async function POST(request: NextRequest) {
       const key = sub.email.toLowerCase();
       if (!emailSet.has(key)) {
         emailSet.add(key);
-        subscribers.push({ email: sub.email, name: sub.name });
+        subscribers.push({ email: sub.email, name: sub.name ?? null });
       }
     }
-    for (const lead of (leads || [])) {
+    for (const lead of (leads || []) as { email: string; first_name: string | null }[]) {
       const key = lead.email.toLowerCase();
       if (!emailSet.has(key)) {
         emailSet.add(key);

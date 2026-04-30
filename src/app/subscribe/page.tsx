@@ -30,7 +30,7 @@ export default function SubscribePage() {
                 Welcome to the Community!
               </h1>
               <p className="text-xl text-ink-600 mb-8 leading-relaxed">
-                Thank you for joining Born to Create Project. Check your email for the phone-exposure mini workshop!
+                Thank you for joining The Born to Create Project. Check your email for the phone-exposure mini workshop!
               </p>
               
               <div className="bg-sage-50 rounded-xl p-6 mb-8">
@@ -250,7 +250,7 @@ export default function SubscribePage() {
               First email arrives with the phone-exposure mini workshop.
             </p>
             <p className="text-xs text-ink-400">
-              Born to Create Project - where creativity meets calling
+              The Born to Create Project - where creativity meets calling
             </p>
           </div>
         </div>

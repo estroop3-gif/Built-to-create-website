@@ -3,7 +3,7 @@ import Section from '@/components/Section';
 import AnalyticsButton from '@/components/AnalyticsButton';
 
 export const metadata: Metadata = {
-  title: 'The Experience — Born to Create Project',
+  title: 'The Experience — The Born to Create Project',
   description: 'Discover The Experience: a 9-day Costa Rica filmmaking retreat designed to equip creators with hands-on training, community, and spiritual growth.',
 };
 

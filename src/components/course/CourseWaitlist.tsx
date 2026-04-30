@@ -56,7 +56,7 @@ export default function CourseWaitlist() {
           Join the Waitlist
         </h2>
         <p className="font-body text-xl text-cream-200 mb-12">
-          Be the first to know when the Born to Create Project Online Course launches.
+          Be the first to know when The Born to Create Project Online Course launches.
           Get exclusive early access and special pricing.
         </p>
 

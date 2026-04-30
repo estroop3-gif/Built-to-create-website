@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import AuthForm from '@/components/auth/AuthForm';
 
 export const metadata: Metadata = {
-  title: 'Login — Born to Create Project',
+  title: 'Login — The Born to Create Project',
   description: 'Sign in to access your courses and retreat content.',
 };
 

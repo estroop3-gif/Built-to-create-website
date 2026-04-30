@@ -18,7 +18,7 @@ export async function generateMetadata() {
     : 'http://localhost:3000';
   
   return {
-    title: 'Our Vision for Creators - Born to Create Project',
+    title: 'Our Vision for Creators - The Born to Create Project',
     description: 'A workshop clarifying why your work matters and giving you a framework to move your calling forward.',
     robots: 'noindex,nofollow',
     canonical: `${baseUrl}/vision`,

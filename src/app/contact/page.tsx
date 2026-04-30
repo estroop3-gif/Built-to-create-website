@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import ContactForm from '@/components/forms/ContactForm';
 
 export const metadata: Metadata = {
-  title: 'Contact — Born to Create Project',
-  description: 'Contact Born to Create Project to ask questions about the retreat, curriculum, or registration.',
+  title: 'Contact — The Born to Create Project',
+  description: 'Contact The Born to Create Project to ask questions about the retreat, curriculum, or registration.',
 };
 
 export default function ContactPage() {

@@ -74,7 +74,7 @@ export default function VisionWorkshopClient() {
             {/* Intro */}
             <div className="text-lg text-gray-700 leading-relaxed mb-8">
               <p className="mb-4">
-                Born to Create Project exists to form filmmakers and storytellers who carry presence and excellence into culture.
+                The Born to Create Project exists to form filmmakers and storytellers who carry presence and excellence into culture.
               </p>
               <p className="mb-4">
                 We believe every creator is born to create and called to reflect the Creator.

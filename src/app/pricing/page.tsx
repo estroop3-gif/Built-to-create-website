@@ -3,7 +3,7 @@ import Section from '@/components/Section';
 import Button from '@/components/Button';
 
 export const metadata: Metadata = {
-  title: 'Pricing — Born to Create Project',
+  title: 'Pricing — The Born to Create Project',
   description: 'See tuition for the online course and global retreats. First retreat includes a filmmaking kit. Returning students save $500 per trip.',
 };
 
