@@ -21,14 +21,42 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title and description are required' }, { status: 400 });
     }
 
-    const subscribers = await getEmailSubscribers('subscribed');
+    // Get subscribers from email_subscribers table
+    const emailSubscribers = await getEmailSubscribers('subscribed');
 
-    if (!subscribers || subscribers.length === 0) {
+    // Also get leads with consent who may not be in email_subscribers yet
+    const supabase = getSupabaseAdmin();
+    const { data: leads } = await supabase
+      .from('leads')
+      .select('email, first_name')
+      .eq('consent_marketing', true);
+
+    // Merge both sources, deduplicate by email
+    const emailSet = new Set<string>();
+    const subscribers: { email: string; name: string | null }[] = [];
+
+    for (const sub of emailSubscribers) {
+      const key = sub.email.toLowerCase();
+      if (!emailSet.has(key)) {
+        emailSet.add(key);
+        subscribers.push({ email: sub.email, name: sub.name });
+      }
+    }
+    for (const lead of (leads || [])) {
+      const key = lead.email.toLowerCase();
+      if (!emailSet.has(key)) {
+        emailSet.add(key);
+        subscribers.push({ email: lead.email, name: lead.first_name });
+      }
+    }
+
+    if (subscribers.length === 0) {
       return NextResponse.json({ message: 'No subscribers to notify', sent: 0 });
     }
 
     let sent = 0;
     let failed = 0;
+    const errors: string[] = [];
 
     for (const subscriber of subscribers) {
       try {
@@ -64,19 +92,24 @@ export async function POST(request: NextRequest) {
 
         sent++;
       } catch (err) {
-        console.error(`Failed to send to ${subscriber.email}:`, err);
+        const errMsg = err instanceof Error ? err.message : String(err);
+        console.error(`Failed to send to ${subscriber.email}:`, errMsg);
+        errors.push(`${subscriber.email}: ${errMsg}`);
         failed++;
       }
     }
 
     return NextResponse.json({
-      message: `Notification sent to ${sent} subscribers`,
+      message: failed > 0
+        ? `Sent ${sent}, failed ${failed} of ${subscribers.length}. Errors: ${errors.slice(0, 3).join('; ')}`
+        : `Notification sent to ${sent} subscribers`,
       sent,
       failed,
       total: subscribers.length,
     });
   } catch (error) {
     console.error('Error sending notifications:', error);
-    return NextResponse.json({ error: 'Failed to send notifications' }, { status: 500 });
+    const details = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: `Failed to send notifications: ${details}` }, { status: 500 });
   }
 }

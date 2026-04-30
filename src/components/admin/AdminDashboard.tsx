@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import Section from '../Section';
@@ -30,52 +30,57 @@ export default function AdminDashboard() {
     recentActivity: []
   });
   const [loading, setLoading] = useState(true);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const supabase = createClient();
 
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        // Get user count
-        const { count: userCount } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true });
+  const fetchStats = useCallback(async () => {
+    try {
+      // Get user count
+      const { count: userCount } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
 
-        // Get enrollment count
-        const { count: enrollmentCount } = await supabase
-          .from('enrollments')
-          .select('*', { count: 'exact', head: true });
+      // Get enrollment count
+      const { count: enrollmentCount } = await supabase
+        .from('enrollments')
+        .select('*', { count: 'exact', head: true });
 
-        // Get retreat access count
-        const { count: accessCount } = await supabase
-          .from('retreat_access')
-          .select('*', { count: 'exact', head: true });
+      // Get retreat access count
+      const { count: accessCount } = await supabase
+        .from('retreat_access')
+        .select('*', { count: 'exact', head: true });
 
-        // Get recent audit activity
-        const { data: recentActivity } = await supabase
-          .from('audit_log')
-          .select(`
-            *,
-            profiles!audit_log_actor_fkey(full_name, email)
-          `)
-          .order('created_at', { ascending: false })
-          .limit(5);
+      // Get recent audit activity
+      const { data: recentActivity } = await supabase
+        .from('audit_log')
+        .select(`
+          *,
+          profiles!audit_log_actor_fkey(full_name, email)
+        `)
+        .order('created_at', { ascending: false })
+        .limit(5);
 
-        setStats({
-          totalUsers: userCount || 0,
-          totalEnrollments: enrollmentCount || 0,
-          totalRetreatAccess: accessCount || 0,
-          recentActivity: recentActivity || []
-        });
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-      } finally {
-        setLoading(false);
-      }
+      setStats({
+        totalUsers: userCount || 0,
+        totalEnrollments: enrollmentCount || 0,
+        totalRetreatAccess: accessCount || 0,
+        recentActivity: recentActivity || []
+      });
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
     }
-
-    fetchStats();
   }, [supabase]);
+
+  useEffect(() => {
+    fetchStats();
+    intervalRef.current = setInterval(fetchStats, 30000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [fetchStats]);
 
   if (loading) {
     return (

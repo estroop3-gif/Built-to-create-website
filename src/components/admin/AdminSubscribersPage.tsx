@@ -64,10 +64,23 @@ export default function AdminSubscribersPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(notifyForm),
       });
-      const data = await res.json();
-      setSendResult(data.message || 'Sent!');
-    } catch {
-      setSendResult('Failed to send notifications');
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        setSendResult(`Failed: Server returned non-JSON (status ${res.status}): ${text.slice(0, 200)}`);
+        return;
+      }
+      if (!res.ok) {
+        setSendResult(`Failed (${res.status}): ${data.error || JSON.stringify(data)}`);
+      } else if (data.sent === 0 && data.failed === 0) {
+        setSendResult(`No subscribers found to notify. Check that you have leads or subscribers in the database.`);
+      } else {
+        setSendResult(data.message || 'Sent!');
+      }
+    } catch (err) {
+      setSendResult(`Failed to send: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setSending(false);
     }
@@ -276,7 +289,7 @@ export default function AdminSubscribersPage() {
             </div>
 
             {sendResult && (
-              <div className={`p-4 rounded-lg ${sendResult.includes('Failed') ? 'bg-red-50 text-red-800' : 'bg-green-50 text-green-800'}`}>
+              <div className={`p-4 rounded-lg ${sendResult.includes('Failed') || sendResult.includes('No subscribers') ? 'bg-red-50 text-red-800' : 'bg-green-50 text-green-800'}`}>
                 {sendResult}
               </div>
             )}

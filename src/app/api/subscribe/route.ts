@@ -211,11 +211,25 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Track analytics event (could be sent to GA4 or other analytics)
-    // This would be implemented based on your analytics setup
+    // Sync to email_subscribers table so admin broadcast includes this subscriber
+    try {
+      await supabase
+        .from('email_subscribers')
+        .upsert(
+          {
+            email: email.toLowerCase(),
+            name: first_name || null,
+            source: 'website',
+            status: 'subscribed',
+          },
+          { onConflict: 'email', ignoreDuplicates: true }
+        );
+    } catch {
+      // non-critical — leads table is the source of truth for drip sequence
+    }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: 'Successfully subscribed! Check your email for the phone exposure workshop.' 
     });
 
